@@ -30,7 +30,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ghcr.io/kienbeo237/job_find_fe
           tags: |
             type=raw,value=latest
             type=sha,format=short
@@ -42,8 +42,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/kienbeo237/job_find_fe:buildcache
+          cache-to: type=registry,ref=ghcr.io/kienbeo237/job_find_fe:buildcache,mode=max
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
@@ -65,12 +65,12 @@ jobs:
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
             echo "📥 Pulling latest image..."
-            docker pull ghcr.io/${{ github.repository }}:latest
+            docker pull ghcr.io/kienbeo237/job_find_fe:latest
 
             echo "🧹 Removing old container if exists..."
             docker rm -f job-find-portal || true
 
             echo "🚀 Starting new container..."
-            docker run -d --name job-find-portal -p 3000:3000 ghcr.io/${{ github.repository }}:latest
+            docker run -d --name job-find-portal -p 3000:3000 ghcr.io/kienbeo237/job_find_fe:latest
 
             echo "✅ Container deployed successfully!"
