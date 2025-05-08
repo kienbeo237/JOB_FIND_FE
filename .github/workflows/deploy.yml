@@ -28,6 +28,7 @@ jobs:
           host: 157.66.24.154
           username: root
           password: dTs6kG5fqa1#
+          port: 5762
           script: |
             # Install Node.js and npm if not installed
             if ! command -v node &> /dev/null; then
