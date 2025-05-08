@@ -41,20 +41,20 @@ jobs:
               sudo npm install -g pm2
             fi
 
-            # Create directory if it doesn't exist
-            sudo mkdir -p /var/www/html
+            # Create app directory if it doesn't exist
+            sudo mkdir -p /home/root/apps/job-find-portal
 
             # Initialize git repository if not already initialized
-            if [ ! -d "/var/www/html/.git" ]; then
-              cd /var/www/html
+            if [ ! -d "/home/root/apps/job-find-portal/.git" ]; then
+              cd /home/root/apps/job-find-portal
               sudo git init
               sudo git remote add origin https://github.com/kienbeo237/JOB_FIND_FE.git
             fi
 
             # Deploy the application
-            cd /var/www/html
+            cd /home/root/apps/job-find-portal
             sudo git fetch origin
             sudo git reset --hard origin/main
             sudo npm install --legacy-peer-deps
             sudo npm run build
-            sudo pm2 restart all || sudo pm2 start npm --name "job-find-portal" -- start
+            sudo pm2 restart job-find-portal || sudo pm2 start npm --name "job-find-portal" -- start
