@@ -21,7 +21,11 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Build
-        run: npm run build
+        run: |
+          echo "🔨 Starting build process..."
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          export NEXT_TELEMETRY_DISABLED=1
+          npm run build
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
@@ -75,6 +79,8 @@ jobs:
             echo "📦 Installing dependencies..."
             sudo npm install --legacy-peer-deps
             echo "🔨 Building application..."
+            export NODE_OPTIONS="--max-old-space-size=4096"
+            export NEXT_TELEMETRY_DISABLED=1
             sudo npm run build
             echo "🔄 Restarting application..."
             sudo pm2 restart job-find-portal || sudo pm2 start npm --name "job-find-portal" -- start
