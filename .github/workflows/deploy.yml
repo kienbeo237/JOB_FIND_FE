@@ -33,7 +33,6 @@ jobs:
           host: 157.66.24.154
           username: root
           password: dTs6kG5fqa1#
-          port: 5762
           script: |
             cd /var/www/html
             git pull
