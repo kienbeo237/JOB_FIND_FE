@@ -7,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Added timeout of 30 minutes
 
     steps:
       - uses: actions/checkout@v3
@@ -30,31 +31,51 @@ jobs:
           password: dTs6kG5fqa1#
           port: 22
           script: |
-            # Install Node.js and npm if not installed
+            echo "🚀 Starting deployment process..."
+
+            echo "📦 Checking Node.js installation..."
             if ! command -v node &> /dev/null; then
+              echo "📥 Installing Node.js..."
               curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
               sudo apt-get install -y nodejs
+              echo "✅ Node.js installed successfully"
+            else
+              echo "✅ Node.js is already installed"
             fi
 
-            # Install PM2 globally if not installed
+            echo "📦 Checking PM2 installation..."
             if ! command -v pm2 &> /dev/null; then
+              echo "📥 Installing PM2..."
               sudo npm install -g pm2
+              echo "✅ PM2 installed successfully"
+            else
+              echo "✅ PM2 is already installed"
             fi
 
-            # Create app directory if it doesn't exist
+            echo "📁 Creating application directory..."
             sudo mkdir -p /home/root/apps/job-find-portal
+            echo "✅ Directory created/verified"
 
-            # Initialize git repository if not already initialized
+            echo "🔧 Checking git repository..."
             if [ ! -d "/home/root/apps/job-find-portal/.git" ]; then
+              echo "📥 Initializing git repository..."
               cd /home/root/apps/job-find-portal
               sudo git init
               sudo git remote add origin https://github.com/kienbeo237/JOB_FIND_FE.git
+              echo "✅ Git repository initialized"
+            else
+              echo "✅ Git repository already exists"
             fi
 
-            # Deploy the application
+            echo "🚀 Deploying application..."
             cd /home/root/apps/job-find-portal
+            echo "📥 Fetching latest changes..."
             sudo git fetch origin
             sudo git reset --hard origin/main
+            echo "📦 Installing dependencies..."
             sudo npm install --legacy-peer-deps
+            echo "🔨 Building application..."
             sudo npm run build
+            echo "🔄 Restarting application..."
             sudo pm2 restart job-find-portal || sudo pm2 start npm --name "job-find-portal" -- start
+            echo "✅ Deployment completed successfully!"
