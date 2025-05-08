@@ -2,12 +2,12 @@ name: Deploy to VPS
 
 on:
   push:
-    branches: [main] # or your default branch
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30 # Added timeout of 30 minutes
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v3
@@ -15,16 +15,17 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18' # Thay đổi nếu bạn cần node 16 hoặc 20
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm ci --legacy-peer-deps
 
       - name: Build
         run: |
           echo "🔨 Starting build process..."
           export NODE_OPTIONS="--max-old-space-size=4096"
           export NEXT_TELEMETRY_DISABLED=1
+          set -x # enable debug output
           npm run build
 
       - name: Deploy to VPS
@@ -61,9 +62,9 @@ jobs:
             echo "✅ Directory created/verified"
 
             echo "🔧 Checking git repository..."
-            if [ ! -d "/home/root/apps/job-find-portal/.git" ]; then
+            cd /home/root/apps/job-find-portal
+            if [ ! -d ".git" ]; then
               echo "📥 Initializing git repository..."
-              cd /home/root/apps/job-find-portal
               sudo git init
               sudo git remote add origin https://github.com/kienbeo237/JOB_FIND_FE.git
               echo "✅ Git repository initialized"
@@ -72,16 +73,11 @@ jobs:
             fi
 
             echo "🚀 Deploying application..."
-            cd /home/root/apps/job-find-portal
-            echo "📥 Fetching latest changes..."
             sudo git fetch origin
             sudo git reset --hard origin/main
-            echo "📦 Installing dependencies..."
             sudo npm install --legacy-peer-deps
-            echo "🔨 Building application..."
             export NODE_OPTIONS="--max-old-space-size=4096"
             export NEXT_TELEMETRY_DISABLED=1
             sudo npm run build
-            echo "🔄 Restarting application..."
             sudo pm2 restart job-find-portal || sudo pm2 start npm --name "job-find-portal" -- start
             echo "✅ Deployment completed successfully!"
