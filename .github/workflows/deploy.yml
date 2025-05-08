@@ -29,8 +29,31 @@ jobs:
           username: root
           password: dTs6kG5fqa1#
           script: |
+            # Install Node.js and npm if not installed
+            if ! command -v node &> /dev/null; then
+              curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
+
+            # Install PM2 globally if not installed
+            if ! command -v pm2 &> /dev/null; then
+              sudo npm install -g pm2
+            fi
+
+            # Create directory if it doesn't exist
+            sudo mkdir -p /var/www/html
+
+            # Initialize git repository if not already initialized
+            if [ ! -d "/var/www/html/.git" ]; then
+              cd /var/www/html
+              sudo git init
+              sudo git remote add origin https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git
+            fi
+
+            # Deploy the application
             cd /var/www/html
-            git pull
-            npm install --legacy-peer-deps
-            npm run build
-            pm2 restart all
+            sudo git fetch origin
+            sudo git reset --hard origin/main
+            sudo npm install --legacy-peer-deps
+            sudo npm run build
+            sudo pm2 restart all || sudo pm2 start npm --name "your-app-name" -- start
