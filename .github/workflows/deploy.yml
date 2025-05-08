@@ -16,16 +16,11 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
       - name: Install dependencies
-        run: pnpm install
+        run: npm install --legacy-peer-deps
 
       - name: Build
-        run: pnpm build
+        run: npm run build
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
@@ -36,6 +31,6 @@ jobs:
           script: |
             cd /var/www/html
             git pull
-            pnpm install
-            pnpm build
+            npm install --legacy-peer-deps
+            npm run build
             pm2 restart all
