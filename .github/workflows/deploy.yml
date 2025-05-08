@@ -21,11 +21,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/kienbeo237/job_find_fe:latest .
+          docker build -t ghcr.io/${{ github.repository }}:latest .
 
       - name: Push Docker image to GitHub Container Registry
         run: |
-          docker push ghcr.io/kienbeo237/job_find_fe:latest
+          docker push ghcr.io/${{ github.repository }}:latest
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
