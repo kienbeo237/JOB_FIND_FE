@@ -48,7 +48,7 @@ jobs:
             if [ ! -d "/var/www/html/.git" ]; then
               cd /var/www/html
               sudo git init
-              sudo git remote add origin https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git
+              sudo git remote add origin https://github.com/kienbeo237/JOB_FIND_FE.git
             fi
 
             # Deploy the application
