@@ -28,7 +28,7 @@ jobs:
           host: 157.66.24.154
           username: root
           password: dTs6kG5fqa1#
-          port: 5762
+          port: 22
           script: |
             # Install Node.js and npm if not installed
             if ! command -v node &> /dev/null; then
@@ -57,4 +57,4 @@ jobs:
             sudo git reset --hard origin/main
             sudo npm install --legacy-peer-deps
             sudo npm run build
-            sudo pm2 restart all || sudo pm2 start npm --name "your-app-name" -- start
+            sudo pm2 restart all || sudo pm2 start npm --name "job-find-portal" -- start
