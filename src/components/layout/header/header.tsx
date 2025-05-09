@@ -1,87 +1,84 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { Globe, Menu, X, MessageSquare } from "lucide-react"
-import UserDropdown from "./user-dropdown"
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { Globe, Menu, X, MessageSquare } from 'lucide-react';
+import UserDropdown from './user-dropdown';
 
 const navItems = [
   {
-    name: "Việc làm",
-    href: "/viec-lam",
+    name: 'Việc làm',
+    href: '/viec-lam',
     dropdown: true,
     items: [
-      { name: "Tìm việc làm", href: "/viec-lam/tim-kiem" },
-      { name: "Việc làm hot", href: "/viec-lam/hot" },
-      { name: "Việc làm gấp", href: "/viec-lam/gap" },
+      { name: 'Tìm việc làm', href: '/viec-lam/tim-kiem' },
+      { name: 'Việc làm hot', href: '/viec-lam/hot' },
+      { name: 'Việc làm gấp', href: '/viec-lam/gap' },
     ],
   },
   {
-    name: "Hồ Sơ, CV",
-    href: "/ho-so-cv",
+    name: 'Hồ Sơ, CV',
+    href: '/ho-so-cv',
     dropdown: true,
     items: [
-      { name: "Tạo CV", href: "/ho-so-cv/tao-cv" },
-      { name: "Cập nhật CV", href: "/ho-so-cv/cap-nhat" },
+      { name: 'Tạo CV', href: '/ho-so-cv/tao-cv' },
+      { name: 'Cập nhật CV', href: '/ho-so-cv/cap-nhat' },
     ],
   },
   {
-    name: "Công ty",
-    href: "/cong-ty",
+    name: 'Công ty',
+    href: '/cong-ty',
     dropdown: false,
   },
   {
-    name: "Cẩm nang, công cụ",
-    href: "/cam-nang",
+    name: 'Cẩm nang, công cụ',
+    href: '/cam-nang',
     dropdown: true,
     items: [
-      { name: "Cẩm nang", href: "/cam-nang/bai-viet" },
-      { name: "Công cụ", href: "/cam-nang/cong-cu" },
+      { name: 'Cẩm nang', href: '/cam-nang/bai-viet' },
+      { name: 'Công cụ', href: '/cam-nang/cong-cu' },
     ],
   },
   {
-    name: "Hành trình xanh",
-    href: "/hanh-trinh-xanh",
+    name: 'Hành trình xanh',
+    href: '/hanh-trinh-xanh',
     dropdown: true,
     items: [
-      { name: "Bài viết", href: "/hanh-trinh-xanh/bai-viet" },
-      { name: "Sự kiện", href: "/hanh-trinh-xanh/su-kien" },
+      { name: 'Bài viết', href: '/hanh-trinh-xanh/bai-viet' },
+      { name: 'Sự kiện', href: '/hanh-trinh-xanh/su-kien' },
     ],
   },
-]
+];
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const pathname = usePathname()
-  const [showHeader, setShowHeader] = useState(true)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const [showHeader, setShowHeader] = useState(true);
 
-  // Define the toggleMenu function before any potential returns
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-  // All useEffect hooks must be called unconditionally
   useEffect(() => {
-    setShowHeader(!pathname?.includes("/employer"))
-  }, [pathname])
+    setShowHeader(!pathname?.includes('/employer'));
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  // Instead of returning null early, conditionally render the header
   return showHeader ? (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur transition-all",
-        isScrolled ? "shadow-sm" : "",
+        'sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur transition-all',
+        isScrolled ? 'shadow-sm' : ''
       )}
     >
       {/* Rest of the header JSX remains unchanged */}
@@ -91,7 +88,10 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6">
-          <Link href="/jobs" className="text-gray-700 hover:text-green-500 flex items-center gap-1">
+          <Link
+            href="/jobs"
+            className="text-gray-700 hover:text-green-500 flex items-center gap-1"
+          >
             <span>Việc làm</span>
             <svg
               className="w-4 h-4"
@@ -100,10 +100,18 @@ export default function Header() {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
             </svg>
           </Link>
-          <Link href="/cv" className="text-gray-700 hover:text-green-500 flex items-center gap-1">
+          <Link
+            href="/cv"
+            className="text-gray-700 hover:text-green-500 flex items-center gap-1"
+          >
             <span>Hồ Sơ, CV</span>
             <svg
               className="w-4 h-4"
@@ -112,13 +120,24 @@ export default function Header() {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
             </svg>
           </Link>
-          <Link href="/companies" className="text-gray-700 hover:text-green-500">
+          <Link
+            href="/companies"
+            className="text-gray-700 hover:text-green-500"
+          >
             Công ty
           </Link>
-          <Link href="/tools" className="text-gray-700 hover:text-green-500 flex items-center gap-1">
+          <Link
+            href="/tools"
+            className="text-gray-700 hover:text-green-500 flex items-center gap-1"
+          >
             <span>Cẩm năng, công cụ</span>
             <svg
               className="w-4 h-4"
@@ -127,10 +146,18 @@ export default function Header() {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
             </svg>
           </Link>
-          <Link href="/green" className="text-gray-700 hover:text-green-500 flex items-center gap-1">
+          <Link
+            href="/green"
+            className="text-gray-700 hover:text-green-500 flex items-center gap-1"
+          >
             <span>Hành trình xanh</span>
             <svg
               className="w-4 h-4"
@@ -139,7 +166,12 @@ export default function Header() {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
             </svg>
           </Link>
         </nav>
@@ -169,7 +201,10 @@ export default function Header() {
             <Link href="/cv" className="text-gray-700 hover:text-green-500">
               Hồ Sơ, CV
             </Link>
-            <Link href="/companies" className="text-gray-700 hover:text-green-500">
+            <Link
+              href="/companies"
+              className="text-gray-700 hover:text-green-500"
+            >
               Công ty
             </Link>
             <Link href="/tools" className="text-gray-700 hover:text-green-500">
@@ -179,16 +214,28 @@ export default function Header() {
               Hành trình xanh
             </Link>
             <div className="pt-4 border-t border-gray-200">
-              <Link href="/candidate/login" className="block py-2 text-green-500 hover:text-green-600">
+              <Link
+                href="/candidate/login"
+                className="block py-2 text-green-500 hover:text-green-600"
+              >
                 Đăng nhập ứng viên
               </Link>
-              <Link href="/candidate/register" className="block py-2 text-green-500 hover:text-green-600">
+              <Link
+                href="/candidate/register"
+                className="block py-2 text-green-500 hover:text-green-600"
+              >
                 Đăng ký ứng viên
               </Link>
-              <Link href="/employer/login" className="block py-2 text-emerald-600 hover:text-emerald-700">
+              <Link
+                href="/employer/login"
+                className="block py-2 text-emerald-600 hover:text-emerald-700"
+              >
                 Đăng nhập nhà tuyển dụng
               </Link>
-              <Link href="/employer/register" className="block py-2 text-emerald-600 hover:text-emerald-700">
+              <Link
+                href="/employer/register"
+                className="block py-2 text-emerald-600 hover:text-emerald-700"
+              >
                 Đăng ký nhà tuyển dụng
               </Link>
             </div>
@@ -196,5 +243,5 @@ export default function Header() {
         </div>
       )}
     </header>
-  ) : null
+  ) : null;
 }

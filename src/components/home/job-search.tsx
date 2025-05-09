@@ -1,24 +1,28 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search } from "lucide-react"
-import { motion } from "framer-motion"
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function JobSearch() {
-  const [keyword, setKeyword] = useState("")
-  const [location, setLocation] = useState("")
-  const [category, setCategory] = useState("")
+  const [keyword, setKeyword] = useState('');
+  const [location, setLocation] = useState('');
+  const [category, setCategory] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log({ keyword, location, category })
-    // Handle search logic
-  }
+    e.preventDefault();
+  };
 
   return (
     <motion.div
@@ -32,7 +36,7 @@ export default function JobSearch() {
           <Input
             placeholder="Tìm kiếm tên công việc..."
             value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
+            onChange={e => setKeyword(e.target.value)}
             className="pl-10"
           />
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -69,5 +73,5 @@ export default function JobSearch() {
         </Button>
       </form>
     </motion.div>
-  )
+  );
 }

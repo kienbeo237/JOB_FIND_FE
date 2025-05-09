@@ -27,16 +27,18 @@ import {
   ChevronUp,
   ChevronDown,
 } from 'lucide-react';
+import {
+  DashboardProvider,
+  useDashboard,
+} from '../../contexts/dashboard-context';
 
-export default function EmployerLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAuthPage =
     pathname?.includes('/login') || pathname?.includes('/register');
   const [openDropdown, setOpenDropdown] = useState('');
+  const { activeTab, setActiveTab, activeSettingsTab, setActiveSettingsTab } =
+    useDashboard();
 
   useEffect(() => {
     const isInSettingsSection = pathname?.includes('/employer/settings/');
@@ -45,11 +47,59 @@ export default function EmployerLayout({
     }
   }, [pathname]);
 
+  useEffect(() => {
+    if (activeTab === 'settings' && openDropdown !== 'Cài đặt tài khoản') {
+      setOpenDropdown('Cài đặt tài khoản');
+    }
+  }, [activeTab, openDropdown]);
+
   const toggleDropdown = (title: string) => {
     if (openDropdown === title) {
       setOpenDropdown('');
     } else {
       setOpenDropdown(title);
+    }
+  };
+
+  const handleNavItemClick = (
+    title: string,
+    href: string,
+    hasDropdown?: boolean
+  ) => {
+    if (hasDropdown) {
+      toggleDropdown(title);
+    } else {
+      setOpenDropdown('');
+
+      if (title === 'Tổng quan') {
+        setActiveTab('dashboard');
+      } else if (title === 'Cài đặt tài khoản') {
+        setActiveTab('settings');
+        setActiveSettingsTab('');
+      }
+    }
+  };
+
+  const handleSettingsItemClick = (subItem: {
+    title: string;
+    href: string;
+  }) => {
+    setActiveTab('settings');
+
+    if (subItem.title === 'Người dùng đăng nhập') {
+      setActiveSettingsTab('user-login');
+    } else if (subItem.title === 'Danh sách người dùng') {
+      setActiveSettingsTab('user-list');
+    } else if (subItem.title === 'Tạo người dùng phụ') {
+      setActiveSettingsTab('create-user');
+    } else if (subItem.title === 'Thông tin công ty') {
+      setActiveSettingsTab('company-info');
+    } else if (subItem.title === 'Giấy phép kinh doanh') {
+      setActiveSettingsTab('business-license');
+    } else if (subItem.title === 'Đổi mật khẩu') {
+      setActiveSettingsTab('change-password');
+    } else if (subItem.title === 'Dịch vụ API') {
+      setActiveSettingsTab('api-service');
     }
   };
 
@@ -318,7 +368,7 @@ export default function EmployerLayout({
           </div>
         ) : (
           <div className="flex rounded-lg overflow-hidden shadow-sm">
-            <div className="w-64 bg-white">
+            <div className="w-64 min-w-[240px] bg-white flex-shrink-0">
               <div className="p-4 border-b border-gray-200">
                 <Link href="/" className="flex items-center">
                   <span className="text-xl font-bold text-green-500">
@@ -326,88 +376,120 @@ export default function EmployerLayout({
                   </span>
                 </Link>
               </div>
-              <div className="flex-1 overflow-y-auto py-4">
+              <div className="h-[calc(100vh-10rem)] overflow-y-auto py-4">
                 <nav className="px-2">
                   {navItems.map(item => {
                     const isActive =
-                      pathname === item.href ||
-                      (item.dropdownItems &&
-                        item.dropdownItems.some(
-                          subItem => pathname === subItem.href
-                        ));
+                      (activeTab === 'dashboard' &&
+                        item.title === 'Tổng quan') ||
+                      (activeTab === 'settings' &&
+                        item.title === 'Cài đặt tài khoản');
                     const isOpen = openDropdown === item.title;
 
                     return (
-                      <div key={item.href}>
+                      <div key={item.href} className="mb-1">
                         {item.hasDropdown ? (
-                          <button
-                            onClick={() => toggleDropdown(item.title)}
-                            className={`w-full flex items-center justify-between px-3 py-2 my-1 text-sm rounded-md transition-colors ${
-                              isActive
-                                ? 'bg-green-50 text-green-700 font-medium'
-                                : 'text-gray-700 hover:bg-gray-100'
-                            }`}
-                          >
-                            <div className="flex items-center">
-                              <item.icon
-                                className={`mr-2 h-5 w-5 ${
-                                  isActive ? 'text-green-600' : 'text-gray-500'
-                                }`}
-                              />
-                              <span>{item.title}</span>
-                            </div>
-                            {isOpen ? (
-                              <ChevronUp className="h-4 w-4 text-gray-500" />
-                            ) : (
-                              <ChevronDown className="h-4 w-4 text-gray-500" />
+                          <>
+                            <button
+                              onClick={() =>
+                                handleNavItemClick(
+                                  item.title,
+                                  item.href,
+                                  item.hasDropdown
+                                )
+                              }
+                              className={`w-full flex items-center justify-between px-3 py-2 text-sm rounded-md transition-colors ${
+                                isActive
+                                  ? 'bg-green-100 text-green-700 font-medium border border-green-300'
+                                  : 'text-gray-700 hover:bg-gray-100'
+                              }`}
+                            >
+                              <div className="flex items-center">
+                                <item.icon
+                                  className={`mr-2 h-5 w-5 ${
+                                    isActive
+                                      ? 'text-green-600'
+                                      : 'text-gray-500'
+                                  }`}
+                                />
+                                <span>{item.title}</span>
+                              </div>
+                              {isOpen ? (
+                                <ChevronUp className="h-4 w-4 text-gray-500" />
+                              ) : (
+                                <ChevronDown className="h-4 w-4 text-gray-500" />
+                              )}
+                            </button>
+
+                            {isOpen && (
+                              <div className="mt-1 ml-4 pl-4 border-l border-gray-200">
+                                {item.dropdownItems?.map(subItem => {
+                                  const isSubActive =
+                                    activeTab === 'settings' &&
+                                    ((subItem.title ===
+                                      'Người dùng đăng nhập' &&
+                                      activeSettingsTab === 'user-login') ||
+                                      (subItem.title ===
+                                        'Danh sách người dùng' &&
+                                        activeSettingsTab === 'user-list') ||
+                                      (subItem.title === 'Tạo người dùng phụ' &&
+                                        activeSettingsTab === 'create-user') ||
+                                      (subItem.title === 'Thông tin công ty' &&
+                                        activeSettingsTab === 'company-info') ||
+                                      (subItem.title ===
+                                        'Giấy phép kinh doanh' &&
+                                        activeSettingsTab ===
+                                          'business-license') ||
+                                      (subItem.title === 'Đổi mật khẩu' &&
+                                        activeSettingsTab ===
+                                          'change-password') ||
+                                      (subItem.title === 'Dịch vụ API' &&
+                                        activeSettingsTab === 'api-service'));
+
+                                  return (
+                                    <button
+                                      key={subItem.href}
+                                      onClick={() =>
+                                        handleSettingsItemClick(subItem)
+                                      }
+                                      className={`flex w-full items-center px-3 py-2 my-1 text-sm rounded-md transition-colors ${
+                                        isSubActive
+                                          ? 'text-green-700 font-medium'
+                                          : 'text-gray-700 hover:text-green-600'
+                                      }`}
+                                    >
+                                      <subItem.icon
+                                        className={`mr-2 h-4 w-4 ${
+                                          isSubActive
+                                            ? 'text-green-600'
+                                            : 'text-gray-500'
+                                        }`}
+                                      />
+                                      <span>{subItem.title}</span>
+                                    </button>
+                                  );
+                                })}
+                              </div>
                             )}
-                          </button>
+                          </>
                         ) : (
-                          <Link
-                            href={item.href}
-                            className={`flex items-center px-3 py-2 my-1 text-sm rounded-md transition-colors ${
-                              pathname === item.href
-                                ? 'bg-green-50 text-green-700 font-medium'
+                          <button
+                            onClick={() =>
+                              handleNavItemClick(item.title, item.href)
+                            }
+                            className={`flex w-full items-center px-3 py-2 text-sm rounded-md transition-colors ${
+                              isActive
+                                ? 'bg-green-100 text-green-700 font-medium'
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
                           >
                             <item.icon
                               className={`mr-2 h-5 w-5 ${
-                                pathname === item.href
-                                  ? 'text-green-600'
-                                  : 'text-gray-500'
+                                isActive ? 'text-green-600' : 'text-gray-500'
                               }`}
                             />
                             <span>{item.title}</span>
-                          </Link>
-                        )}
-
-                        {item.hasDropdown && isOpen && (
-                          <div className="ml-7 mt-1 space-y-1">
-                            {item.dropdownItems?.map(subItem => {
-                              const isSubActive = pathname === subItem.href;
-                              return (
-                                <Link
-                                  key={subItem.href}
-                                  href={subItem.href}
-                                  className={`flex items-center px-3 py-2 text-sm rounded-md transition-colors ${
-                                    isSubActive
-                                      ? 'text-green-700'
-                                      : 'text-gray-700 hover:text-green-600'
-                                  }`}
-                                >
-                                  <subItem.icon
-                                    className={`mr-2 h-4 w-4 ${
-                                      isSubActive
-                                        ? 'text-green-600'
-                                        : 'text-gray-500'
-                                    }`}
-                                  />
-                                  <span>{subItem.title}</span>
-                                </Link>
-                              );
-                            })}
-                          </div>
+                          </button>
                         )}
                       </div>
                     );
@@ -420,5 +502,17 @@ export default function EmployerLayout({
         )}
       </div>
     </div>
+  );
+}
+
+export default function EmployerLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <DashboardProvider>
+      <EmployerLayoutContent>{children}</EmployerLayoutContent>
+    </DashboardProvider>
   );
 }

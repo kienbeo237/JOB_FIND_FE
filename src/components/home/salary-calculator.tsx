@@ -1,27 +1,37 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Calculator } from "lucide-react"
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Calculator } from 'lucide-react';
 
 export default function SalaryCalculator() {
-  const [dependents, setDependents] = useState("0")
-  const [grossSalary, setGrossSalary] = useState("4400000")
-  const [baseSalary, setBaseSalary] = useState("2340000")
-  const [personalDeduction, setPersonalDeduction] = useState("11000000")
-  const [region, setRegion] = useState("Vùng")
+  const [dependents, setDependents] = useState('0');
+  const [grossSalary, setGrossSalary] = useState('4400000');
+  const [baseSalary, setBaseSalary] = useState('2340000');
+  const [personalDeduction, setPersonalDeduction] = useState('11000000');
+  const [region, setRegion] = useState('Vùng');
 
   const handleCalculate = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Calculation logic would go here
-    console.log({ dependents, grossSalary, baseSalary, personalDeduction, region })
-  }
+    e.preventDefault();
+  };
 
   return (
     <section className="mb-12">
@@ -32,19 +42,30 @@ export default function SalaryCalculator() {
           </div>
           <CardTitle className="text-xl">Công Cụ Đổi Lương Gross-Net</CardTitle>
           <CardDescription>
-            Nhập mức lương để chuyển đổi giữa lương Gross và Net, giúp bạn hiểu rõ thu nhập thực tế. Áp dụng mức lương
-            cơ sở mới nhất có hiệu lực từ ngày 01/07/2024. (Theo Nghị định số 73/2024/NĐ-CP)
+            Nhập mức lương để chuyển đổi giữa lương Gross và Net, giúp bạn hiểu
+            rõ thu nhập thực tế. Áp dụng mức lương cơ sở mới nhất có hiệu lực từ
+            ngày 01/07/2024. (Theo Nghị định số 73/2024/NĐ-CP)
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleCalculate} className="grid gap-4 md:grid-cols-2">
+          <form
+            onSubmit={handleCalculate}
+            className="grid gap-4 md:grid-cols-2"
+          >
             <div className="space-y-2">
               <Label htmlFor="dependents">Người phụ thuộc</Label>
-              <Input id="dependents" type="text" value={dependents} onChange={(e) => setDependents(e.target.value)} />
+              <Input
+                id="dependents"
+                type="text"
+                value={dependents}
+                onChange={e => setDependents(e.target.value)}
+              />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="salary-type">Chọn loại lương cần chuyển đổi:</Label>
+              <Label htmlFor="salary-type">
+                Chọn loại lương cần chuyển đổi:
+              </Label>
               <Select defaultValue="income">
                 <SelectTrigger id="salary-type">
                   <SelectValue placeholder="Thu nhập của bạn" />
@@ -59,7 +80,12 @@ export default function SalaryCalculator() {
 
             <div className="space-y-2">
               <Label htmlFor="base-salary">Lương cơ sở</Label>
-              <Input id="base-salary" type="text" value={baseSalary} onChange={(e) => setBaseSalary(e.target.value)} />
+              <Input
+                id="base-salary"
+                type="text"
+                value={baseSalary}
+                onChange={e => setBaseSalary(e.target.value)}
+              />
             </div>
 
             <div className="space-y-2">
@@ -68,17 +94,19 @@ export default function SalaryCalculator() {
                 id="dependents-count"
                 type="text"
                 value={dependents}
-                onChange={(e) => setDependents(e.target.value)}
+                onChange={e => setDependents(e.target.value)}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="personal-deduction">Giảm trừ gia cảnh bản thân</Label>
+              <Label htmlFor="personal-deduction">
+                Giảm trừ gia cảnh bản thân
+              </Label>
               <Input
                 id="personal-deduction"
                 type="text"
                 value={personalDeduction}
-                onChange={(e) => setPersonalDeduction(e.target.value)}
+                onChange={e => setPersonalDeduction(e.target.value)}
               />
             </div>
 
@@ -98,7 +126,10 @@ export default function SalaryCalculator() {
             </div>
 
             <div className="md:col-span-2">
-              <Button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700">
+              <Button
+                type="submit"
+                className="w-full bg-emerald-600 hover:bg-emerald-700"
+              >
                 Chuyển đổi
               </Button>
             </div>
@@ -112,5 +143,5 @@ export default function SalaryCalculator() {
         </CardContent>
       </Card>
     </section>
-  )
+  );
 }
