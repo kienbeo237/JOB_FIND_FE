@@ -5,7 +5,6 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { motion, AnimatePresence } from "framer-motion"
 
 const slides = [
   {
@@ -49,55 +48,34 @@ export default function HeroBanner() {
     <div className="relative h-[500px] w-full overflow-hidden bg-gradient-to-r from-emerald-600 to-emerald-400">
       <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/90 to-emerald-400/80 z-10"></div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={current}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="absolute inset-0"
-        >
-          <Image
-            src={slides[current].image || "/placeholder.svg"}
-            alt={slides[current].title}
-            fill
-            priority
-            className="object-cover"
-          />
-        </motion.div>
-      </AnimatePresence>
+      <div className="absolute inset-0 transition-opacity duration-500" style={{ opacity: 1 }}>
+        <Image
+          src={slides[current].image || "/placeholder.svg"}
+          alt={slides[current].title}
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
 
       <div className="relative z-20 flex h-full items-center">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 md:grid-cols-2 md:gap-12">
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
-                <motion.h1
+                <h1
                   key={`title-${current}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="text-3xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl"
+                  className="text-3xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl transition-all duration-500"
                 >
                   {slides[current].title}
-                </motion.h1>
-                <motion.p
-                  key={`subtitle-${current}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="text-white/90 md:text-xl"
-                >
+                </h1>
+                <p key={`subtitle-${current}`} className="text-white/90 md:text-xl transition-all duration-500">
                   {slides[current].subtitle}
-                </motion.p>
+                </p>
               </div>
-              <motion.div
+              <div
                 key={`cta-${current}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="flex flex-col gap-2 min-[400px]:flex-row"
+                className="flex flex-col gap-2 min-[400px]:flex-row transition-all duration-500"
               >
                 <Button size="lg" className="bg-white text-emerald-600 hover:bg-white/90">
                   {slides[current].ctaText}
@@ -105,7 +83,7 @@ export default function HeroBanner() {
                 <Button size="lg" variant="outline" className="border-white text-emerald-600 hover:bg-white/20">
                   {slides[current].ctaSecondary}
                 </Button>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>

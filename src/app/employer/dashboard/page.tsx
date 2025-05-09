@@ -37,7 +37,8 @@ import { CreateUserSettings } from '../../../components/employer/setting-tabs/cr
 import { BusinessLicenseSettings } from '../../../components/employer/setting-tabs/business-license-settings';
 import { ChangePasswordSettings } from '../../../components/employer/setting-tabs/change-password-settings';
 import { ApiServiceSettings } from '../../../components/employer/setting-tabs/api-service-settings';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { LoadingOverlay } from '@/components/ui/loading-overlay';
 
 const timeData = [
   { name: 'T1', total: 20 },
@@ -61,6 +62,15 @@ const jobPositionData = [
 export default function EmployerDashboard() {
   const { activeTab, activeSettingsTab, setActiveSettingsTab } = useDashboard();
   const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (tabsContainerRef.current) {
@@ -566,5 +576,11 @@ export default function EmployerDashboard() {
     );
   };
 
-  return <div className="flex-1 bg-gray-50 p-6">{renderContent()}</div>;
+  return (
+    <div className="flex-1 bg-gray-50 p-6">
+      <LoadingOverlay isLoading={isLoading} text="Đang tải dữ liệu...">
+        {renderContent()}
+      </LoadingOverlay>
+    </div>
+  );
 }

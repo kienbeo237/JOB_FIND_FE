@@ -7,6 +7,7 @@ import Footer from '../components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
+import { PageTransition } from '@/components/ui/page-transition';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,7 +30,6 @@ export default function RootLayout({
           inter.className,
           'min-h-screen bg-background antialiased'
         )}
-        suppressHydrationWarning
       >
         <ThemeProvider
           attribute="class"
@@ -37,7 +37,9 @@ export default function RootLayout({
           enableSystem={false}
         >
           <Header />
-          <main>{children}</main>
+          <main>
+            <PageTransition>{children}</PageTransition>
+          </main>
           <Footer />
           <Toaster />
         </ThemeProvider>
