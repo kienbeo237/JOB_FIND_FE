@@ -1,16 +1,12 @@
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from "@/components/ui/skeleton"
 
 interface LoadingSectionProps {
-  title?: boolean;
-  lines?: number;
-  className?: string;
+  title?: boolean
+  lines?: number
+  className?: string
 }
 
-export function LoadingSection({
-  title = true,
-  lines = 5,
-  className,
-}: LoadingSectionProps) {
+export function LoadingSection({ title = true, lines = 5, className }: LoadingSectionProps) {
   return (
     <div className={className}>
       {title && (
@@ -25,5 +21,5 @@ export function LoadingSection({
         ))}
       </div>
     </div>
-  );
+  )
 }

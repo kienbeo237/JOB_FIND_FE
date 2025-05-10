@@ -7,7 +7,6 @@ import Footer from '../components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
-import { PageTransition } from '@/components/ui/page-transition';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -37,9 +36,7 @@ export default function RootLayout({
           enableSystem={false}
         >
           <Header />
-          <main>
-            <PageTransition>{children}</PageTransition>
-          </main>
+          <main>{children}</main>
           <Footer />
           <Toaster />
         </ThemeProvider>

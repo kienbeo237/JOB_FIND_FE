@@ -1,63 +1,27 @@
-'use client';
+"use client"
 
-import type React from 'react';
-
-import { LoadingSpinner } from './loading-spinner';
-import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import type React from "react"
+import { Loader2 } from "lucide-react"
 
 interface LoadingOverlayProps {
-  isLoading?: boolean;
-  text?: string;
-  fullScreen?: boolean;
-  className?: string;
-  children?: React.ReactNode;
+  isLoading: boolean
+  text?: string
+  children: React.ReactNode
 }
 
-export function LoadingOverlay({
-  isLoading = true,
-  text = 'Đang tải...',
-  fullScreen = false,
-  className,
-  children,
-}: LoadingOverlayProps) {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    if (isLoading) {
-      timeout = setTimeout(() => {
-        setShow(true);
-      }, 300);
-    } else {
-      setShow(false);
-    }
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [isLoading]);
-
-  if (!isLoading && !show) {
-    return <>{children}</>;
-  }
-
+export function LoadingOverlay({ isLoading, text = "Đang tải...", children }: LoadingOverlayProps) {
   return (
     <div className="relative">
       {children}
 
-      <div
-        className={cn(
-          'flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm transition-opacity duration-300',
-          show ? 'opacity-100' : 'opacity-0',
-          fullScreen ? 'fixed inset-0 z-50' : 'absolute inset-0 z-10',
-          className
-        )}
-      >
-        <LoadingSpinner size="lg" color="primary" />
-        {text && <p className="mt-4 text-emerald-700 font-medium">{text}</p>}
-      </div>
+      {isLoading && (
+        <div className="absolute inset-0 bg-white/80 flex flex-col items-center justify-center z-50 transition-opacity duration-200">
+          <Loader2 className="h-8 w-8 animate-spin text-teal-600 mb-2" />
+          <p className="text-sm font-medium text-gray-700">{text}</p>
+        </div>
+      )}
     </div>
-  );
+  )
 }
+
+export default LoadingOverlay

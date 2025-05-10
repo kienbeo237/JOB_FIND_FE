@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
+// Dynamically import components with loading fallbacks
 const HeroBanner = dynamic(() => import('../components/home/hero-banner'), {
   loading: () => (
     <div className="h-[500px] w-full bg-gradient-to-r from-emerald-600/30 to-emerald-400/30 animate-pulse"></div>
@@ -70,26 +71,26 @@ export default function Home() {
         <Suspense fallback={<Skeleton className="h-40 w-full mb-8" />}>
           <TopEmployers />
         </Suspense>
-        <Suspense fallback={<Skeleton className="h-80 w-full mb-8" />}>
-          <HotJobs />
-        </Suspense>
         <Suspense fallback={<Skeleton className="h-60 w-full mb-8" />}>
           <FeaturedJobs />
         </Suspense>
-        <Suspense fallback={<Skeleton className="h-40 w-full mb-8" />}>
-          <PremiumFeature />
-        </Suspense>
         <Suspense fallback={<Skeleton className="h-60 w-full mb-8" />}>
           <UrgentJobs />
+        </Suspense>
+        <Suspense fallback={<Skeleton className="h-60 w-full mb-8" />}>
+          <WhyChooseUs />
+        </Suspense>
+        <Suspense fallback={<Skeleton className="h-40 w-full mb-8" />}>
+          <SalaryCalculator />
+        </Suspense>
+        <Suspense fallback={<Skeleton className="h-80 w-full mb-8" />}>
+          <HotJobs />
         </Suspense>
         <Suspense fallback={<Skeleton className="h-40 w-full mb-8" />}>
           <SkillsSection />
         </Suspense>
         <Suspense fallback={<Skeleton className="h-40 w-full mb-8" />}>
-          <SalaryCalculator />
-        </Suspense>
-        <Suspense fallback={<Skeleton className="h-60 w-full mb-8" />}>
-          <WhyChooseUs />
+          <PremiumFeature />
         </Suspense>
       </div>
     </div>

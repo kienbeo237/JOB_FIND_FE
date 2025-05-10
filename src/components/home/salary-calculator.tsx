@@ -1,147 +1,138 @@
-'use client';
+"use client"
 
-import type React from 'react';
-
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Calculator } from 'lucide-react';
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ArrowRight, Calculator } from "lucide-react"
 
 export default function SalaryCalculator() {
-  const [dependents, setDependents] = useState('0');
-  const [grossSalary, setGrossSalary] = useState('4400000');
-  const [baseSalary, setBaseSalary] = useState('2340000');
-  const [personalDeduction, setPersonalDeduction] = useState('11000000');
-  const [region, setRegion] = useState('Vùng');
+  const [grossSalary, setGrossSalary] = useState<string>("")
+  const [calculatedNet, setCalculatedNet] = useState<string>("")
+  const [calculatedGross, setCalculatedGross] = useState<string>("")
 
-  const handleCalculate = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+  const calculateNetFromGross = (gross: number) => {
+    return gross * 0.8
+  }
+
+  const handleCalculate = () => {
+    const gross = Number.parseFloat(grossSalary)
+    if (!isNaN(gross)) {
+      const net = calculateNetFromGross(gross)
+      setCalculatedGross(gross.toLocaleString("vi-VN"))
+      setCalculatedNet(net.toLocaleString("vi-VN"))
+    }
+  }
 
   return (
-    <section className="mb-12">
-      <Card>
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
-            <Calculator className="h-6 w-6 text-emerald-600" />
-          </div>
-          <CardTitle className="text-xl">Công Cụ Đổi Lương Gross-Net</CardTitle>
-          <CardDescription>
-            Nhập mức lương để chuyển đổi giữa lương Gross và Net, giúp bạn hiểu
-            rõ thu nhập thực tế. Áp dụng mức lương cơ sở mới nhất có hiệu lực từ
-            ngày 01/07/2024. (Theo Nghị định số 73/2024/NĐ-CP)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form
-            onSubmit={handleCalculate}
-            className="grid gap-4 md:grid-cols-2"
-          >
-            <div className="space-y-2">
-              <Label htmlFor="dependents">Người phụ thuộc</Label>
-              <Input
-                id="dependents"
-                type="text"
-                value={dependents}
-                onChange={e => setDependents(e.target.value)}
-              />
-            </div>
+    <section className="py-12 bg-emerald-50">
+      <div className="max-w-[1350px] mx-auto px-4">
+        <Card className="max-w-4xl mx-auto">
+          <CardHeader className="text-center space-y-2 pb-4">
+            <CardTitle className="text-2xl font-bold text-emerald-600 flex items-center justify-center gap-2">
+              <Calculator className="w-6 h-6" />
+              Công Cụ Đổi Lương Gross-Net
+            </CardTitle>
+            <p className="text-sm text-gray-600 max-w-2xl mx-auto">
+              Nhập mức lương để chuyển đổi giữa lương Gross và Net, giúp bạn hiểu rõ thu nhập thực tế. Áp dụng mức lương
+              cơ sở mới nhất có hiệu lực từ ngày 01/07/2024. (Theo Nghị định số 73/2024/NĐ-CP)
+            </p>
+          </CardHeader>
 
-            <div className="space-y-2">
-              <Label htmlFor="salary-type">
-                Chọn loại lương cần chuyển đổi:
-              </Label>
-              <Select defaultValue="income">
-                <SelectTrigger id="salary-type">
-                  <SelectValue placeholder="Thu nhập của bạn" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="income">Thu nhập của bạn</SelectItem>
-                  <SelectItem value="gross">Lương Gross</SelectItem>
-                  <SelectItem value="net">Lương Net</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <CardContent>
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Left side inputs */}
+                <div className="space-y-4">
+                  <div>
+                    <Label>Người phụ thuộc</Label>
+                    <Input
+                      type="text"
+                      placeholder="4,400,000đ"
+                      value={grossSalary}
+                      onChange={(e) => setGrossSalary(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label>Lương cơ sở</Label>
+                    <Input type="text" placeholder="2,340,000đ" />
+                  </div>
+                  <div>
+                    <Label>Giảm trừ gia cảnh bản thân</Label>
+                    <Input type="text" placeholder="11,000,000đ" />
+                  </div>
+                </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="base-salary">Lương cơ sở</Label>
-              <Input
-                id="base-salary"
-                type="text"
-                value={baseSalary}
-                onChange={e => setBaseSalary(e.target.value)}
-              />
-            </div>
+                {/* Right side inputs */}
+                <div className="space-y-4">
+                  <div>
+                    <Label>Chọn loại lương cần chuyển đổi:</Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Thu nhập của bạn" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="gross-to-net">Gross sang Net</SelectItem>
+                        <SelectItem value="net-to-gross">Net sang Gross</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="dependents-count">Số người phụ thuộc</Label>
-              <Input
-                id="dependents-count"
-                type="text"
-                value={dependents}
-                onChange={e => setDependents(e.target.value)}
-              />
-            </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Số người phụ thuộc</Label>
+                      <Input type="number" placeholder="0" />
+                    </div>
+                    <div>
+                      <Label>Mức lương đóng BHXH</Label>
+                      <Input type="text" placeholder="Nhập mức lương" />
+                    </div>
+                  </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="personal-deduction">
-                Giảm trừ gia cảnh bản thân
-              </Label>
-              <Input
-                id="personal-deduction"
-                type="text"
-                value={personalDeduction}
-                onChange={e => setPersonalDeduction(e.target.value)}
-              />
-            </div>
+                  <div>
+                    <Label>Khu vực:</Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Vùng" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1">Vùng 1</SelectItem>
+                        <SelectItem value="2">Vùng 2</SelectItem>
+                        <SelectItem value="3">Vùng 3</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="region">Khu vực:</Label>
-              <Select value={region} onValueChange={setRegion}>
-                <SelectTrigger id="region">
-                  <SelectValue placeholder="Vùng" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="region1">Vùng 1</SelectItem>
-                  <SelectItem value="region2">Vùng 2</SelectItem>
-                  <SelectItem value="region3">Vùng 3</SelectItem>
-                  <SelectItem value="region4">Vùng 4</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              <div className="space-y-4">
+                <Button className="w-full bg-emerald-600 hover:bg-emerald-700 h-12 text-base" onClick={handleCalculate}>
+                  Chuyển đổi <Calculator className="ml-2 h-5 w-5" />
+                </Button>
 
-            <div className="md:col-span-2">
-              <Button
-                type="submit"
-                className="w-full bg-emerald-600 hover:bg-emerald-700"
-              >
-                Chuyển đổi
-              </Button>
-            </div>
-          </form>
+                {(calculatedGross || calculatedNet) && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                    <div className="bg-orange-50 p-4 rounded-lg">
+                      <div className="text-orange-600 font-medium mb-1">GROSS</div>
+                      <div className="text-xl font-bold">{calculatedGross}đ</div>
+                    </div>
+                    <div className="bg-green-50 p-4 rounded-lg">
+                      <div className="text-green-600 font-medium mb-1">NET</div>
+                      <div className="text-xl font-bold">{calculatedNet}đ</div>
+                    </div>
+                  </div>
+                )}
 
-          <div className="mt-4 text-center">
-            <Button variant="link" className="text-emerald-600">
-              Thử công cụ khác ngay
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+                <Button variant="outline" className="w-full h-12">
+                  Thử công cụ khác ngay <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </section>
-  );
+  )
 }

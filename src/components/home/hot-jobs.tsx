@@ -1,14 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { cn } from "@/lib/utils"
+import { Card, CardContent } from "@/components/ui/card"
 
 const categories = [
   { id: "all", name: "Tất cả" },
@@ -92,80 +89,62 @@ export default function HotJobs() {
   const filteredJobs = activeTab === "all" ? jobs : jobs.filter((job) => job.category === activeTab)
 
   return (
-    <section className="mb-12">
-      <div className="mb-6 flex items-center justify-between">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-2xl font-bold text-gray-900"
-        >
-          Việc làm hot trong tuần
-        </motion.h2>
-        <Link href="/viec-lam/hot" className="flex items-center text-emerald-600 hover:underline">
-          Xem tất cả
-          <ChevronRight className="ml-1 h-4 w-4" />
-        </Link>
-      </div>
+    <section className="py-12 bg-white">
+      <div className="container px-4 mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-green-600">Việc Làm Hot Trong Tuần</h2>
+          <Link href="/viec-lam/hot" className="text-green-500 hover:underline flex items-center text-sm">
+            Xem tất cả
+            <ChevronRight className="ml-1 h-5 w-5" />
+          </Link>
+        </div>
 
-      <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="mb-6 flex w-full overflow-x-auto space-x-2 bg-transparent p-0">
-          {categories.map((category) => (
-            <TabsTrigger
-              key={category.id}
-              value={category.id}
-              className={cn(
-                "rounded-full border px-4 py-2 text-sm transition-colors",
-                activeTab === category.id
-                  ? "border-emerald-600 bg-emerald-600 text-white"
-                  : "border-gray-200 bg-white hover:border-emerald-600/50 hover:text-emerald-600",
-              )}
-            >
-              {category.name}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-
-        <TabsContent value={activeTab} className="mt-0">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredJobs.map((job, index) => (
-              <motion.div
-                key={job.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+        <div className="relative mb-5">
+          <div className="flex items-center gap-2 overflow-x-auto pb-3 scrollbar-hide">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveTab(category.id)}
+                className={`px-3 py-1 rounded-full border border-gray-200 hover:border-green-500 whitespace-nowrap text-xs ${
+                  category.id === activeTab ? "bg-green-500 text-white border-green-500" : ""
+                }`}
               >
-                <Link href={`/viec-lam/${job.id}`}>
-                  <Card className="group overflow-hidden transition-all hover:border-emerald-600/50 hover:shadow-md">
-                    <CardHeader className="flex flex-row items-center gap-4 space-y-0 p-4">
-                      <div className="h-12 w-12 overflow-hidden rounded border bg-gray-100">
-                        <Image
-                          src={job.logo || "/placeholder.svg"}
-                          alt={job.company}
-                          width={48}
-                          height={48}
-                          className="h-full w-full object-contain p-1"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-medium group-hover:text-emerald-600">{job.title}</h3>
-                        <p className="text-sm text-muted-foreground">{job.company}</p>
-                      </div>
-                      {job.isHot && <Badge className="bg-red-500 hover:bg-red-600">Hot</Badge>}
-                    </CardHeader>
-                    <CardContent className="grid gap-2 p-4 pt-0 text-sm">
-                      <div className="font-medium text-red-500">{job.salary}</div>
-                      <div className="text-muted-foreground">{job.location}</div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </motion.div>
+                {category.name}
+              </button>
             ))}
           </div>
-        </TabsContent>
-      </Tabs>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredJobs.map((job) => (
+            <Card
+              key={job.id}
+              className="overflow-hidden hover:shadow-lg transition-shadow border border-gray-200 relative"
+            >
+              {job.isHot && <Badge className="absolute top-2 right-2 z-10 bg-[#ea384c] text-white">Hot</Badge>}
+              <CardContent className="p-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-[120px] h-[120px] flex-shrink-0 flex items-center justify-center border border-gray-200 rounded-md p-2">
+                    <Image
+                      src={job.logo || "/placeholder.svg"}
+                      alt={job.company}
+                      width={100}
+                      height={100}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0 space-y-0.5">
+                    <h3 className="font-semibold text-xl truncate">{job.title}</h3>
+                    <p className="text-gray-600 text-base">{job.company}</p>
+                    <p className="text-[#ea384c] font-medium text-base">{job.salary}</p>
+                    <p className="text-gray-600 text-base">{job.location}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

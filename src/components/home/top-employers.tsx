@@ -1,53 +1,66 @@
 "use client"
 import Image from "next/image"
 import Link from "next/link"
-import { motion } from "framer-motion"
 
 const employers = [
-  { id: 1, name: "Meta", logo: "/placeholder.svg?height=60&width=120" },
-  { id: 2, name: "Amazon", logo: "/placeholder.svg?height=60&width=120" },
-  { id: 3, name: "Techcombank", logo: "/placeholder.svg?height=60&width=120" },
-  { id: 4, name: "Microsoft", logo: "/placeholder.svg?height=60&width=120" },
-  { id: 5, name: "Canon", logo: "/placeholder.svg?height=60&width=120" },
-  { id: 6, name: "Google", logo: "/placeholder.svg?height=60&width=120" },
+  {
+    id: 1,
+    name: "Meta",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png",
+    link: "#",
+  },
+  {
+    id: 2,
+    name: "Amazon",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+    link: "#",
+  },
+  {
+    id: 3,
+    name: "Techcombank",
+    logo: "https://upload.wikimedia.org/wikipedia/vi/7/7c/Techcombank_logo.png",
+    link: "#",
+  },
+  {
+    id: 4,
+    name: "Microsoft",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
+    link: "#",
+  },
+  {
+    id: 5,
+    name: "Canon",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Canon_logo.svg",
+    link: "#",
+  },
+  {
+    id: 6,
+    name: "Google",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+    link: "#",
+  },
 ]
 
 export default function TopEmployers() {
   return (
-    <section className="mb-12">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="mb-6 text-2xl font-bold text-center text-gray-900"
-      >
-        Nhà tuyển dụng hàng đầu
-      </motion.h2>
-
-      <div className="flex justify-center">
-        <div className="flex flex-wrap justify-center gap-2 max-w-6xl">
-          {employers.map((employer, index) => (
-            <motion.div
+    <section className="py-12 bg-white">
+      <div className="max-w-[1350px] mx-auto px-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">Nhà tuyển dụng hàng đầu</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+          {employers.map((employer) => (
+            <Link
               key={employer.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
+              href={employer.link}
+              className="flex items-center justify-center p-6 bg-white border border-gray-100 rounded-lg hover:shadow-md transition-shadow group"
             >
-              <Link
-                href={`/nha-tuyen-dung/${employer.id}`}
-                className="flex h-20 w-40 items-center justify-center rounded-lg border bg-white p-4 transition-all hover:border-emerald-600/50 hover:shadow-md"
-              >
-                <Image
-                  src={employer.logo || "/placeholder.svg"}
-                  alt={employer.name}
-                  width={120}
-                  height={60}
-                  className="max-h-12 w-auto object-contain"
-                />
-              </Link>
-            </motion.div>
+              <Image
+                src={employer.logo || "/placeholder.svg"}
+                alt={employer.name}
+                width={120}
+                height={40}
+                className="max-h-8 w-auto group-hover:scale-105 transition-transform"
+              />
+            </Link>
           ))}
         </div>
       </div>

@@ -1,24 +1,40 @@
-'use client';
+"use client"
 
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode } from "react"
 
-type DashboardContextType = {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  activeSettingsTab: string;
-  setActiveSettingsTab: (tab: string) => void;
-};
+type ActiveTab =
+  | "dashboard"
+  | "settings"
+  | "packages"
+  | "cart"
+  | "orders"
+  | "services"
+  | "jobs"
+  | "candidates"
+  | "cv-labels"
+  | "messages"
+  | "activity"
+  | "support"
+  | "post-job"
+  | "cv-filter"
+
+interface DashboardContextType {
+  activeTab: ActiveTab
+  setActiveTab: (tab: ActiveTab) => void
+  activeSettingsTab: string
+  setActiveSettingsTab: (tab: string) => void
+}
 
 const DashboardContext = createContext<DashboardContextType>({
-  activeTab: 'dashboard',
+  activeTab: "dashboard",
   setActiveTab: () => {},
-  activeSettingsTab: '',
+  activeSettingsTab: "",
   setActiveSettingsTab: () => {},
-});
+})
 
-export function DashboardProvider({ children }: { children: ReactNode }) {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [activeSettingsTab, setActiveSettingsTab] = useState('user-list');
+export const DashboardProvider = ({ children }: { children: ReactNode }) => {
+  const [activeTab, setActiveTab] = useState<ActiveTab>("dashboard")
+  const [activeSettingsTab, setActiveSettingsTab] = useState("")
 
   return (
     <DashboardContext.Provider
@@ -31,10 +47,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     >
       {children}
     </DashboardContext.Provider>
-  );
+  )
 }
 
-export function useDashboard() {
-  const context = useContext(DashboardContext);
-  return context;
-}
+export const useDashboard = () => useContext(DashboardContext)

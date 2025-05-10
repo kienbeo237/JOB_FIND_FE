@@ -1,97 +1,139 @@
 import Link from "next/link"
-import { MapPin, Phone, Mail } from "lucide-react"
-
-const footerLinks = [
-  {
-    title: "Liên kết nhanh",
-    links: [
-      { name: "Tìm việc làm", href: "/viec-lam" },
-      { name: "Cập nhật CV", href: "/ho-so-cv" },
-      { name: "Công ty", href: "/cong-ty" },
-      { name: "Cẩm nang", href: "/cam-nang" },
-      { name: "Liên hệ", href: "/lien-he" },
-    ],
-  },
-  {
-    title: "Dành cho ứng viên",
-    links: [
-      { name: "Quản lý hồ sơ", href: "/ung-vien/ho-so" },
-      { name: "Việc làm đã lưu", href: "/ung-vien/viec-lam-da-luu" },
-      { name: "Việc làm đã ứng tuyển", href: "/ung-vien/viec-lam-da-ung-tuyen" },
-      { name: "Hướng dẫn tìm việc", href: "/ung-vien/huong-dan" },
-      { name: "Công cụ tính lương", href: "/ung-vien/cong-cu" },
-    ],
-  },
-  {
-    title: "Dành cho nhà tuyển dụng",
-    links: [
-      { name: "Đăng tin tuyển dụng", href: "/nha-tuyen-dung/dang-tin" },
-      { name: "Tìm ứng viên", href: "/nha-tuyen-dung/tim-ung-vien" },
-      { name: "Bảng giá dịch vụ", href: "/nha-tuyen-dung/bang-gia" },
-      { name: "Tài liệu & hướng dẫn", href: "/nha-tuyen-dung/tai-lieu" },
-      { name: "Liên hệ tư vấn", href: "/nha-tuyen-dung/lien-he" },
-    ],
-  },
-]
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+    <footer className="bg-[#0F172A] text-white">
+      <div className="container px-4 mx-auto py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-4">
+            <Link href="/" className="inline-block mb-4">
               <span className="text-2xl font-bold text-white">
-                JobFind<span className="text-emerald-400">.vn</span>
+                JobFind<span className="text-emerald-500">.vn</span>
               </span>
             </Link>
-            <p className="mb-6 text-sm">Nền tảng kết nối nhà tuyển dụng và người tìm việc hàng đầu Việt Nam.</p>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-emerald-400 mt-0.5" />
-                <span className="text-sm">Tầng 12, Tòa nhà Innovation, 123 Nguyễn Đình Chiểu, Quận 1, TP.HCM</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-emerald-400" />
-                <span className="text-sm">Hotline: 1900 1234 56</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-emerald-400" />
-                <span className="text-sm">Email: contact@jobfind.vn</span>
-              </div>
+            <p className="text-gray-300 mb-6">Nền tảng kết nối nhà tuyển dụng và người tìm việc hàng đầu Việt Nam.</p>
+            <div className="space-y-2">
+              <p className="flex items-start">
+                <span className="mr-2">📍</span>
+                <span>Tầng 12, Tòa nhà Innovation, 123 Nguyễn Đình Chiểu, Quận 1, TP.HCM</span>
+              </p>
+              <p className="flex items-start">
+                <span className="mr-2">📞</span>
+                <span>Hotline: 1900 1234 56</span>
+              </p>
+              <p className="flex items-start">
+                <span className="mr-2">✉️</span>
+                <span>Email: contact@jobfind.vn</span>
+              </p>
             </div>
           </div>
 
-          {footerLinks.map((column) => (
-            <div key={column.title}>
-              <h3 className="mb-4 text-lg font-semibold text-white">{column.title}</h3>
-              <ul className="space-y-2">
-                {column.links.map((link) => (
-                  <li key={link.name}>
-                    <Link href={link.href} className="text-sm hover:text-emerald-400 transition-colors">
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Liên kết nhanh</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/jobs" className="text-gray-300 hover:text-white">
+                  Tìm việc làm
+                </Link>
+              </li>
+              <li>
+                <Link href="/cv" className="text-gray-300 hover:text-white">
+                  Cập nhật CV
+                </Link>
+              </li>
+              <li>
+                <Link href="/companies" className="text-gray-300 hover:text-white">
+                  Công ty
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-gray-300 hover:text-white">
+                  Cẩm nang
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-gray-300 hover:text-white">
+                  Liên hệ
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Dành cho ứng viên</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/profile" className="text-gray-300 hover:text-white">
+                  Quản lý hồ sơ
+                </Link>
+              </li>
+              <li>
+                <Link href="/saved-jobs" className="text-gray-300 hover:text-white">
+                  Việc làm đã lưu
+                </Link>
+              </li>
+              <li>
+                <Link href="/applied-jobs" className="text-gray-300 hover:text-white">
+                  Việc làm đã ứng tuyển
+                </Link>
+              </li>
+              <li>
+                <Link href="/career-guide" className="text-gray-300 hover:text-white">
+                  Hướng dẫn tìm việc
+                </Link>
+              </li>
+              <li>
+                <Link href="/salary-tool" className="text-gray-300 hover:text-white">
+                  Công cụ tính lương
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Dành cho nhà tuyển dụng</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/employer/post-job" className="text-gray-300 hover:text-white">
+                  Đăng tin tuyển dụng
+                </Link>
+              </li>
+              <li>
+                <Link href="/employer/search-candidates" className="text-gray-300 hover:text-white">
+                  Tìm ứng viên
+                </Link>
+              </li>
+              <li>
+                <Link href="/employer/pricing" className="text-gray-300 hover:text-white">
+                  Bảng giá dịch vụ
+                </Link>
+              </li>
+              <li>
+                <Link href="/employer/resources" className="text-gray-300 hover:text-white">
+                  Tài liệu & hướng dẫn
+                </Link>
+              </li>
+              <li>
+                <Link href="/employer/contact" className="text-gray-300 hover:text-white">
+                  Liên hệ tư vấn
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div className="mt-12 border-t border-gray-800 pt-6 text-sm">
-          <div className="flex flex-col md:flex-row md:justify-between gap-4">
-            <p>© 2023 JobFind.vn. Tất cả các quyền được bảo lưu.</p>
-            <div className="flex gap-6">
-              <Link href="/dieu-khoan" className="hover:text-emerald-400 transition-colors">
-                Điều khoản sử dụng
-              </Link>
-              <Link href="/chinh-sach" className="hover:text-emerald-400 transition-colors">
-                Chính sách bảo mật
-              </Link>
-              <Link href="/so-do" className="hover:text-emerald-400 transition-colors">
-                Sơ đồ trang
-              </Link>
-            </div>
+        <div className="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-400 text-sm mb-4 md:mb-0">© 2023 JobFind.vn. Tất cả các quyền được bảo lưu.</p>
+          <div className="flex space-x-4">
+            <Link href="/terms" className="text-gray-400 hover:text-white text-sm">
+              Điều khoản sử dụng
+            </Link>
+            <Link href="/privacy" className="text-gray-400 hover:text-white text-sm">
+              Chính sách bảo mật
+            </Link>
+            <Link href="/sitemap" className="text-gray-400 hover:text-white text-sm">
+              Sơ đồ trang
+            </Link>
           </div>
         </div>
       </div>

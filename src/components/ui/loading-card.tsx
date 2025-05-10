@@ -1,19 +1,14 @@
-import { Skeleton } from '@/components/ui/skeleton';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Skeleton } from "@/components/ui/skeleton"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 
 interface LoadingCardProps {
-  hasImage?: boolean;
-  lines?: number;
-  imageHeight?: number;
-  className?: string;
+  hasImage?: boolean
+  lines?: number
+  imageHeight?: number
+  className?: string
 }
 
-export function LoadingCard({
-  hasImage = true,
-  lines = 3,
-  imageHeight = 48,
-  className,
-}: LoadingCardProps) {
+export function LoadingCard({ hasImage = true, lines = 3, imageHeight = 48, className }: LoadingCardProps) {
   return (
     <Card className={className}>
       <CardHeader className="flex flex-row items-center gap-4 space-y-0 p-4">
@@ -30,5 +25,5 @@ export function LoadingCard({
         ))}
       </CardContent>
     </Card>
-  );
+  )
 }
