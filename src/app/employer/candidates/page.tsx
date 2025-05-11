@@ -1,7 +1,18 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Search, Filter, Download, Star, Tag, Check, Mail, Phone, MapPin, Calendar } from "lucide-react"
+import { useState } from 'react';
+import {
+  Search,
+  Filter,
+  Download,
+  Star,
+  Tag,
+  Check,
+  Mail,
+  Phone,
+  MapPin,
+  Calendar,
+} from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -10,124 +21,123 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 const CandidatesPage = () => {
-  const [activeTab, setActiveTab] = useState("all")
-  const [showLabelDialog, setShowLabelDialog] = useState(false)
-  const [showCVDialog, setShowCVDialog] = useState(false)
-  const [selectedCandidateId, setSelectedCandidateId] = useState<number | null>(null)
+  const [activeTab, setActiveTab] = useState('all');
+  const [showLabelDialog, setShowLabelDialog] = useState(false);
+  const [showCVDialog, setShowCVDialog] = useState(false);
+  const [selectedCandidateId, setSelectedCandidateId] = useState<number | null>(
+    null
+  );
 
-  // Sample CV data
   const sampleCV = {
-    name: "Nguyễn Văn A",
-    jobTitle: "Frontend Developer",
-    email: "ng***@gmail.com",
-    phone: "09********",
-    address: "Quận 1, TP. Hồ Chí Minh",
+    name: 'Nguyễn Văn A',
+    jobTitle: 'Frontend Developer',
+    email: 'ng***@gmail.com',
+    phone: '09********',
+    address: 'Quận 1, TP. Hồ Chí Minh',
     experience: [
       {
-        company: "Công ty ABC",
-        position: "Senior Frontend Developer",
-        period: "06/2020 - Hiện tại",
+        company: 'Công ty ABC',
+        position: 'Senior Frontend Developer',
+        period: '06/2020 - Hiện tại',
         description:
-          "Phát triển và duy trì các ứng dụng web sử dụng React, TypeScript và GraphQL. Tối ưu hóa hiệu suất và trải nghiệm người dùng. Hợp tác với đội ngũ backend để phát triển API. Hướng dẫn các thành viên mới trong team.",
+          'Phát triển và duy trì các ứng dụng web sử dụng React, TypeScript và GraphQL. Tối ưu hóa hiệu suất và trải nghiệm người dùng. Hợp tác với đội ngũ backend để phát triển API. Hướng dẫn các thành viên mới trong team.',
       },
       {
-        company: "Công ty XYZ",
-        position: "Frontend Developer",
-        period: "01/2018 - 05/2020",
+        company: 'Công ty XYZ',
+        position: 'Frontend Developer',
+        period: '01/2018 - 05/2020',
         description:
-          "Phát triển giao diện người dùng cho các ứng dụng web thương mại điện tử. Sử dụng Vue.js, Nuxt.js và REST API. Tham gia vào quá trình thiết kế và triển khai các tính năng mới.",
+          'Phát triển giao diện người dùng cho các ứng dụng web thương mại điện tử. Sử dụng Vue.js, Nuxt.js và REST API. Tham gia vào quá trình thiết kế và triển khai các tính năng mới.',
       },
     ],
     education: {
-      university: "Đại học Công nghệ Thông tin",
-      degree: "Cử nhân Khoa học Máy tính",
-      graduationYear: "2017",
+      university: 'Đại học Công nghệ Thông tin',
+      degree: 'Cử nhân Khoa học Máy tính',
+      graduationYear: '2017',
     },
     skills: [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Redux",
-      "Vue.js",
-      "HTML5",
-      "CSS3",
-      "SASS",
-      "Git",
-      "GraphQL",
-      "REST API",
+      'JavaScript',
+      'TypeScript',
+      'React',
+      'Redux',
+      'Vue.js',
+      'HTML5',
+      'CSS3',
+      'SASS',
+      'Git',
+      'GraphQL',
+      'REST API',
     ],
-  }
+  };
 
-  // Sample CV labels
   const labels = [
-    { id: 1, name: "Frontend", color: "blue" },
-    { id: 2, name: "Backend", color: "green" },
-    { id: 3, name: "Design", color: "purple" },
-    { id: 4, name: "Marketing", color: "orange" },
-    { id: 5, name: "HR", color: "pink" },
-  ]
+    { id: 1, name: 'Frontend', color: 'blue' },
+    { id: 2, name: 'Backend', color: 'green' },
+    { id: 3, name: 'Design', color: 'purple' },
+    { id: 4, name: 'Marketing', color: 'orange' },
+    { id: 5, name: 'HR', color: 'pink' },
+  ];
 
-  // Sample candidates with labels
   const candidates = [
     {
       id: 1,
-      name: "Nguyễn Văn A",
-      email: "nguyenvana@example.com",
-      position: "Frontend Developer",
-      applyDate: "04-03-2024",
-      status: "interviewed",
+      name: 'Nguyễn Văn A',
+      email: 'nguyenvana@example.com',
+      position: 'Frontend Developer',
+      applyDate: '04-03-2024',
+      status: 'interviewed',
       rating: 4,
       labels: [1, 3],
-      avatar: "NVA",
+      avatar: 'NVA',
     },
     {
       id: 2,
-      name: "Trần Thị B",
-      email: "tranthib@example.com",
-      position: "UI/UX Designer",
-      applyDate: "01-03-2024",
-      status: "pending",
+      name: 'Trần Thị B',
+      email: 'tranthib@example.com',
+      position: 'UI/UX Designer',
+      applyDate: '01-03-2024',
+      status: 'pending',
       rating: 3,
       labels: [3],
-      avatar: "TTB",
+      avatar: 'TTB',
     },
     {
       id: 3,
-      name: "Lê Hoàng C",
-      email: "lehoangc@example.com",
-      position: "Backend Developer",
-      applyDate: "28-02-2024",
-      status: "rejected",
+      name: 'Lê Hoàng C',
+      email: 'lehoangc@example.com',
+      position: 'Backend Developer',
+      applyDate: '28-02-2024',
+      status: 'rejected',
       rating: 2,
       labels: [2],
-      avatar: "LHC",
+      avatar: 'LHC',
     },
     {
       id: 4,
-      name: "Phạm Minh D",
-      email: "phaminhd@example.com",
-      position: "Product Manager",
-      applyDate: "25-02-2024",
-      status: "hired",
+      name: 'Phạm Minh D',
+      email: 'phaminhd@example.com',
+      position: 'Product Manager',
+      applyDate: '25-02-2024',
+      status: 'hired',
       rating: 5,
       labels: [4, 5],
-      avatar: "PMD",
+      avatar: 'PMD',
     },
-  ]
+  ];
 
   const handleOpenLabelDialog = (candidateId: number) => {
-    setSelectedCandidateId(candidateId)
-    setShowLabelDialog(true)
-  }
+    setSelectedCandidateId(candidateId);
+    setShowLabelDialog(true);
+  };
 
   const handleViewCV = (candidateId: number) => {
-    setSelectedCandidateId(candidateId)
-    setShowCVDialog(true)
-  }
+    setSelectedCandidateId(candidateId);
+    setShowCVDialog(true);
+  };
 
   const renderRatingStars = (rating: number) => {
     return (
@@ -136,72 +146,110 @@ const CandidatesPage = () => {
           <Star
             key={index}
             size={16}
-            className={index < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}
+            className={
+              index < rating
+                ? 'text-yellow-400 fill-yellow-400'
+                : 'text-gray-300'
+            }
           />
         ))}
       </div>
-    )
-  }
+    );
+  };
 
   const renderCandidateStatus = (status: string) => {
     switch (status) {
-      case "interviewed":
-        return <span className="px-2.5 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Đã phỏng vấn</span>
-      case "pending":
-        return <span className="px-2.5 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">Chờ phỏng vấn</span>
-      case "rejected":
-        return <span className="px-2.5 py-1 bg-red-100 text-red-800 rounded-full text-xs">Từ chối</span>
-      case "hired":
-        return <span className="px-2.5 py-1 bg-green-100 text-green-800 rounded-full text-xs">Đã tuyển</span>
+      case 'interviewed':
+        return (
+          <span className="px-2.5 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
+            Đã phỏng vấn
+          </span>
+        );
+      case 'pending':
+        return (
+          <span className="px-2.5 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">
+            Chờ phỏng vấn
+          </span>
+        );
+      case 'rejected':
+        return (
+          <span className="px-2.5 py-1 bg-red-100 text-red-800 rounded-full text-xs">
+            Từ chối
+          </span>
+        );
+      case 'hired':
+        return (
+          <span className="px-2.5 py-1 bg-green-100 text-green-800 rounded-full text-xs">
+            Đã tuyển
+          </span>
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const getLabelById = (labelId: number) => {
-    return labels.find((label) => label.id === labelId)
-  }
+    return labels.find(label => label.id === labelId);
+  };
 
   const renderLabelColor = (color: string) => {
     const colorMap: Record<string, string> = {
-      blue: "bg-blue-100 text-blue-800",
-      green: "bg-green-100 text-green-800",
-      purple: "bg-purple-100 text-purple-800",
-      orange: "bg-orange-100 text-orange-800",
-      pink: "bg-pink-100 text-pink-800",
-    }
+      blue: 'bg-blue-100 text-blue-800',
+      green: 'bg-green-100 text-green-800',
+      purple: 'bg-purple-100 text-purple-800',
+      orange: 'bg-orange-100 text-orange-800',
+      pink: 'bg-pink-100 text-pink-800',
+    };
 
-    return colorMap[color] || "bg-gray-100 text-gray-800"
-  }
+    return colorMap[color] || 'bg-gray-100 text-gray-800';
+  };
 
   return (
     <div className="p-6">
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <h1 className="text-xl font-bold text-teal-700 mb-6">Quản lý CV ứng viên</h1>
+        <h1 className="text-xl font-bold text-teal-700 mb-6">
+          Quản lý CV ứng viên
+        </h1>
 
         <div className="mb-6 border-b pb-1">
           <div className="flex flex-wrap">
             <button
-              className={`px-4 py-2 ${activeTab === "all" ? "border-b-2 border-teal-600 text-teal-600 font-medium" : "text-gray-500 hover:text-gray-700"}`}
-              onClick={() => setActiveTab("all")}
+              className={`px-4 py-2 ${
+                activeTab === 'all'
+                  ? 'border-b-2 border-teal-600 text-teal-600 font-medium'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+              onClick={() => setActiveTab('all')}
             >
               Tất cả ứng viên
             </button>
             <button
-              className={`px-4 py-2 ${activeTab === "new" ? "border-b-2 border-teal-600 text-teal-600 font-medium" : "text-gray-500 hover:text-gray-700"}`}
-              onClick={() => setActiveTab("new")}
+              className={`px-4 py-2 ${
+                activeTab === 'new'
+                  ? 'border-b-2 border-teal-600 text-teal-600 font-medium'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+              onClick={() => setActiveTab('new')}
             >
               Ứng viên mới
             </button>
             <button
-              className={`px-4 py-2 ${activeTab === "interviewed" ? "border-b-2 border-teal-600 text-teal-600 font-medium" : "text-gray-500 hover:text-gray-700"}`}
-              onClick={() => setActiveTab("interviewed")}
+              className={`px-4 py-2 ${
+                activeTab === 'interviewed'
+                  ? 'border-b-2 border-teal-600 text-teal-600 font-medium'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+              onClick={() => setActiveTab('interviewed')}
             >
               Đã phỏng vấn
             </button>
             <button
-              className={`px-4 py-2 ${activeTab === "saved" ? "border-b-2 border-teal-600 text-teal-600 font-medium" : "text-gray-500 hover:text-gray-700"}`}
-              onClick={() => setActiveTab("saved")}
+              className={`px-4 py-2 ${
+                activeTab === 'saved'
+                  ? 'border-b-2 border-teal-600 text-teal-600 font-medium'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+              onClick={() => setActiveTab('saved')}
             >
               Đã lưu
             </button>
@@ -251,26 +299,28 @@ const CandidatesPage = () => {
               </tr>
             </thead>
             <tbody>
-              {candidates.map((candidate) => (
+              {candidates.map(candidate => (
                 <tr key={candidate.id} className="border-b">
                   <td className="px-4 py-3">
                     <div className="flex items-center">
                       <div
                         className={`w-10 h-10 rounded-full ${
                           candidate.id % 4 === 0
-                            ? "bg-green-100 text-green-600"
+                            ? 'bg-green-100 text-green-600'
                             : candidate.id % 3 === 0
-                              ? "bg-amber-100 text-amber-600"
-                              : candidate.id % 2 === 0
-                                ? "bg-purple-100 text-purple-600"
-                                : "bg-blue-100 text-blue-600"
+                            ? 'bg-amber-100 text-amber-600'
+                            : candidate.id % 2 === 0
+                            ? 'bg-purple-100 text-purple-600'
+                            : 'bg-blue-100 text-blue-600'
                         } flex items-center justify-center mr-3`}
                       >
                         {candidate.avatar}
                       </div>
                       <div>
                         <p className="font-medium text-sm">{candidate.name}</p>
-                        <p className="text-xs text-gray-500">{candidate.email}</p>
+                        <p className="text-xs text-gray-500">
+                          {candidate.email}
+                        </p>
                       </div>
                     </div>
                   </td>
@@ -278,16 +328,18 @@ const CandidatesPage = () => {
                   <td className="px-4 py-3 text-sm">{candidate.applyDate}</td>
                   <td className="px-4 py-3 text-sm">
                     <div className="flex flex-wrap gap-1">
-                      {candidate.labels.map((labelId) => {
-                        const label = getLabelById(labelId)
+                      {candidate.labels.map(labelId => {
+                        const label = getLabelById(labelId);
                         return label ? (
                           <span
                             key={labelId}
-                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${renderLabelColor(label.color)}`}
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${renderLabelColor(
+                              label.color
+                            )}`}
                           >
                             {label.name}
                           </span>
-                        ) : null
+                        ) : null;
                       })}
                       <button
                         onClick={() => handleOpenLabelDialog(candidate.id)}
@@ -298,8 +350,12 @@ const CandidatesPage = () => {
                       </button>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-sm">{renderRatingStars(candidate.rating)}</td>
-                  <td className="px-4 py-3 text-sm">{renderCandidateStatus(candidate.status)}</td>
+                  <td className="px-4 py-3 text-sm">
+                    {renderRatingStars(candidate.rating)}
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    {renderCandidateStatus(candidate.status)}
+                  </td>
                   <td className="px-4 py-3 text-sm">
                     <Button
                       variant="ghost"
@@ -318,11 +374,21 @@ const CandidatesPage = () => {
         {/* Pagination */}
         <div className="flex justify-center mt-6">
           <nav className="flex text-sm">
-            <button className="px-3 py-1 border border-gray-300 rounded-l-md">Trước</button>
-            <button className="px-3 py-1 border-t border-b border-gray-300 bg-blue-50 text-blue-600">1</button>
-            <button className="px-3 py-1 border-t border-b border-gray-300">2</button>
-            <button className="px-3 py-1 border-t border-b border-gray-300">3</button>
-            <button className="px-3 py-1 border border-gray-300 rounded-r-md">Sau</button>
+            <button className="px-3 py-1 border border-gray-300 rounded-l-md">
+              Trước
+            </button>
+            <button className="px-3 py-1 border-t border-b border-gray-300 bg-blue-50 text-blue-600">
+              1
+            </button>
+            <button className="px-3 py-1 border-t border-b border-gray-300">
+              2
+            </button>
+            <button className="px-3 py-1 border-t border-b border-gray-300">
+              3
+            </button>
+            <button className="px-3 py-1 border border-gray-300 rounded-r-md">
+              Sau
+            </button>
           </nav>
         </div>
       </div>
@@ -332,12 +398,18 @@ const CandidatesPage = () => {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Gán nhãn CV</DialogTitle>
-            <DialogDescription>Chọn nhãn để gán cho CV ứng viên này</DialogDescription>
+            <DialogDescription>
+              Chọn nhãn để gán cho CV ứng viên này
+            </DialogDescription>
           </DialogHeader>
           <div className="grid grid-cols-2 gap-3 py-4 max-h-60 overflow-auto">
-            {labels.map((label) => (
+            {labels.map(label => (
               <div key={label.id} className="flex items-center space-x-2">
-                <div className={`flex-shrink-0 p-2 rounded ${renderLabelColor(label.color)}`}>
+                <div
+                  className={`flex-shrink-0 p-2 rounded ${renderLabelColor(
+                    label.color
+                  )}`}
+                >
                   <Check size={14} />
                 </div>
                 <div className="flex-grow">
@@ -364,7 +436,9 @@ const CandidatesPage = () => {
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>CV của {sampleCV.name}</DialogTitle>
-            <DialogDescription>Thông tin liên hệ đã được ẩn đi. Lưu CV để xem thông tin đầy đủ.</DialogDescription>
+            <DialogDescription>
+              Thông tin liên hệ đã được ẩn đi. Lưu CV để xem thông tin đầy đủ.
+            </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-6 py-4">
@@ -389,7 +463,9 @@ const CandidatesPage = () => {
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold mb-3">Kinh nghiệm làm việc</h3>
+              <h3 className="text-lg font-semibold mb-3">
+                Kinh nghiệm làm việc
+              </h3>
               <div className="space-y-4">
                 {sampleCV.experience.map((exp, index) => (
                   <div key={index} className="border-l-2 border-gray-200 pl-4">
@@ -403,7 +479,9 @@ const CandidatesPage = () => {
                         <span>{exp.period}</span>
                       </div>
                     </div>
-                    <p className="mt-2 text-sm text-gray-600">{exp.description}</p>
+                    <p className="mt-2 text-sm text-gray-600">
+                      {exp.description}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -415,7 +493,9 @@ const CandidatesPage = () => {
                 <div className="flex justify-between items-start">
                   <div>
                     <h4 className="font-medium">{sampleCV.education.degree}</h4>
-                    <p className="text-gray-600">{sampleCV.education.university}</p>
+                    <p className="text-gray-600">
+                      {sampleCV.education.university}
+                    </p>
                   </div>
                   <div className="flex items-center text-sm text-gray-500">
                     <Calendar className="h-4 w-4 mr-1" />
@@ -428,8 +508,11 @@ const CandidatesPage = () => {
             <div>
               <h3 className="text-lg font-semibold mb-3">Kỹ năng</h3>
               <div className="flex flex-wrap gap-2">
-                {sampleCV.skills.map((skill) => (
-                  <span key={skill} className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">
+                {sampleCV.skills.map(skill => (
+                  <span
+                    key={skill}
+                    className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                  >
                     {skill}
                   </span>
                 ))}
@@ -446,7 +529,7 @@ const CandidatesPage = () => {
         </DialogContent>
       </Dialog>
     </div>
-  )
-}
+  );
+};
 
-export default CandidatesPage
+export default CandidatesPage;

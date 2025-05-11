@@ -11,7 +11,6 @@ const BLOG_TABS = [
   { key: 'su-kien', label: 'SỰ KIỆN' },
 ];
 
-// Tag color mapping
 const TAG_COLORS: Record<string, string> = {
   'Kỹ năng': 'bg-emerald-50 text-emerald-600',
   'CV & Hồ sơ': 'bg-teal-50 text-teal-700',
@@ -23,7 +22,6 @@ const TAG_COLORS: Record<string, string> = {
   'Phỏng vấn': 'bg-orange-50 text-orange-700',
 };
 
-// Sample blog articles data
 const blogArticles = [
   {
     id: 1,

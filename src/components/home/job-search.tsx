@@ -1,23 +1,27 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search, MapPin, Building2 } from "lucide-react"
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search, MapPin, Building2 } from 'lucide-react';
 
 export default function JobSearch() {
-  const [keyword, setKeyword] = useState("")
-  const [location, setLocation] = useState("")
-  const [category, setCategory] = useState("")
+  const [keyword, setKeyword] = useState('');
+  const [location, setLocation] = useState('');
+  const [category, setCategory] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log({ keyword, location, category })
-    // Handle search logic
-  }
+    e.preventDefault();
+  };
 
   return (
     <div className="w-full bg-white py-6 border-b">
@@ -30,7 +34,7 @@ export default function JobSearch() {
                 <Input
                   placeholder="Tìm kiếm tên công việc..."
                   value={keyword}
-                  onChange={(e) => setKeyword(e.target.value)}
+                  onChange={e => setKeyword(e.target.value)}
                   className="pl-10 bg-gray-50 border-gray-200"
                 />
               </div>
@@ -72,7 +76,11 @@ export default function JobSearch() {
             </div>
 
             <div className="md:col-span-1">
-              <Button type="submit" onClick={handleSearch} className="w-full bg-emerald-600 hover:bg-emerald-700">
+              <Button
+                type="submit"
+                onClick={handleSearch}
+                className="w-full bg-emerald-600 hover:bg-emerald-700"
+              >
                 <Search className="h-5 w-5" />
               </Button>
             </div>
@@ -80,5 +88,5 @@ export default function JobSearch() {
         </div>
       </div>
     </div>
-  )
+  );
 }

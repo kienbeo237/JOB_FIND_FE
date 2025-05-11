@@ -45,10 +45,8 @@ export default function CartPage() {
   const { toast } = useToast();
   const { setActiveTab: setDashboardTab } = useDashboard();
 
-  // Load cart items from localStorage
   useEffect(() => {
     const loadCartItems = () => {
-      // Combine items from different carts
       const jobPostingItems = JSON.parse(
         localStorage.getItem('jobPostingCart') || '[]'
       );
@@ -105,12 +103,10 @@ export default function CartPage() {
 
     setCartItems(updatedItems);
 
-    // Update localStorage
     updateLocalStorage(updatedItems);
   };
 
   const updateLocalStorage = (items: CartItem[]) => {
-    // Group items by their original cart
     const jobPostingItems = items.filter(
       item =>
         item.packageTitle.includes('PREMIUM') ||
@@ -144,7 +140,6 @@ export default function CartPage() {
       setActiveProductDescription(null);
     }
 
-    // Update localStorage
     updateLocalStorage(updatedItems);
 
     toast({
@@ -157,7 +152,6 @@ export default function CartPage() {
     setCartItems([]);
     setActiveProductDescription(null);
 
-    // Clear localStorage
     localStorage.removeItem('jobPostingCart');
     localStorage.removeItem('cvFilteringCart');
     localStorage.removeItem('bannerCart');
@@ -187,10 +181,8 @@ export default function CartPage() {
   };
 
   const handlePayment = () => {
-    // Simulate payment processing
     setPaymentSuccess(true);
 
-    // Clear cart after successful payment
     setCartItems([]);
     localStorage.removeItem('jobPostingCart');
     localStorage.removeItem('cvFilteringCart');

@@ -54,8 +54,7 @@ export function BannerAdvertising({
         (item: any) => item.name === period && item.packageTitle === packageName
       );
 
-      // Find the package benefits based on the package title
-      let benefits = [];
+      let benefits: string[] = [];
       Object.values(bannerPackages).forEach(pkg => {
         if (pkg.title === packageName) {
           benefits = pkg.benefits;
@@ -84,7 +83,6 @@ export function BannerAdvertising({
         description: `Đã thêm ${quantity} ${period} vào giỏ hàng.`,
       });
 
-      // Change to cart tab
       setActiveTab('cart');
     },
     [setActiveTab, toast]

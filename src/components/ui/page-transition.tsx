@@ -1,42 +1,32 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface PageTransitionProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export function PageTransition({ children }: PageTransitionProps) {
-  const pathname = usePathname()
-  const [isLoading, setIsLoading] = useState(false)
+  const pathname = usePathname();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Simulate loading for demo purposes
     const handleStart = () => {
-      setIsLoading(true)
-    }
+      setIsLoading(true);
+    };
 
     const handleComplete = () => {
       setTimeout(() => {
-        setIsLoading(false)
-      }, 500)
-    }
+        setIsLoading(false);
+      }, 500);
+    };
 
-    // In a real implementation, you would use Next.js router events
-    // router.events.on('routeChangeStart', handleStart)
-    // router.events.on('routeChangeComplete', handleComplete)
-    // router.events.on('routeChangeError', handleComplete)
-
-    return () => {
-      // router.events.off('routeChangeStart', handleStart)
-      // router.events.off('routeChangeComplete', handleComplete)
-      // router.events.off('routeChangeError', handleComplete)
-    }
-  }, [])
+    return () => {};
+  }, []);
 
   return (
     <AnimatePresence mode="wait">
@@ -62,5 +52,5 @@ export function PageTransition({ children }: PageTransitionProps) {
         )}
       </motion.div>
     </AnimatePresence>
-  )
+  );
 }

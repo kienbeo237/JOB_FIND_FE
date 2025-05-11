@@ -83,7 +83,6 @@ export function CvFilteringServices({
       description: `Đã thêm ${quantity} ${period} vào giỏ hàng.`,
     });
 
-    // Change to cart tab
     setActiveTab('cart');
   };
 

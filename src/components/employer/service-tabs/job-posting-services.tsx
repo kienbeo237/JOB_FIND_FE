@@ -60,8 +60,7 @@ export function JobPostingServices({
     if (existingItemIndex !== -1) {
       existingCart[existingItemIndex].quantity += quantity;
     } else {
-      // Find the package benefits based on the package title
-      let benefits = [];
+      let benefits: string[] = [];
       Object.values(packageData).forEach(pkg => {
         if (pkg.title === packageName) {
           benefits = pkg.benefits;
@@ -87,7 +86,6 @@ export function JobPostingServices({
       description: `Đã thêm ${quantity} ${period} vào giỏ hàng.`,
     });
 
-    // Change to cart tab
     setActiveTab('cart');
   };
 

@@ -1,44 +1,44 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Search, Plus, Edit, Trash2, Tags } from "lucide-react"
+import { useState } from 'react';
+import { Search, Plus, Edit, Trash2, Tags } from 'lucide-react';
 
 const CVLabelsPage = () => {
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Sample labels data
   const labels = [
     {
       id: 1,
-      name: "Ưu tiên",
-      color: "green",
-      updatedAt: "12/03/2025",
+      name: 'Ưu tiên',
+      color: 'green',
+      updatedAt: '12/03/2025',
       totalCVs: 0,
       unviewedCVs: 0,
       isDefault: true,
     },
     {
       id: 2,
-      name: "Từ tiếp nhận",
-      color: "red",
-      updatedAt: "12/03/2025",
+      name: 'Từ tiếp nhận',
+      color: 'red',
+      updatedAt: '12/03/2025',
       totalCVs: 0,
       unviewedCVs: 0,
       isDefault: false,
     },
     {
       id: 3,
-      name: "bankxxxxxk",
-      color: "yellow",
-      updatedAt: "12/03/2025",
+      name: 'bankxxxxxk',
+      color: 'yellow',
+      updatedAt: '12/03/2025',
       totalCVs: 0,
       unviewedCVs: 0,
       isDefault: false,
     },
-  ]
+  ];
 
-  // Filter labels based on search term
-  const filteredLabels = labels.filter((label) => label.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredLabels = labels.filter(label =>
+    label.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="p-6">
@@ -49,8 +49,8 @@ const CVLabelsPage = () => {
         </div>
 
         <p className="text-sm text-gray-600 mb-6">
-          Tạo và quản lý các nhãn để phân loại CV. Gắn nhãn vào CV giúp bạn dễ dàng theo dõi và tìm kiếm những ứng viên
-          phù hợp.
+          Tạo và quản lý các nhãn để phân loại CV. Gắn nhãn vào CV giúp bạn dễ
+          dàng theo dõi và tìm kiếm những ứng viên phù hợp.
         </p>
 
         <div className="relative w-full md:w-64 mb-6">
@@ -60,7 +60,7 @@ const CVLabelsPage = () => {
           <input
             type="text"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
             placeholder="Tìm kiếm theo tên"
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
@@ -85,11 +85,13 @@ const CVLabelsPage = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredLabels.map((label) => (
+              {filteredLabels.map(label => (
                 <tr key={label.id} className="border-b">
                   <td className="px-4 py-3">
                     <div className="flex items-center">
-                      <span className={`w-3 h-3 rounded-full bg-${label.color}-500 mr-2`}></span>
+                      <span
+                        className={`w-3 h-3 rounded-full bg-${label.color}-500 mr-2`}
+                      ></span>
                       {label.name}
                     </div>
                   </td>
@@ -115,7 +117,7 @@ const CVLabelsPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CVLabelsPage
+export default CVLabelsPage;

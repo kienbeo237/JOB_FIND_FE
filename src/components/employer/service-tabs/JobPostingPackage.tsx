@@ -1,26 +1,32 @@
-"use client"
+'use client';
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Minus, Plus, ShoppingCart } from "lucide-react"
+import type React from 'react';
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Minus, Plus, ShoppingCart } from 'lucide-react';
 
 interface PricingItem {
-  period: string
-  price: string
-  priceValue: number
-  quantity: number
-  total: string
+  period: string;
+  price: string;
+  priceValue: number;
+  quantity: number;
+  total: string;
 }
 
 interface JobPostingPackageProps {
-  title: string
-  benefits: string[]
-  description?: string
-  pricing: PricingItem[]
-  packageTitle: string
-  onAddToCart: (packageInfo: any, quantity: number) => void
+  title: string;
+  benefits: string[];
+  description?: string;
+  pricing: PricingItem[];
+  packageTitle: string;
+  onAddToCart: (packageInfo: any, quantity: number) => void;
 }
 
 const JobPostingPackage: React.FC<JobPostingPackageProps> = ({
@@ -31,57 +37,57 @@ const JobPostingPackage: React.FC<JobPostingPackageProps> = ({
   packageTitle,
   onAddToCart,
 }) => {
-  const [quantities, setQuantities] = useState<Record<string, number>>({})
-  const [totals, setTotals] = useState<Record<string, string>>({})
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [totals, setTotals] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    // Initialize quantities and totals
-    const initialQuantities: Record<string, number> = {}
-    const initialTotals: Record<string, string> = {}
+    const initialQuantities: Record<string, number> = {};
+    const initialTotals: Record<string, string> = {};
 
-    pricing.forEach((item) => {
-      initialQuantities[item.period] = 0
-      initialTotals[item.period] = "VND 0"
-    })
+    pricing.forEach(item => {
+      initialQuantities[item.period] = 0;
+      initialTotals[item.period] = 'VND 0';
+    });
 
-    setQuantities(initialQuantities)
-    setTotals(initialTotals)
-  }, [pricing])
+    setQuantities(initialQuantities);
+    setTotals(initialTotals);
+  }, [pricing]);
 
   const handleQuantityChange = (period: string, value: number) => {
-    if (value < 0) value = 0
+    if (value < 0) value = 0;
 
-    const updatedQuantities = { ...quantities, [period]: value }
-    setQuantities(updatedQuantities)
+    const updatedQuantities = { ...quantities, [period]: value };
+    setQuantities(updatedQuantities);
 
-    // Update totals
-    const priceItem = pricing.find((item) => item.period === period)
+    const priceItem = pricing.find(item => item.period === period);
     if (priceItem) {
-      const total = priceItem.priceValue * value
-      const formattedTotal = `VND ${total.toLocaleString()}`
-      setTotals({ ...totals, [period]: formattedTotal })
+      const total = priceItem.priceValue * value;
+      const formattedTotal = `VND ${total.toLocaleString()}`;
+      setTotals({ ...totals, [period]: formattedTotal });
     }
-  }
+  };
 
   const handleAddToCart = (period: string) => {
-    const quantity = quantities[period] || 0
-    const packageInfo = pricing.find((item) => item.period === period)
+    const quantity = quantities[period] || 0;
+    const packageInfo = pricing.find(item => item.period === period);
 
     if (packageInfo) {
       const packageData = {
         ...packageInfo,
         packageTitle,
         benefits,
-      }
+      };
 
-      onAddToCart(packageData, quantity)
+      onAddToCart(packageData, quantity);
     }
-  }
+  };
 
   return (
     <Card className="border-gray-200">
       <CardHeader className="bg-gray-50">
-        <CardTitle className="text-lg font-semibold text-gray-800">{title}</CardTitle>
+        <CardTitle className="text-lg font-semibold text-gray-800">
+          {title}
+        </CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent className="p-6">
@@ -100,11 +106,21 @@ const JobPostingPackage: React.FC<JobPostingPackageProps> = ({
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-200">
-                <th className="text-left py-3 font-medium text-gray-600">Thời gian</th>
-                <th className="text-left py-3 font-medium text-gray-600">Giá (VND)</th>
-                <th className="text-left py-3 font-medium text-gray-600">Số lượng</th>
-                <th className="text-left py-3 font-medium text-gray-600">Thành tiền</th>
-                <th className="text-left py-3 font-medium text-gray-600">Thao tác</th>
+                <th className="text-left py-3 font-medium text-gray-600">
+                  Thời gian
+                </th>
+                <th className="text-left py-3 font-medium text-gray-600">
+                  Giá (VND)
+                </th>
+                <th className="text-left py-3 font-medium text-gray-600">
+                  Số lượng
+                </th>
+                <th className="text-left py-3 font-medium text-gray-600">
+                  Thành tiền
+                </th>
+                <th className="text-left py-3 font-medium text-gray-600">
+                  Thao tác
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -118,22 +134,34 @@ const JobPostingPackage: React.FC<JobPostingPackageProps> = ({
                         variant="outline"
                         size="icon"
                         className="h-8 w-8"
-                        onClick={() => handleQuantityChange(item.period, (quantities[item.period] || 0) - 1)}
+                        onClick={() =>
+                          handleQuantityChange(
+                            item.period,
+                            (quantities[item.period] || 0) - 1
+                          )
+                        }
                       >
                         <Minus className="h-4 w-4" />
                       </Button>
-                      <span className="w-8 text-center">{quantities[item.period] || 0}</span>
+                      <span className="w-8 text-center">
+                        {quantities[item.period] || 0}
+                      </span>
                       <Button
                         variant="outline"
                         size="icon"
                         className="h-8 w-8"
-                        onClick={() => handleQuantityChange(item.period, (quantities[item.period] || 0) + 1)}
+                        onClick={() =>
+                          handleQuantityChange(
+                            item.period,
+                            (quantities[item.period] || 0) + 1
+                          )
+                        }
                       >
                         <Plus className="h-4 w-4" />
                       </Button>
                     </div>
                   </td>
-                  <td className="py-4">{totals[item.period] || "VND 0"}</td>
+                  <td className="py-4">{totals[item.period] || 'VND 0'}</td>
                   <td className="py-4">
                     <div className="flex space-x-2">
                       <Button
@@ -162,7 +190,7 @@ const JobPostingPackage: React.FC<JobPostingPackageProps> = ({
         </div>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default JobPostingPackage
+export default JobPostingPackage;

@@ -47,7 +47,6 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
   const [cartCount, setCartCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Function to get the total number of items in all carts
   const getTotalCartItems = () => {
     if (typeof window === 'undefined') return 0;
 
@@ -75,23 +74,17 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Update cart count when component mounts and when localStorage changes
   useEffect(() => {
-    // Function to update cart count
     const updateCartCount = () => {
       setCartCount(getTotalCartItems());
     };
 
-    // Listen for storage events to update cart count
     window.addEventListener('storage', updateCartCount);
 
-    // Custom event for cart updates
     window.addEventListener('cartUpdated', updateCartCount);
 
-    // Initial cart count
     updateCartCount();
 
-    // Check cart count periodically
     const interval = setInterval(updateCartCount, 1000);
 
     return () => {
@@ -102,7 +95,6 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    // Function to handle setting active tab from custom event
     const handleSetActiveTab = (event: CustomEvent) => {
       if (event.detail === 'post-job') {
         setActiveTab('post-job');
@@ -113,7 +105,6 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
       }
     };
 
-    // Add event listener for custom event
     window.addEventListener(
       'setActiveTab',
       handleSetActiveTab as EventListener
@@ -135,7 +126,6 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   useEffect(() => {
-    // Always keep the settings dropdown open when a settings tab is active
     if (activeTab === 'settings' && openDropdown !== 'Cài đặt tài khoản') {
       setOpenDropdown('Cài đặt tài khoản');
     }
@@ -157,7 +147,6 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
     if (hasDropdown) {
       toggleDropdown(title);
     } else {
-      // Close any open dropdown when clicking on a non-dropdown tab
       setOpenDropdown('');
 
       if (title === 'Tổng quan') {
@@ -205,7 +194,6 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
   }) => {
     setActiveTab('settings');
 
-    // Map the title to the corresponding tab value
     if (subItem.title === 'Người dùng đăng nhập') {
       setActiveSettingsTab('user-login');
     } else if (subItem.title === 'Danh sách người dùng') {
@@ -328,7 +316,6 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -345,7 +332,6 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
@@ -355,7 +341,6 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
   };
 
   const handleLogout = () => {
-    // Add logout logic here
     window.location.href = '/';
   };
 
@@ -382,12 +367,11 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
               <button
                 onClick={() => {
                   if (typeof window !== 'undefined') {
-                    // Set active tab to post-job
                     const event = new CustomEvent('setActiveTab', {
                       detail: 'post-job',
                     });
                     window.dispatchEvent(event);
-                    // If on mobile, close the menu
+
                     setMobileMenuOpen(false);
                   }
                 }}
@@ -398,12 +382,11 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
               <button
                 onClick={() => {
                   if (typeof window !== 'undefined') {
-                    // Set active tab to cv-filter
                     const event = new CustomEvent('setActiveTab', {
                       detail: 'cv-filter',
                     });
                     window.dispatchEvent(event);
-                    // If on mobile, close the menu
+
                     setMobileMenuOpen(false);
                   }
                 }}
@@ -414,12 +397,11 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
               <button
                 onClick={() => {
                   if (typeof window !== 'undefined') {
-                    // Set active tab to banner
                     const event = new CustomEvent('setActiveTab', {
                       detail: 'banner',
                     });
                     window.dispatchEvent(event);
-                    // If on mobile, close the menu
+
                     setMobileMenuOpen(false);
                   }
                 }}
@@ -546,12 +528,11 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
                 <button
                   onClick={() => {
                     if (typeof window !== 'undefined') {
-                      // Set active tab to post-job
                       const event = new CustomEvent('setActiveTab', {
                         detail: 'post-job',
                       });
                       window.dispatchEvent(event);
-                      // Close the mobile menu
+
                       setMobileMenuOpen(false);
                     }
                   }}
@@ -562,12 +543,11 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
                 <button
                   onClick={() => {
                     if (typeof window !== 'undefined') {
-                      // Set active tab to cv-filter
                       const event = new CustomEvent('setActiveTab', {
                         detail: 'cv-filter',
                       });
                       window.dispatchEvent(event);
-                      // Close the mobile menu
+
                       setMobileMenuOpen(false);
                     }
                   }}
@@ -578,12 +558,11 @@ function EmployerLayoutContent({ children }: { children: React.ReactNode }) {
                 <button
                   onClick={() => {
                     if (typeof window !== 'undefined') {
-                      // Set active tab to banner
                       const event = new CustomEvent('setActiveTab', {
                         detail: 'banner',
                       });
                       window.dispatchEvent(event);
-                      // Close the mobile menu
+
                       setMobileMenuOpen(false);
                     }
                   }}
