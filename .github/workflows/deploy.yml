@@ -67,7 +67,7 @@ jobs:
             echo "📥 Pulling latest image..."
             docker pull ghcr.io/kienbeo237/job_find_fe:latest
 
-            echo "🧹 Removing old container if exists..."
+            echo "🧹 Removing old container if exists 1..."
             docker rm -f job-find-portal || true
 
             echo "🚀 Starting new container..."
