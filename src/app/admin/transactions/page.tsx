@@ -5,7 +5,6 @@ import { Search, Filter, Calendar, Download } from "lucide-react"
 import Swal from "sweetalert2"
 
 export default function TransactionsManagement() {
-  // Mock data for transactions
   const transactions = [
     {
       id: "TX123456",
