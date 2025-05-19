@@ -17,12 +17,17 @@ import {
   LogOut,
   BarChart,
   Layers,
+  Ticket,
 } from 'lucide-react';
 
-const scrollbarHideStyle: React.CSSProperties = {
+/* Hide scrollbar for Chrome, Safari and Opera */
+const scrollbarHideStyle = {
   scrollbarWidth: 'none' as const,
-  msOverflowStyle: 'none',
-};
+  msOverflowStyle: 'none' as const,
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+} as const;
 
 export default function AdminSidebar() {
   const pathname = usePathname();
@@ -48,6 +53,11 @@ export default function AdminSidebar() {
       title: 'Transactions',
       href: '/admin/transactions',
       icon: <CreditCard className="h-5 w-5" />,
+    },
+    {
+      title: 'Vouchers & Coupons',
+      href: '/admin/vouchers',
+      icon: <Ticket className="h-5 w-5" />,
     },
     {
       title: 'Job Categories',
@@ -102,10 +112,7 @@ export default function AdminSidebar() {
         </button>
       </div>
 
-      <div
-        className="flex-1 py-4 overflow-y-auto [&::-webkit-scrollbar]:hidden"
-        style={scrollbarHideStyle}
-      >
+      <div className="flex-1 py-4 overflow-y-auto" style={scrollbarHideStyle}>
         <nav className="px-2 space-y-1">
           {navItems.map(item => (
             <Link
@@ -117,7 +124,9 @@ export default function AdminSidebar() {
                   ? 'bg-emerald-50 text-emerald-700'
                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                 collapsed ? 'justify-center' : 'justify-start',
-                item.title === 'Settings' && 'relative'
+                (item.title === 'Settings' ||
+                  item.title === 'Vouchers & Coupons') &&
+                  'relative'
               )}
             >
               <div className={collapsed ? '' : 'mr-3'}>{item.icon}</div>
@@ -132,12 +141,24 @@ export default function AdminSidebar() {
                       </span>
                     </div>
                   )}
+                  {item.title === 'Vouchers & Coupons' && (
+                    <div className="ml-auto">
+                      <span className="px-1.5 py-0.5 text-xs font-medium bg-emerald-100 text-emerald-800 rounded-full">
+                        NEW
+                      </span>
+                    </div>
+                  )}
                 </>
               )}
               {collapsed && item.title === 'Settings' && (
                 <span className="absolute -top-1 -right-1 flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+              )}
+              {collapsed && item.title === 'Vouchers & Coupons' && (
+                <span className="absolute -top-1 -right-1 px-1 py-0.5 text-xs font-medium bg-emerald-100 text-emerald-800 rounded-full">
+                  N
                 </span>
               )}
             </Link>

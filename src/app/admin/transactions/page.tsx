@@ -1,240 +1,245 @@
-"use client"
+'use client';
 
-import { useEffect, useRef, useState } from "react"
-import { Search, Filter, Calendar, Download } from "lucide-react"
-import Swal from "sweetalert2"
+import { useEffect, useRef, useState } from 'react';
+import { Search, Filter, Calendar, Download } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 export default function TransactionsManagement() {
   const transactions = [
     {
-      id: "TX123456",
-      company: "Tech Solutions Inc.",
-      package: "Premium Job Posting",
-      amount: "$299.00",
-      date: "2023-05-15",
-      paymentMethod: "Credit Card",
-      status: "Completed",
+      id: 'TX123456',
+      company: 'Tech Solutions Inc.',
+      package: 'Premium Job Posting',
+      amount: '$299.00',
+      date: '2023-05-15',
+      paymentMethod: 'Credit Card',
+      status: 'Completed',
     },
     {
-      id: "TX123455",
-      company: "Global Innovations",
-      package: "Featured Employer",
-      amount: "$199.00",
-      date: "2023-05-14",
-      paymentMethod: "PayPal",
-      status: "Completed",
+      id: 'TX123455',
+      company: 'Global Innovations',
+      package: 'Featured Employer',
+      amount: '$199.00',
+      date: '2023-05-14',
+      paymentMethod: 'PayPal',
+      status: 'Completed',
     },
     {
-      id: "TX123454",
-      company: "Future Systems",
-      package: "CV Database Access",
-      amount: "$499.00",
-      date: "2023-05-13",
-      paymentMethod: "Bank Transfer",
-      status: "Pending",
+      id: 'TX123454',
+      company: 'Future Systems',
+      package: 'CV Database Access',
+      amount: '$499.00',
+      date: '2023-05-13',
+      paymentMethod: 'Bank Transfer',
+      status: 'Pending',
     },
     {
-      id: "TX123453",
-      company: "Digital Experts",
-      package: "Job Posting Bundle",
-      amount: "$349.00",
-      date: "2023-05-12",
-      paymentMethod: "Credit Card",
-      status: "Completed",
+      id: 'TX123453',
+      company: 'Digital Experts',
+      package: 'Job Posting Bundle',
+      amount: '$349.00',
+      date: '2023-05-12',
+      paymentMethod: 'Credit Card',
+      status: 'Completed',
     },
     {
-      id: "TX123452",
-      company: "Smart Technologies",
-      package: "Banner Advertising",
-      amount: "$199.00",
-      date: "2023-05-11",
-      paymentMethod: "Credit Card",
-      status: "Failed",
+      id: 'TX123452',
+      company: 'Smart Technologies',
+      package: 'Banner Advertising',
+      amount: '$199.00',
+      date: '2023-05-11',
+      paymentMethod: 'Credit Card',
+      status: 'Failed',
     },
     {
-      id: "TX123451",
-      company: "Innovative Solutions",
-      package: "Premium Job Posting",
-      amount: "$299.00",
-      date: "2023-05-10",
-      paymentMethod: "PayPal",
-      status: "Completed",
+      id: 'TX123451',
+      company: 'Innovative Solutions',
+      package: 'Premium Job Posting',
+      amount: '$299.00',
+      date: '2023-05-10',
+      paymentMethod: 'PayPal',
+      status: 'Completed',
     },
     {
-      id: "TX123450",
-      company: "Global Tech",
-      package: "Featured Employer",
-      amount: "$199.00",
-      date: "2023-05-09",
-      paymentMethod: "Credit Card",
-      status: "Completed",
+      id: 'TX123450',
+      company: 'Global Tech',
+      package: 'Featured Employer',
+      amount: '$199.00',
+      date: '2023-05-09',
+      paymentMethod: 'Credit Card',
+      status: 'Completed',
     },
     {
-      id: "TX123449",
-      company: "Future Innovations",
-      package: "CV Database Access",
-      amount: "$499.00",
-      date: "2023-05-08",
-      paymentMethod: "Bank Transfer",
-      status: "Refunded",
+      id: 'TX123449',
+      company: 'Future Innovations',
+      package: 'CV Database Access',
+      amount: '$499.00',
+      date: '2023-05-08',
+      paymentMethod: 'Bank Transfer',
+      status: 'Refunded',
     },
-  ]
+  ];
 
-  // State for filters
-  const [statusFilters, setStatusFilters] = useState<string[]>([])
-  const [paymentMethodFilters, setPaymentMethodFilters] = useState<string[]>([])
-  const [dateRange, setDateRange] = useState<{ start: string; end: string }>({ start: "", end: "" })
-  const [showStatusFilter, setShowStatusFilter] = useState(false)
-  const [showDateFilter, setShowDateFilter] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
+  const [statusFilters, setStatusFilters] = useState<string[]>([]);
+  const [paymentMethodFilters, setPaymentMethodFilters] = useState<string[]>(
+    []
+  );
+  const [dateRange, setDateRange] = useState<{ start: string; end: string }>({
+    start: '',
+    end: '',
+  });
+  const [showStatusFilter, setShowStatusFilter] = useState(false);
+  const [showDateFilter, setShowDateFilter] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Pagination state
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage] = useState(5)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
 
-  // Refs for closing dropdowns when clicking outside
-  const statusFilterRef = useRef<HTMLDivElement>(null)
-  const dateFilterRef = useRef<HTMLDivElement>(null)
+  const statusFilterRef = useRef<HTMLDivElement>(null);
+  const dateFilterRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (statusFilterRef.current && !statusFilterRef.current.contains(event.target as Node)) {
-        setShowStatusFilter(false)
+      if (
+        statusFilterRef.current &&
+        !statusFilterRef.current.contains(event.target as Node)
+      ) {
+        setShowStatusFilter(false);
       }
-      if (dateFilterRef.current && !dateFilterRef.current.contains(event.target as Node)) {
-        setShowDateFilter(false)
+      if (
+        dateFilterRef.current &&
+        !dateFilterRef.current.contains(event.target as Node)
+      ) {
+        setShowDateFilter(false);
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
-  // Status filter toggle handler
   const toggleStatusFilter = (status: string) => {
-    setStatusFilters((prev) => (prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]))
-  }
+    setStatusFilters(prev =>
+      prev.includes(status) ? prev.filter(s => s !== status) : [...prev, status]
+    );
+  };
 
-  // Payment method filter toggle handler
   const togglePaymentMethodFilter = (method: string) => {
-    setPaymentMethodFilters((prev) => (prev.includes(method) ? prev.filter((m) => m !== method) : [...prev, method]))
-  }
+    setPaymentMethodFilters(prev =>
+      prev.includes(method) ? prev.filter(m => m !== method) : [...prev, method]
+    );
+  };
 
-  // Clear all filters
   const clearFilters = () => {
-    setStatusFilters([])
-    setPaymentMethodFilters([])
-    setDateRange({ start: "", end: "" })
-    setSearchQuery("")
-  }
+    setStatusFilters([]);
+    setPaymentMethodFilters([]);
+    setDateRange({ start: '', end: '' });
+    setSearchQuery('');
+  };
 
-  // Filter transactions based on all criteria
-  const filteredTransactions = transactions.filter((transaction) => {
-    // Search query filter
+  const filteredTransactions = transactions.filter(transaction => {
     const matchesSearch =
-      searchQuery === "" ||
+      searchQuery === '' ||
       transaction.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
       transaction.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      transaction.package.toLowerCase().includes(searchQuery.toLowerCase())
+      transaction.package.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // Status filter
-    const matchesStatus = statusFilters.length === 0 || statusFilters.includes(transaction.status)
+    const matchesStatus =
+      statusFilters.length === 0 || statusFilters.includes(transaction.status);
 
-    // Payment method filter
     const matchesPaymentMethod =
-      paymentMethodFilters.length === 0 || paymentMethodFilters.includes(transaction.paymentMethod)
+      paymentMethodFilters.length === 0 ||
+      paymentMethodFilters.includes(transaction.paymentMethod);
 
-    // Date range filter
-    const transactionDate = new Date(transaction.date)
-    const startDate = dateRange.start ? new Date(dateRange.start) : null
-    const endDate = dateRange.end ? new Date(dateRange.end) : null
+    const transactionDate = new Date(transaction.date);
+    const startDate = dateRange.start ? new Date(dateRange.start) : null;
+    const endDate = dateRange.end ? new Date(dateRange.end) : null;
 
-    const matchesDateRange = (!startDate || transactionDate >= startDate) && (!endDate || transactionDate <= endDate)
+    const matchesDateRange =
+      (!startDate || transactionDate >= startDate) &&
+      (!endDate || transactionDate <= endDate);
 
-    return matchesSearch && matchesStatus && matchesPaymentMethod && matchesDateRange
-  })
+    return (
+      matchesSearch && matchesStatus && matchesPaymentMethod && matchesDateRange
+    );
+  });
 
-  // Pagination calculations
-  const indexOfLastItem = currentPage * itemsPerPage
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const currentTransactions = filteredTransactions.slice(indexOfFirstItem, indexOfLastItem)
-  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage)
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentTransactions = filteredTransactions.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
 
-  // Reset to first page when filters change
   useEffect(() => {
-    setCurrentPage(1)
-  }, [statusFilters, paymentMethodFilters, dateRange, searchQuery])
+    setCurrentPage(1);
+  }, [statusFilters, paymentMethodFilters, dateRange, searchQuery]);
 
-  // Page change handlers
   const goToPage = (pageNumber: number) => {
-    setCurrentPage(pageNumber)
-  }
+    setCurrentPage(pageNumber);
+  };
 
   const goToPreviousPage = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1))
-  }
+    setCurrentPage(prev => Math.max(prev - 1, 1));
+  };
 
   const goToNextPage = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-  }
+    setCurrentPage(prev => Math.min(prev + 1, totalPages));
+  };
 
-  // Generate page numbers to display
   const getPageNumbers = () => {
-    const pageNumbers = []
-    const maxPagesToShow = 5
+    const pageNumbers = [];
+    const maxPagesToShow = 5;
 
     if (totalPages <= maxPagesToShow) {
-      // If we have fewer pages than our max, show all pages
       for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i)
+        pageNumbers.push(i);
       }
     } else {
-      // Always include first page
-      pageNumbers.push(1)
+      pageNumbers.push(1);
 
-      // Calculate start and end of page number range
-      let startPage = Math.max(2, currentPage - 1)
-      let endPage = Math.min(totalPages - 1, currentPage + 1)
+      let startPage = Math.max(2, currentPage - 1);
+      let endPage = Math.min(totalPages - 1, currentPage + 1);
 
-      // Adjust to show 3 pages in the middle
       if (currentPage <= 2) {
-        endPage = 3
+        endPage = 3;
       } else if (currentPage >= totalPages - 1) {
-        startPage = totalPages - 2
+        startPage = totalPages - 2;
       }
 
-      // Add ellipsis if needed
       if (startPage > 2) {
-        pageNumbers.push("...")
+        pageNumbers.push('...');
       }
 
-      // Add middle page numbers
       for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i)
+        pageNumbers.push(i);
       }
 
-      // Add ellipsis if needed
       if (endPage < totalPages - 1) {
-        pageNumbers.push("...")
+        pageNumbers.push('...');
       }
 
-      // Always include last page
-      pageNumbers.push(totalPages)
+      pageNumbers.push(totalPages);
     }
 
-    return pageNumbers
-  }
+    return pageNumbers;
+  };
 
-  // Export to CSV function
   const exportToCSV = () => {
-    // Define CSV headers
-    const headers = ["ID", "Company", "Package", "Amount", "Date", "Payment Method", "Status"]
+    const headers = [
+      'ID',
+      'Company',
+      'Package',
+      'Amount',
+      'Date',
+      'Payment Method',
+      'Status',
+    ];
 
-    // Convert filtered transactions to CSV rows
-    const rows = filteredTransactions.map((transaction) => [
+    const rows = filteredTransactions.map(transaction => [
       transaction.id,
       transaction.company,
       transaction.package,
@@ -242,87 +247,90 @@ export default function TransactionsManagement() {
       transaction.date,
       transaction.paymentMethod,
       transaction.status,
-    ])
+    ]);
 
-    // Combine headers and rows
-    const csvContent = [headers.join(","), ...rows.map((row) => row.map((cell) => `"${cell}"`).join(","))].join("\n")
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.map(cell => `"${cell}"`).join(',')),
+    ].join('\n');
 
-    // Create Blob and download link
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement("a")
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
 
-    // Set up and trigger download
-    link.setAttribute("href", url)
-    link.setAttribute("download", `transactions_export_${new Date().toISOString().slice(0, 10)}.csv`)
-    link.style.visibility = "hidden"
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+    link.setAttribute('href', url);
+    link.setAttribute(
+      'download',
+      `transactions_export_${new Date().toISOString().slice(0, 10)}.csv`
+    );
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
-  // Format date for display
   const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "short", day: "numeric" }
-    return new Date(dateString).toLocaleDateString(undefined, options)
-  }
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
-  // Summary data
   const summary = [
     {
-      title: "Total Revenue",
-      value: "$12,345.00",
+      title: 'Total Revenue',
+      value: '$12,345.00',
       icon: (
         <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
           <span className="text-green-600 font-bold">$</span>
         </div>
       ),
-      color: "bg-green-50 text-green-600",
+      color: 'bg-green-50 text-green-600',
     },
     {
-      title: "Pending",
-      value: "$499.00",
+      title: 'Pending',
+      value: '$499.00',
       icon: (
         <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center">
           <span className="text-yellow-600 font-bold">!</span>
         </div>
       ),
-      color: "bg-yellow-50 text-yellow-600",
+      color: 'bg-yellow-50 text-yellow-600',
     },
     {
-      title: "Refunded",
-      value: "$499.00",
+      title: 'Refunded',
+      value: '$499.00',
       icon: (
         <div className="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center">
           <span className="text-red-600 font-bold">↩</span>
         </div>
       ),
-      color: "bg-red-50 text-red-600",
+      color: 'bg-red-50 text-red-600',
     },
     {
-      title: "Transactions",
+      title: 'Transactions',
       value: transactions.length.toString(),
       icon: (
         <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
           <span className="text-blue-600 font-bold">#</span>
         </div>
       ),
-      color: "bg-blue-50 text-blue-600",
+      color: 'bg-blue-50 text-blue-600',
     },
-  ]
+  ];
 
-  // Check if any filter is applied
   const isFiltered =
     statusFilters.length > 0 ||
     paymentMethodFilters.length > 0 ||
     dateRange.start ||
     dateRange.end ||
-    searchQuery !== ""
+    searchQuery !== '';
 
-  // Function to handle viewing transaction details
   const handleViewTransaction = (transaction: any) => {
     Swal.fire({
-      title: "Transaction Details",
+      title: 'Transaction Details',
       html: `
         <div class="text-left">
           <div class="grid grid-cols-2 gap-4 mb-4">
@@ -361,13 +369,13 @@ export default function TransactionsManagement() {
             <p class="text-sm text-gray-500">Status</p>
             <p class="font-medium">
               <span class="px-2 py-1 text-xs rounded-full ${
-                transaction.status === "Completed"
-                  ? "bg-green-100 text-green-800"
-                  : transaction.status === "Pending"
-                    ? "bg-yellow-100 text-yellow-800"
-                    : transaction.status === "Failed"
-                      ? "bg-red-100 text-red-800"
-                      : "bg-blue-100 text-blue-800"
+                transaction.status === 'Completed'
+                  ? 'bg-green-100 text-green-800'
+                  : transaction.status === 'Pending'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : transaction.status === 'Failed'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-blue-100 text-blue-800'
               }">
                 ${transaction.status}
               </span>
@@ -377,36 +385,35 @@ export default function TransactionsManagement() {
           <div class="mb-4">
             <p class="text-sm text-gray-500">Notes</p>
             <p class="text-sm">${
-              transaction.status === "Failed"
-                ? "Payment processing error. Customer was notified."
-                : transaction.status === "Pending"
-                  ? "Awaiting bank confirmation."
-                  : transaction.status === "Refunded"
-                    ? "Refunded due to customer request on " + formatDate(transaction.date)
-                    : "Transaction completed successfully."
+              transaction.status === 'Failed'
+                ? 'Payment processing error. Customer was notified.'
+                : transaction.status === 'Pending'
+                ? 'Awaiting bank confirmation.'
+                : transaction.status === 'Refunded'
+                ? 'Refunded due to customer request on ' +
+                  formatDate(transaction.date)
+                : 'Transaction completed successfully.'
             }</p>
           </div>
         </div>
       `,
-      width: "600px",
+      width: '600px',
       showCloseButton: true,
       showConfirmButton: false,
       customClass: {
-        container: "swal-wide",
-        popup: "rounded-lg",
-        header: "border-b pb-3",
-        content: "pt-4",
+        container: 'swal-wide',
+        popup: 'rounded-lg',
+        title: 'border-b pb-3',
+        htmlContainer: 'pt-4',
       },
-    })
-  }
+    });
+  };
 
-  // Function to handle viewing and downloading receipt
   const handleViewReceipt = (transaction: any) => {
-    // Create a receipt number based on transaction ID
-    const receiptNumber = `R-${transaction.id.substring(2)}`
+    const receiptNumber = `R-${transaction.id.substring(2)}`;
 
     Swal.fire({
-      title: "Receipt",
+      title: 'Receipt',
       html: `
         <div class="text-left">
           <div class="flex justify-between items-start mb-6">
@@ -418,16 +425,20 @@ export default function TransactionsManagement() {
             <div class="text-right">
               <p class="font-bold">RECEIPT</p>
               <p class="text-sm text-gray-500">#${receiptNumber}</p>
-              <p class="text-sm text-gray-500">Date: ${formatDate(transaction.date)}</p>
+              <p class="text-sm text-gray-500">Date: ${formatDate(
+                transaction.date
+              )}</p>
             </div>
           </div>
           
           <div class="mb-6">
             <p class="font-medium">Bill To:</p>
             <p>${transaction.company}</p>
-            <p class="text-sm text-gray-500">Customer ID: CUS-${Math.floor(Math.random() * 10000)
+            <p class="text-sm text-gray-500">Customer ID: CUS-${Math.floor(
+              Math.random() * 10000
+            )
               .toString()
-              .padStart(4, "0")}</p>
+              .padStart(4, '0')}</p>
           </div>
           
           <table class="w-full mb-6">
@@ -466,53 +477,58 @@ export default function TransactionsManagement() {
           </div>
         </div>
       `,
-      width: "650px",
+      width: '650px',
       showCloseButton: true,
-      confirmButtonText: "Download PDF",
+      confirmButtonText: 'Download PDF',
       showCancelButton: true,
-      cancelButtonText: "Close",
+      cancelButtonText: 'Close',
       customClass: {
-        container: "swal-wide",
-        popup: "rounded-lg",
-        header: "border-b pb-3",
-        content: "pt-4",
-        confirmButton: "bg-blue-600 hover:bg-blue-700",
-        cancelButton: "bg-gray-200 hover:bg-gray-300 text-gray-800",
+        container: 'swal-wide',
+        popup: 'rounded-lg',
+        title: 'border-b pb-3',
+        htmlContainer: 'pt-4',
+        confirmButton: 'bg-blue-600 hover:bg-blue-700',
+        cancelButton: 'bg-gray-200 hover:bg-gray-300 text-gray-800',
       },
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
-        // In a real application, this would generate and download a PDF
-        // For this example, we'll just show a success message
         Swal.fire({
-          title: "Receipt Downloaded",
+          title: 'Receipt Downloaded',
           text: `Receipt #${receiptNumber} has been downloaded.`,
-          icon: "success",
+          icon: 'success',
           timer: 2000,
           showConfirmButton: false,
-        })
+        });
 
-        console.log("Downloading receipt for transaction:", transaction.id)
+        console.log('Downloading receipt for transaction:', transaction.id);
       }
-    })
-  }
+    });
+  };
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Transactions & Payments</h1>
-        <p className="text-gray-500 mt-1">Manage all financial transactions and payment records</p>
+        <p className="text-gray-500 mt-1">
+          Manage all financial transactions and payment records
+        </p>
       </div>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {summary.map((item, index) => (
-          <div key={index} className="bg-white rounded-lg shadow p-5 border border-gray-100">
+          <div
+            key={index}
+            className="bg-white rounded-lg shadow p-5 border border-gray-100"
+          >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-500 text-sm">{item.title}</p>
                 <p className="text-2xl font-bold mt-1">{item.value}</p>
               </div>
-              <div className={`p-3 rounded-full ${item.color}`}>{item.icon}</div>
+              <div className={`p-3 rounded-full ${item.color}`}>
+                {item.icon}
+              </div>
             </div>
           </div>
         ))}
@@ -526,7 +542,7 @@ export default function TransactionsManagement() {
             type="text"
             placeholder="Search transactions..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
@@ -534,11 +550,15 @@ export default function TransactionsManagement() {
           <div className="relative" ref={statusFilterRef}>
             <button
               onClick={() => {
-                setShowStatusFilter(!showStatusFilter)
-                setShowDateFilter(false)
+                setShowStatusFilter(!showStatusFilter);
+                setShowDateFilter(false);
               }}
               className={`flex items-center gap-2 px-4 py-2 border rounded-md 
-                ${isFiltered ? "bg-blue-50 border-blue-300 text-blue-700" : "border-gray-300 hover:bg-gray-50"}`}
+                ${
+                  isFiltered
+                    ? 'bg-blue-50 border-blue-300 text-blue-700'
+                    : 'border-gray-300 hover:bg-gray-50'
+                }`}
             >
               <Filter className="h-4 w-4" />
               <span>Filter</span>
@@ -549,7 +569,10 @@ export default function TransactionsManagement() {
                 <div className="p-4">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="font-semibold">Filter Transactions</h3>
-                    <button onClick={clearFilters} className="text-xs text-blue-600 hover:text-blue-800">
+                    <button
+                      onClick={clearFilters}
+                      className="text-xs text-blue-600 hover:text-blue-800"
+                    >
                       Clear all filters
                     </button>
                   </div>
@@ -557,34 +580,38 @@ export default function TransactionsManagement() {
                   <div className="mb-4">
                     <h4 className="text-sm font-medium mb-2">Status</h4>
                     <div className="space-y-2">
-                      {["Completed", "Pending", "Failed", "Refunded"].map((status) => (
-                        <label key={status} className="flex items-center">
-                          <input
-                            type="checkbox"
-                            checked={statusFilters.includes(status)}
-                            onChange={() => toggleStatusFilter(status)}
-                            className="rounded text-blue-600 focus:ring-blue-500 h-4 w-4 mr-2"
-                          />
-                          <span className="text-sm">{status}</span>
-                        </label>
-                      ))}
+                      {['Completed', 'Pending', 'Failed', 'Refunded'].map(
+                        status => (
+                          <label key={status} className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={statusFilters.includes(status)}
+                              onChange={() => toggleStatusFilter(status)}
+                              className="rounded text-blue-600 focus:ring-blue-500 h-4 w-4 mr-2"
+                            />
+                            <span className="text-sm">{status}</span>
+                          </label>
+                        )
+                      )}
                     </div>
                   </div>
 
                   <div>
                     <h4 className="text-sm font-medium mb-2">Payment Method</h4>
                     <div className="space-y-2">
-                      {["Credit Card", "PayPal", "Bank Transfer"].map((method) => (
-                        <label key={method} className="flex items-center">
-                          <input
-                            type="checkbox"
-                            checked={paymentMethodFilters.includes(method)}
-                            onChange={() => togglePaymentMethodFilter(method)}
-                            className="rounded text-blue-600 focus:ring-blue-500 h-4 w-4 mr-2"
-                          />
-                          <span className="text-sm">{method}</span>
-                        </label>
-                      ))}
+                      {['Credit Card', 'PayPal', 'Bank Transfer'].map(
+                        method => (
+                          <label key={method} className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={paymentMethodFilters.includes(method)}
+                              onChange={() => togglePaymentMethodFilter(method)}
+                              className="rounded text-blue-600 focus:ring-blue-500 h-4 w-4 mr-2"
+                            />
+                            <span className="text-sm">{method}</span>
+                          </label>
+                        )
+                      )}
                     </div>
                   </div>
                 </div>
@@ -595,11 +622,15 @@ export default function TransactionsManagement() {
           <div className="relative" ref={dateFilterRef}>
             <button
               onClick={() => {
-                setShowDateFilter(!showDateFilter)
-                setShowStatusFilter(false)
+                setShowDateFilter(!showDateFilter);
+                setShowStatusFilter(false);
               }}
               className={`flex items-center gap-2 px-4 py-2 border rounded-md 
-                ${dateRange.start || dateRange.end ? "bg-blue-50 border-blue-300 text-blue-700" : "border-gray-300 hover:bg-gray-50"}`}
+                ${
+                  dateRange.start || dateRange.end
+                    ? 'bg-blue-50 border-blue-300 text-blue-700'
+                    : 'border-gray-300 hover:bg-gray-50'
+                }`}
             >
               <Calendar className="h-4 w-4" />
               <span>Date Range</span>
@@ -611,7 +642,7 @@ export default function TransactionsManagement() {
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="font-semibold">Date Range</h3>
                     <button
-                      onClick={() => setDateRange({ start: "", end: "" })}
+                      onClick={() => setDateRange({ start: '', end: '' })}
                       className="text-xs text-blue-600 hover:text-blue-800"
                     >
                       Clear dates
@@ -620,21 +651,29 @@ export default function TransactionsManagement() {
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium mb-1">Start Date</label>
+                      <label className="block text-sm font-medium mb-1">
+                        Start Date
+                      </label>
                       <input
                         type="date"
                         value={dateRange.start}
-                        onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+                        onChange={e =>
+                          setDateRange({ ...dateRange, start: e.target.value })
+                        }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium mb-1">End Date</label>
+                      <label className="block text-sm font-medium mb-1">
+                        End Date
+                      </label>
                       <input
                         type="date"
                         value={dateRange.end}
-                        onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+                        onChange={e =>
+                          setDateRange({ ...dateRange, end: e.target.value })
+                        }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                         min={dateRange.start}
                       />
@@ -660,25 +699,31 @@ export default function TransactionsManagement() {
         <div className="flex flex-wrap gap-2 items-center">
           <span className="text-sm text-gray-500">Active filters:</span>
 
-          {statusFilters.map((filter) => (
+          {statusFilters.map(filter => (
             <span
               key={filter}
               className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full flex items-center gap-1"
             >
               Status: {filter}
-              <button onClick={() => toggleStatusFilter(filter)} className="hover:text-blue-600">
+              <button
+                onClick={() => toggleStatusFilter(filter)}
+                className="hover:text-blue-600"
+              >
                 ×
               </button>
             </span>
           ))}
 
-          {paymentMethodFilters.map((filter) => (
+          {paymentMethodFilters.map(filter => (
             <span
               key={filter}
               className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full flex items-center gap-1"
             >
               Payment: {filter}
-              <button onClick={() => togglePaymentMethodFilter(filter)} className="hover:text-blue-600">
+              <button
+                onClick={() => togglePaymentMethodFilter(filter)}
+                className="hover:text-blue-600"
+              >
                 ×
               </button>
             </span>
@@ -687,7 +732,10 @@ export default function TransactionsManagement() {
           {dateRange.start && (
             <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full flex items-center gap-1">
               From: {dateRange.start}
-              <button onClick={() => setDateRange({ ...dateRange, start: "" })} className="hover:text-blue-600">
+              <button
+                onClick={() => setDateRange({ ...dateRange, start: '' })}
+                className="hover:text-blue-600"
+              >
                 ×
               </button>
             </span>
@@ -696,7 +744,10 @@ export default function TransactionsManagement() {
           {dateRange.end && (
             <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full flex items-center gap-1">
               To: {dateRange.end}
-              <button onClick={() => setDateRange({ ...dateRange, end: "" })} className="hover:text-blue-600">
+              <button
+                onClick={() => setDateRange({ ...dateRange, end: '' })}
+                className="hover:text-blue-600"
+              >
                 ×
               </button>
             </span>
@@ -705,13 +756,19 @@ export default function TransactionsManagement() {
           {searchQuery && (
             <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full flex items-center gap-1">
               Search: {searchQuery}
-              <button onClick={() => setSearchQuery("")} className="hover:text-blue-600">
+              <button
+                onClick={() => setSearchQuery('')}
+                className="hover:text-blue-600"
+              >
                 ×
               </button>
             </span>
           )}
 
-          <button onClick={clearFilters} className="text-sm text-red-600 hover:text-red-800 ml-2">
+          <button
+            onClick={clearFilters}
+            className="text-sm text-red-600 hover:text-red-800 ml-2"
+          >
             Clear all
           </button>
         </div>
@@ -775,28 +832,36 @@ export default function TransactionsManagement() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {currentTransactions.length > 0 ? (
-                currentTransactions.map((transaction) => (
+                currentTransactions.map(transaction => (
                   <tr key={transaction.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{transaction.id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.company}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.package}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {transaction.id}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {transaction.company}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {transaction.package}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {transaction.amount}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {formatDate(transaction.date)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.paymentMethod}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {transaction.paymentMethod}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                         className={`px-2 py-1 text-xs rounded-full ${
-                          transaction.status === "Completed"
-                            ? "bg-green-100 text-green-800"
-                            : transaction.status === "Pending"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : transaction.status === "Failed"
-                                ? "bg-red-100 text-red-800"
-                                : "bg-blue-100 text-blue-800"
+                          transaction.status === 'Completed'
+                            ? 'bg-green-100 text-green-800'
+                            : transaction.status === 'Pending'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : transaction.status === 'Failed'
+                            ? 'bg-red-100 text-red-800'
+                            : 'bg-blue-100 text-blue-800'
                         }`}
                       >
                         {transaction.status}
@@ -822,7 +887,10 @@ export default function TransactionsManagement() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={8} className="px-6 py-10 text-center text-sm text-gray-500">
+                  <td
+                    colSpan={8}
+                    className="px-6 py-10 text-center text-sm text-gray-500"
+                  >
                     No transactions found matching your filters.
                   </td>
                 </tr>
@@ -837,8 +905,8 @@ export default function TransactionsManagement() {
               disabled={currentPage === 1}
               className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md ${
                 currentPage === 1
-                  ? "text-gray-300 bg-gray-50 cursor-not-allowed"
-                  : "text-gray-700 bg-white hover:bg-gray-50"
+                  ? 'text-gray-300 bg-gray-50 cursor-not-allowed'
+                  : 'text-gray-700 bg-white hover:bg-gray-50'
               }`}
             >
               Previous
@@ -851,8 +919,8 @@ export default function TransactionsManagement() {
               disabled={currentPage === totalPages || totalPages === 0}
               className={`ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium ${
                 currentPage === totalPages || totalPages === 0
-                  ? "text-gray-300 bg-gray-50 cursor-not-allowed"
-                  : "text-gray-500 hover:bg-gray-50"
+                  ? 'text-gray-300 bg-gray-50 cursor-not-allowed'
+                  : 'text-gray-500 hover:bg-gray-50'
               }`}
             >
               Next
@@ -861,19 +929,31 @@ export default function TransactionsManagement() {
           <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>
               <p className="text-sm text-gray-700">
-                Showing <span className="font-medium">{indexOfFirstItem + 1}</span> to{" "}
-                <span className="font-medium">{Math.min(indexOfLastItem, filteredTransactions.length)}</span> of{" "}
-                <span className="font-medium">{filteredTransactions.length}</span> results
+                Showing{' '}
+                <span className="font-medium">{indexOfFirstItem + 1}</span> to{' '}
+                <span className="font-medium">
+                  {Math.min(indexOfLastItem, filteredTransactions.length)}
+                </span>{' '}
+                of{' '}
+                <span className="font-medium">
+                  {filteredTransactions.length}
+                </span>{' '}
+                results
                 {isFiltered && <span className="italic"> (filtered)</span>}
               </p>
             </div>
             <div>
-              <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+              <nav
+                className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                aria-label="Pagination"
+              >
                 <button
                   onClick={goToPreviousPage}
                   disabled={currentPage === 1}
                   className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium ${
-                    currentPage === 1 ? "text-gray-300 cursor-not-allowed" : "text-gray-500 hover:bg-gray-50"
+                    currentPage === 1
+                      ? 'text-gray-300 cursor-not-allowed'
+                      : 'text-gray-500 hover:bg-gray-50'
                   }`}
                 >
                   <span className="sr-only">Previous</span>
@@ -893,7 +973,7 @@ export default function TransactionsManagement() {
                 </button>
 
                 {getPageNumbers().map((pageNumber, index) =>
-                  pageNumber === "..." ? (
+                  pageNumber === '...' ? (
                     <span
                       key={`ellipsis-${index}`}
                       className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700"
@@ -904,16 +984,18 @@ export default function TransactionsManagement() {
                     <button
                       key={`page-${pageNumber}`}
                       onClick={() => goToPage(Number(pageNumber))}
-                      aria-current={currentPage === pageNumber ? "page" : undefined}
+                      aria-current={
+                        currentPage === pageNumber ? 'page' : undefined
+                      }
                       className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
                         currentPage === pageNumber
-                          ? "z-10 bg-blue-50 border-blue-500 text-blue-600"
-                          : "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
+                          ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
+                          : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
                       }`}
                     >
                       {pageNumber}
                     </button>
-                  ),
+                  )
                 )}
 
                 <button
@@ -921,8 +1003,8 @@ export default function TransactionsManagement() {
                   disabled={currentPage === totalPages || totalPages === 0}
                   className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium ${
                     currentPage === totalPages || totalPages === 0
-                      ? "text-gray-300 cursor-not-allowed"
-                      : "text-gray-500 hover:bg-gray-50"
+                      ? 'text-gray-300 cursor-not-allowed'
+                      : 'text-gray-500 hover:bg-gray-50'
                   }`}
                 >
                   <span className="sr-only">Next</span>
@@ -946,5 +1028,5 @@ export default function TransactionsManagement() {
         </div>
       </div>
     </div>
-  )
+  );
 }
