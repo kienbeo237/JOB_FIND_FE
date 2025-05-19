@@ -1,38 +1,55 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
-import { Eye, EyeOff, Save, Trash2, Plus } from "lucide-react"
+import { useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
+import { Eye, EyeOff, Save, Trash2, Plus } from 'lucide-react';
 
 export default function TabSettingsPage() {
-  const [activeTab, setActiveTab] = useState("general")
+  const [activeTab, setActiveTab] = useState('general');
   const [tabVisibility, setTabVisibility] = useState({
     dashboard: true,
     jobs: true,
     candidates: true,
     analytics: true,
     settings: true,
-  })
+  });
 
   const toggleTabVisibility = (tab: string) => {
     setTabVisibility({
       ...tabVisibility,
       [tab]: !tabVisibility[tab as keyof typeof tabVisibility],
-    })
-  }
+    });
+  };
 
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-2xl font-bold mb-6">Tab Settings</h1>
 
-      <Tabs defaultValue="general" className="w-full" onValueChange={setActiveTab}>
+      <Tabs
+        defaultValue="general"
+        className="w-full"
+        onValueChange={setActiveTab}
+      >
         <TabsList className="grid w-full grid-cols-4 mb-8">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="appearance">Appearance</TabsTrigger>
@@ -40,16 +57,24 @@ export default function TabSettingsPage() {
           <TabsTrigger value="advanced">Advanced</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="general" className="space-y-4">
+        <TabsContent
+          value="general"
+          className="space-y-4 p-4 sm:p-6 md:p-8 lg:p-10"
+        >
           <Card>
             <CardHeader>
               <CardTitle>Tab Visibility</CardTitle>
-              <CardDescription>Control which tabs are visible in the admin interface</CardDescription>
+              <CardDescription>
+                Control which tabs are visible in the admin interface
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4 sm:p-6 md:p-8 lg:p-10">
               <div className="grid gap-4">
                 {Object.entries(tabVisibility).map(([tab, isVisible]) => (
-                  <div key={tab} className="flex items-center justify-between py-2 border-b border-gray-100">
+                  <div
+                    key={tab}
+                    className="flex items-center justify-between py-2 border-b border-gray-100"
+                  >
                     <div className="flex items-center gap-2">
                       {isVisible ? (
                         <Eye className="h-4 w-4 text-gray-500" />
@@ -86,12 +111,16 @@ export default function TabSettingsPage() {
                     className="flex items-center justify-between p-3 bg-gray-50 rounded-md cursor-move hover:bg-gray-100"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-gray-500 w-6 text-center">{index + 1}</span>
+                      <span className="text-gray-500 w-6 text-center">
+                        {index + 1}
+                      </span>
                       <span className="capitalize">{tab}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       {!tabVisibility[tab as keyof typeof tabVisibility] && (
-                        <span className="text-xs text-gray-400 italic">(Hidden)</span>
+                        <span className="text-xs text-gray-400 italic">
+                          (Hidden)
+                        </span>
                       )}
                       <Button variant="ghost" size="sm">
                         <Trash2 className="h-4 w-4 text-gray-400 hover:text-red-500" />
@@ -110,13 +139,18 @@ export default function TabSettingsPage() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="appearance" className="space-y-4">
+        <TabsContent
+          value="appearance"
+          className="space-y-4 p-4 sm:p-6 md:p-8 lg:p-10"
+        >
           <Card>
             <CardHeader>
               <CardTitle>Tab Style</CardTitle>
-              <CardDescription>Customize the appearance of tabs</CardDescription>
+              <CardDescription>
+                Customize the appearance of tabs
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 p-4 sm:p-6 md:p-8 lg:p-10">
               <div className="space-y-2">
                 <Label htmlFor="tab-style">Tab Style</Label>
                 <Select defaultValue="pills">
@@ -158,14 +192,19 @@ export default function TabSettingsPage() {
               <div className="space-y-2">
                 <Label htmlFor="tab-color">Accent Color</Label>
                 <div className="grid grid-cols-6 gap-2">
-                  {["bg-blue-500", "bg-green-500", "bg-purple-500", "bg-amber-500", "bg-rose-500", "bg-slate-500"].map(
-                    (color) => (
-                      <div
-                        key={color}
-                        className={`${color} h-8 w-full rounded-md cursor-pointer ring-offset-2 hover:ring-2 hover:ring-gray-400`}
-                      />
-                    ),
-                  )}
+                  {[
+                    'bg-blue-500',
+                    'bg-green-500',
+                    'bg-purple-500',
+                    'bg-amber-500',
+                    'bg-rose-500',
+                    'bg-slate-500',
+                  ].map(color => (
+                    <div
+                      key={color}
+                      className={`${color} h-8 w-full rounded-md cursor-pointer ring-offset-2 hover:ring-2 hover:ring-gray-400`}
+                    />
+                  ))}
                 </div>
               </div>
             </CardContent>
@@ -176,13 +215,18 @@ export default function TabSettingsPage() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="permissions" className="space-y-4">
+        <TabsContent
+          value="permissions"
+          className="space-y-4 p-4 sm:p-6 md:p-8 lg:p-10"
+        >
           <Card>
             <CardHeader>
               <CardTitle>Role-Based Tab Access</CardTitle>
-              <CardDescription>Control which user roles can access specific tabs</CardDescription>
+              <CardDescription>
+                Control which user roles can access specific tabs
+              </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 sm:p-6 md:p-8 lg:p-10">
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
                   <thead>
@@ -195,24 +239,33 @@ export default function TabSettingsPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {Object.keys(tabVisibility).map((tab) => (
+                    {Object.keys(tabVisibility).map(tab => (
                       <tr key={tab} className="border-b">
                         <td className="py-3 px-2 capitalize">{tab}</td>
                         <td className="text-center py-3 px-2">
-                          <Switch defaultChecked disabled aria-label={`Admin access to ${tab}`} />
-                        </td>
-                        <td className="text-center py-3 px-2">
-                          <Switch defaultChecked={tab !== "settings"} aria-label={`Manager access to ${tab}`} />
+                          <Switch
+                            defaultChecked
+                            disabled
+                            aria-label={`Admin access to ${tab}`}
+                          />
                         </td>
                         <td className="text-center py-3 px-2">
                           <Switch
-                            defaultChecked={!["settings", "analytics"].includes(tab)}
+                            defaultChecked={tab !== 'settings'}
+                            aria-label={`Manager access to ${tab}`}
+                          />
+                        </td>
+                        <td className="text-center py-3 px-2">
+                          <Switch
+                            defaultChecked={
+                              !['settings', 'analytics'].includes(tab)
+                            }
                             aria-label={`Editor access to ${tab}`}
                           />
                         </td>
                         <td className="text-center py-3 px-2">
                           <Switch
-                            defaultChecked={["dashboard", "jobs"].includes(tab)}
+                            defaultChecked={['dashboard', 'jobs'].includes(tab)}
                             aria-label={`Viewer access to ${tab}`}
                           />
                         </td>
@@ -231,13 +284,18 @@ export default function TabSettingsPage() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="advanced" className="space-y-4">
+        <TabsContent
+          value="advanced"
+          className="space-y-4 p-4 sm:p-6 md:p-8 lg:p-10"
+        >
           <Card>
             <CardHeader>
               <CardTitle>Custom Tab Configuration</CardTitle>
-              <CardDescription>Advanced settings for tab behavior and functionality</CardDescription>
+              <CardDescription>
+                Advanced settings for tab behavior and functionality
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4 sm:p-6 md:p-8 lg:p-10s">
               <div className="space-y-2">
                 <Label htmlFor="tab-transition">Tab Transition</Label>
                 <Select defaultValue="fade">
@@ -271,7 +329,9 @@ export default function TabSettingsPage() {
               <div className="flex items-center justify-between py-2">
                 <div className="space-y-0.5">
                   <Label htmlFor="lazy-loading">Lazy Loading</Label>
-                  <p className="text-sm text-gray-500">Only load tab content when activated</p>
+                  <p className="text-sm text-gray-500">
+                    Only load tab content when activated
+                  </p>
                 </div>
                 <Switch id="lazy-loading" defaultChecked />
               </div>
@@ -279,14 +339,20 @@ export default function TabSettingsPage() {
               <div className="flex items-center justify-between py-2">
                 <div className="space-y-0.5">
                   <Label htmlFor="remember-last">Remember Last Tab</Label>
-                  <p className="text-sm text-gray-500">Return to the last active tab on page reload</p>
+                  <p className="text-sm text-gray-500">
+                    Return to the last active tab on page reload
+                  </p>
                 </div>
                 <Switch id="remember-last" defaultChecked />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="custom-css">Custom CSS</Label>
-                <Input id="custom-css" placeholder=".tab { border-radius: 8px; }" className="font-mono text-sm" />
+                <Input
+                  id="custom-css"
+                  placeholder=".tab { border-radius: 8px; }"
+                  className="font-mono text-sm"
+                />
               </div>
             </CardContent>
             <CardFooter className="flex justify-between">
@@ -297,5 +363,5 @@ export default function TabSettingsPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
