@@ -8,47 +8,52 @@ export default function CandidateDashboard() {
   return (
     <div>
       {/* Profile Section */}
-      <Card className="mb-8">
-        <CardContent className="p-6">
-          <div className="flex items-start gap-6">
-            <div className="w-24 h-24 bg-teal-700 text-white flex items-center justify-center text-4xl font-medium rounded-md">
+      <Card className="mb-6 sm:mb-8">
+        <CardContent className="p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-teal-700 text-white flex items-center justify-center text-3xl sm:text-4xl font-medium rounded-md mx-0">
               VD
             </div>
-            <div className="flex-1">
-              <h2 className="text-xl font-medium text-gray-900">VŨ ĐỨC</h2>
-              <p className="text-gray-600 mb-2">Chưa cập nhật</p>
-              <p className="text-gray-600 mb-2">0510vuduc@gmail.com</p>
-              <p className="text-gray-600 mb-2">Chưa cập nhật</p>
-              <p className="text-gray-600">Chưa cập nhật</p>
-              <div className="mt-4">
-                <Button variant="outline" size="sm" className="text-teal-600 border-teal-600 hover:bg-teal-50">
-                  <Edit className="w-4 h-4 mr-2" />
+            <div className="flex-1 mt-3 sm:mt-0 text-left">
+              <h2 className="text-lg sm:text-xl font-medium text-gray-900">VŨ ĐỨC</h2>
+              <p className="text-sm sm:text-base text-gray-600 mb-1 sm:mb-2">Chưa cập nhật</p>
+              <p className="text-sm sm:text-base text-gray-600 mb-1 sm:mb-2">0510vuduc@gmail.com</p>
+              <p className="text-sm sm:text-base text-gray-600 mb-1 sm:mb-2">Chưa cập nhật</p>
+              <p className="text-sm sm:text-base text-gray-600">Chưa cập nhật</p>
+              <div className="mt-3 sm:mt-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-teal-600 border-teal-600 hover:bg-teal-50 text-xs sm:text-sm"
+                >
+                  <Edit className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   Chỉnh sửa
                 </Button>
               </div>
             </div>
-            <div className="w-1/3">
-              <div className="mb-4">
-                <div className="flex justify-between mb-1">
-                  <span className="text-red-600 font-medium">18%</span>
-                  <span className="text-gray-600 text-sm">Tỉ lệ hoàn thiện hồ sơ</span>
-                </div>
-                <Progress value={18} className="h-2 bg-gray-200" indicatorClassName="bg-red-500" />
-              </div>
+          </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-50 p-3 rounded-md">
-                  <div className="text-blue-600 text-center text-xl font-medium">0</div>
-                  <div className="text-blue-600 text-center text-xs">Lượt xem hồ sơ trong tháng</div>
-                </div>
-                <div className="bg-green-50 p-3 rounded-md">
-                  <div className="text-green-600 text-center text-xl font-medium">0</div>
-                  <div className="text-green-600 text-center text-xs">Lượt xem hồ sơ trong tuần</div>
-                </div>
-                <div className="bg-yellow-50 p-3 rounded-md">
-                  <div className="text-yellow-600 text-center text-xl font-medium">0</div>
-                  <div className="text-yellow-600 text-center text-xs">Lượt xem hồ sơ trong năm</div>
-                </div>
+          <div className="mt-4 sm:mt-6">
+            <div className="mb-2 sm:mb-4">
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-red-600 font-medium text-sm sm:text-base">18%</span>
+                <span className="text-gray-600 text-xs sm:text-sm">Tỉ lệ hoàn thiện hồ sơ</span>
+              </div>
+              <Progress value={18} className="h-1.5 sm:h-2 bg-gray-200" indicatorClassName="bg-red-500" />
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
+              <div className="bg-blue-50 p-2 sm:p-3 rounded-md">
+                <div className="text-blue-600 text-center text-base sm:text-xl font-medium">0</div>
+                <div className="text-blue-600 text-center text-[10px] sm:text-xs">Lượt xem hồ sơ trong tháng</div>
+              </div>
+              <div className="bg-green-50 p-2 sm:p-3 rounded-md">
+                <div className="text-green-600 text-center text-base sm:text-xl font-medium">0</div>
+                <div className="text-green-600 text-center text-[10px] sm:text-xs">Lượt xem hồ sơ trong tuần</div>
+              </div>
+              <div className="bg-yellow-50 p-2 sm:p-3 rounded-md">
+                <div className="text-yellow-600 text-center text-base sm:text-xl font-medium">0</div>
+                <div className="text-yellow-600 text-center text-[10px] sm:text-xs">Lượt xem hồ sơ trong năm</div>
               </div>
             </div>
           </div>
@@ -56,8 +61,8 @@ export default function CandidateDashboard() {
       </Card>
 
       {/* CV Section */}
-      <Card className="mb-8">
-        <CardContent className="p-6">
+      <Card className="mb-6 sm:mb-8">
+        <CardContent className="p-4 sm:p-6">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-base font-medium text-gray-700">CV của bạn</h2>
             <Link href="/candidate/cv-management" className="text-green-600 hover:underline text-sm flex items-center">
@@ -170,7 +175,7 @@ export default function CandidateDashboard() {
       </Card>
 
       {/* Dashboard Widgets */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-center mb-4">

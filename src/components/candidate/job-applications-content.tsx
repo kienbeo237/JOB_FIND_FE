@@ -157,7 +157,11 @@ const JobApplicationsContent = () => {
         <Card className="mb-8">
           <CardContent className="p-0">
             <div className="flex flex-col items-center text-center py-12">
-              <img src="/empty-state-illustration.png" alt="Không có thư xin việc yêu thích" className="w-40 h-40 mb-6" />
+              <img
+                src="/empty-state-illustration.png"
+                alt="Không có thư xin việc yêu thích"
+                className="w-40 h-40 mb-6"
+              />
               <p className="text-gray-600">Bạn chưa thích thư xin việc nào</p>
             </div>
           </CardContent>

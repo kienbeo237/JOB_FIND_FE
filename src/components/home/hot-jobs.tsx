@@ -115,34 +115,36 @@ export default function HotJobs() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredJobs.map((job) => (
-            <Card
-              key={job.id}
-              className="overflow-hidden hover:shadow-lg transition-shadow border border-gray-200 relative"
-            >
-              {job.isHot && <Badge className="absolute top-2 right-2 z-10 bg-[#ea384c] text-white">Hot</Badge>}
-              <CardContent className="p-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-[120px] h-[120px] flex-shrink-0 flex items-center justify-center border border-gray-200 rounded-md p-2">
-                    <Image
-                      src={job.logo || "/placeholder.svg"}
-                      alt={job.company}
-                      width={100}
-                      height={100}
-                      className="w-full h-full object-contain"
-                    />
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+            {filteredJobs.map((job) => (
+              <Card
+                key={job.id}
+                className="overflow-hidden hover:shadow-lg transition-shadow border border-gray-200 relative"
+              >
+                {job.isHot && <Badge className="absolute top-2 right-2 z-10 bg-[#ea384c] text-white">Hot</Badge>}
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-[120px] h-[120px] flex-shrink-0 flex items-center justify-center border border-gray-200 rounded-md p-2">
+                      <Image
+                        src={job.logo || "/placeholder.svg"}
+                        alt={job.company}
+                        width={100}
+                        height={100}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0 space-y-0.5">
+                      <h3 className="font-semibold text-xl truncate">{job.title}</h3>
+                      <p className="text-gray-600 text-base">{job.company}</p>
+                      <p className="text-[#ea384c] font-medium text-base">{job.salary}</p>
+                      <p className="text-gray-600 text-base">{job.location}</p>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0 space-y-0.5">
-                    <h3 className="font-semibold text-xl truncate">{job.title}</h3>
-                    <p className="text-gray-600 text-base">{job.company}</p>
-                    <p className="text-[#ea384c] font-medium text-base">{job.salary}</p>
-                    <p className="text-gray-600 text-base">{job.location}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -65,8 +65,16 @@
   }
 }
 
+/* Add this to prevent horizontal scrollbars */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* If you wish to disable all custom scrollbars, you might want to remove or modify these styles */
 .custom-scrollbar::-webkit-scrollbar {
-  height: 6px;
+  height: 0px; /* Change from 6px to 0px to hide horizontal scrollbars */
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {

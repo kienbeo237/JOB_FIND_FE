@@ -3,6 +3,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { useState } from "react"
 
 const jobCategories = [
   { id: "all", label: "Tất cả" },
@@ -172,17 +173,22 @@ const jobs = [
 ]
 
 export default function UrgentJobs() {
+  const [visibleJobs, setVisibleJobs] = useState(6)
+
+  const showMoreJobs = () => {
+    setVisibleJobs((prev) => prev + 6)
+  }
   return (
     <section className="py-12 bg-white">
-      <div className="container px-4 mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-green-600">Việc Làm Tuyển Gấp</h2>
-          <Link href="/viec-lam/gap" className="text-green-500 hover:underline flex items-center text-sm">
+      <div className="container px-4 sm:px-6 mx-auto max-w-7xl">
+        <div className="flex justify-between items-center mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-green-600">Việc Làm Tuyển Gấp</h2>
+          <Link href="/viec-lam/gap" className="text-green-500 hover:underline flex items-center text-xs sm:text-sm">
             Xem tất cả
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width="16"
+              height="16"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -198,11 +204,13 @@ export default function UrgentJobs() {
         </div>
 
         <div className="relative mb-5">
-          <div className="flex items-center gap-2 overflow-x-auto pb-3 scrollbar-hide">
+          <div className="flex items-center gap-2 overflow-x-auto pb-3 scrollbar-hide -mx-1 px-1">
             {jobCategories.map((category) => (
               <button
                 key={category.id}
-                className={`px-3 py-1 rounded-full border border-gray-200 hover:border-green-500 whitespace-nowrap text-xs ${category.id === "all" ? "bg-green-500 text-white border-green-500" : ""}`}
+                className={`px-3 py-1.5 rounded-full border border-gray-200 hover:border-green-500 whitespace-nowrap text-xs sm:text-sm flex-shrink-0 ${
+                  category.id === "all" ? "bg-green-500 text-white border-green-500" : ""
+                }`}
               >
                 {category.label}
               </button>
@@ -210,8 +218,8 @@ export default function UrgentJobs() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {jobs.map((job) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          {jobs.slice(0, visibleJobs).map((job) => (
             <Card
               key={job.id}
               className="overflow-hidden hover:shadow-lg transition-shadow border border-gray-200 relative"
@@ -219,9 +227,9 @@ export default function UrgentJobs() {
               <Badge variant="destructive" className="absolute top-2 right-2 z-10 bg-[#ea384c] text-white">
                 Urgent
               </Badge>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-[120px] h-[120px] flex-shrink-0 flex items-center justify-center border border-gray-200 rounded-md p-2">
+              <CardContent className="p-3 sm:p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] flex-shrink-0 flex items-center justify-center border border-gray-200 rounded-md p-2">
                     <Image
                       src={job.logo || "/placeholder.svg"}
                       alt={job.company}
@@ -231,16 +239,26 @@ export default function UrgentJobs() {
                     />
                   </div>
                   <div className="flex-1 min-w-0 space-y-0.5">
-                    <h3 className="font-semibold text-xl truncate">{job.title}</h3>
-                    <p className="text-gray-600 text-base">{job.company}</p>
-                    <p className="text-[#ea384c] font-medium text-base">{job.salary}</p>
-                    <p className="text-gray-600 text-base">{job.location}</p>
+                    <h3 className="font-semibold text-lg sm:text-xl truncate">{job.title}</h3>
+                    <p className="text-gray-600 text-sm sm:text-base">{job.company}</p>
+                    <p className="text-[#ea384c] font-medium text-sm:text-base">{job.salary}</p>
+                    <p className="text-gray-600 text-sm sm:text-base truncate">{job.location}</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
+        {visibleJobs < jobs.length && (
+          <div className="mt-6 text-center">
+            <button
+              onClick={showMoreJobs}
+              className="px-4 py-2 bg-green-50 text-green-600 rounded-md hover:bg-green-100 transition-colors font-medium text-sm"
+            >
+              Xem thêm việc làm
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )

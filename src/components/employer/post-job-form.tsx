@@ -327,7 +327,7 @@ const PostJobForm = () => {
                 </Label>
                 <div className="flex items-center mb-2">
                   <span className="text-sm text-gray-500 mr-2">Soạn Mô Tả</span>
-                  <span className="text-sm text-blue-600">Gợi ý AI</span>
+                  <span className="text-sm text-blue-600">G��i ý AI</span>
                 </div>
                 <div className="border rounded-md overflow-hidden">
                   <div className="flex bg-gray-100 border-b p-2">

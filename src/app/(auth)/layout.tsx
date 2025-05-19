@@ -1,17 +1,17 @@
-'use client';
+"use client"
 
-import type React from 'react';
+import type React from "react"
 
-import { useEffect } from 'react';
+import { useEffect } from "react"
 
 export default function AuthLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    window.scrollTo(0, 0)
+  }, [])
 
-  return <>{children}</>;
+  return <>{children}</>
 }

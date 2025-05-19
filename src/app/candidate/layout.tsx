@@ -1,43 +1,43 @@
-'use client';
+"use client"
 
-import type { ReactNode } from 'react';
-import { Toaster } from '@/components/ui/toaster';
-import { ThemeProvider } from '@/components/theme-provider';
-import { useState, useEffect } from 'react';
-import ProfileContent from '../../components/candidate/profile-content';
-import CVManagementContent from '../../components/candidate/cv-management-content';
-import CreateCVContent from '../../components/candidate/create-cv-content';
-import JobApplicationsContent from '../../components/candidate/job-applications-content';
-import ScheduleContent from '../../components/candidate/schedule-content';
-import VideoContent from '../../components/candidate/video-content';
-import AudioContent from '../../components/candidate/audio-content';
-import AppliedJobsContent from '../../components/candidate/applied-jobs-content';
-import SavedJobsContent from '../../components/candidate/saved-jobs-content';
-import FollowingCompaniesContent from '../../components/candidate/following-companies-content';
-import MatchingJobsContent from '../../components/candidate/matching-jobs-content';
-import JobSuggestionsContent from '../../components/candidate/job-suggestions-content';
-import MessagesContent from '../../components/candidate/messages-content';
-import ChangePasswordContent from '../../components/candidate/change-password-content';
+import type { ReactNode } from "react"
+import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from "@/components/theme-provider"
+import { useState, useEffect } from "react"
+import ProfileContent from "../../components/candidate/profile-content"
+import CVManagementContent from "../../components/candidate/cv-management-content"
+import CreateCVContent from "../../components/candidate/create-cv-content"
+import JobApplicationsContent from "../../components/candidate/job-applications-content"
+import ScheduleContent from "../../components/candidate/schedule-content"
+import VideoContent from "../../components/candidate/video-content"
+import AudioContent from "../../components/candidate/audio-content"
+import AppliedJobsContent from "../../components/candidate/applied-jobs-content"
+import SavedJobsContent from "../../components/candidate/saved-jobs-content"
+import FollowingCompaniesContent from "../../components/candidate/following-companies-content"
+import MatchingJobsContent from "../../components/candidate/matching-jobs-content"
+import JobSuggestionsContent from "../../components/candidate/job-suggestions-content"
+import MessagesContent from "../../components/candidate/messages-content"
+import ChangePasswordContent from "../../components/candidate/change-password-content"
 
 export default function CandidateLayout({ children }: { children: ReactNode }) {
-  const [activeTab, setActiveTab] = useState<string>('dashboard');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>("dashboard")
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const handleSetActiveTab = (e: any) => {
-      setIsLoading(true);
+      setIsLoading(true)
       setTimeout(() => {
-        setActiveTab(e.detail);
-        setIsLoading(false);
-      }, 500);
-    };
+        setActiveTab(e.detail)
+        setIsLoading(false)
+      }, 500)
+    }
 
-    window.addEventListener('setActiveTab', handleSetActiveTab);
+    window.addEventListener("setActiveTab", handleSetActiveTab)
     return () => {
-      window.removeEventListener('setActiveTab', handleSetActiveTab);
-    };
-  }, []);
+      window.removeEventListener("setActiveTab", handleSetActiveTab)
+    }
+  }, [])
 
   const renderContent = () => {
     if (isLoading) {
@@ -45,64 +45,99 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
         </div>
-      );
+      )
     }
 
     switch (activeTab) {
-      case 'profile':
-        return <ProfileContent />;
-      case 'cv-management':
-        return <CVManagementContent />;
-      case 'create-cv':
-        return <CreateCVContent />;
-      case 'job-applications':
-        return <JobApplicationsContent />;
-      case 'schedule':
-        return <ScheduleContent />;
-      case 'video':
-        return <VideoContent />;
-      case 'audio':
-        return <AudioContent />;
-      case 'applied-jobs':
-        return <AppliedJobsContent />;
-      case 'saved-jobs':
-        return <SavedJobsContent />;
-      case 'matching-jobs':
-        return <MatchingJobsContent />;
-      case 'job-suggestions':
-        return <JobSuggestionsContent />;
-      case 'following-companies':
-        return <FollowingCompaniesContent />;
-      case 'messages':
-        return <MessagesContent />;
-      case 'change-password':
-        return <ChangePasswordContent />;
+      case "profile":
+        return <ProfileContent />
+      case "cv-management":
+        return <CVManagementContent />
+      case "create-cv":
+        return <CreateCVContent />
+      case "job-applications":
+        return <JobApplicationsContent />
+      case "schedule":
+        return <ScheduleContent />
+      case "video":
+        return <VideoContent />
+      case "audio":
+        return <AudioContent />
+      case "applied-jobs":
+        return <AppliedJobsContent />
+      case "saved-jobs":
+        return <SavedJobsContent />
+      case "matching-jobs":
+        return <MatchingJobsContent />
+      case "job-suggestions":
+        return <JobSuggestionsContent />
+      case "following-companies":
+        return <FollowingCompaniesContent />
+      case "messages":
+        return <MessagesContent />
+      case "change-password":
+        return <ChangePasswordContent />
       default:
-        return children;
+        return children
     }
-  };
+  }
 
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       <div className="flex min-h-screen bg-gray-50">
-        <div className="w-64 border-r border-gray-200 bg-white">
+        {/* Mobile sidebar backdrop */}
+        {mobileMenuOpen && (
+          <div
+            className="fixed inset-0 z-40 bg-gray-600 bg-opacity-75 md:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+
+        {/* Sidebar for mobile */}
+        <div
+          className={`fixed inset-y-0 left-0 z-50 w-full max-w-xs transform bg-white transition duration-300 ease-in-out md:relative md:translate-x-0 md:w-64 md:z-0 ${
+            mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
           <div className="h-full flex flex-col">
+            <div className="flex items-center justify-between p-4 md:hidden">
+              <div className="flex items-center">
+                <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600">
+                  VĐ
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-700">Vũ Đức</p>
+                  <p className="text-xs text-gray-500">Ứng viên</p>
+                </div>
+              </div>
+              <button onClick={() => setMobileMenuOpen(false)} className="text-gray-500 hover:text-gray-700">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
             <div className="flex-1 overflow-auto py-2">
               <nav className="space-y-1 px-2">
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'dashboard',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "dashboard",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'dashboard'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "dashboard"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -127,18 +162,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'profile',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "profile",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'profile'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "profile"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -161,18 +196,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'cv-management',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "cv-management",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'cv-management'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "cv-management"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -198,18 +233,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'create-cv',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "create-cv",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'create-cv'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "create-cv"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -234,18 +269,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'job-applications',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "job-applications",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'job-applications'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "job-applications"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -268,18 +303,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'schedule',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "schedule",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'schedule'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "schedule"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -304,18 +339,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'video',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "video",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'video'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "video"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -338,18 +373,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'audio',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "audio",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'audio'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "audio"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -374,18 +409,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'applied-jobs',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "applied-jobs",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'applied-jobs'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "applied-jobs"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -408,18 +443,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'saved-jobs',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "saved-jobs",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'saved-jobs'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "saved-jobs"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -441,18 +476,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'matching-jobs',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "matching-jobs",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'matching-jobs'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "matching-jobs"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -479,18 +514,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'job-suggestions',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "job-suggestions",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'job-suggestions'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "job-suggestions"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -513,18 +548,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'following-companies',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "following-companies",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'following-companies'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "following-companies"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -547,18 +582,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'messages',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "messages",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'messages'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "messages"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -580,18 +615,18 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
 
                 <button
                   onClick={() => {
-                    if (typeof window !== 'undefined') {
-                      const event = new CustomEvent('setActiveTab', {
-                        detail: 'change-password',
-                      });
-                      window.dispatchEvent(event);
-                      setMobileMenuOpen(false);
+                    if (typeof window !== "undefined") {
+                      const event = new CustomEvent("setActiveTab", {
+                        detail: "change-password",
+                      })
+                      window.dispatchEvent(event)
+                      setMobileMenuOpen(false)
                     }
                   }}
                   className={`flex items-center px-3 py-2 text-sm rounded-md group w-full text-left ${
-                    activeTab === 'change-password'
-                      ? 'bg-orange-50 text-orange-600'
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                    activeTab === "change-password"
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-700 hover:bg-orange-50 hover:text-orange-600"
                   }`}
                 >
                   <svg
@@ -629,44 +664,63 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
         </div>
         <div className="flex-1">
           <main className="flex-1 overflow-auto">
-            <header className="sticky top-0 z-10 bg-white border-b border-gray-200 py-4 px-6">
+            <header className="sticky top-0 z-10 bg-white border-b border-gray-200 py-2 sm:py-4 px-3 sm:px-6">
               <div className="flex justify-between items-center">
-                <h1 className="text-xl font-bold">
-                  {activeTab === 'profile'
-                    ? 'Thông tin cá nhân'
-                    : activeTab === 'cv-management'
-                    ? 'Quản lý CV'
-                    : activeTab === 'create-cv'
-                    ? 'Tạo mới CV'
-                    : activeTab === 'job-applications'
-                    ? 'Thư xin việc'
-                    : activeTab === 'schedule'
-                    ? 'Sơ yếu lý lịch'
-                    : activeTab === 'video'
-                    ? 'Video giới thiệu'
-                    : activeTab === 'audio'
-                    ? 'Audio giới thiệu'
-                    : activeTab === 'applied-jobs'
-                    ? 'Việc làm đã ứng tuyển'
-                    : activeTab === 'saved-jobs'
-                    ? 'Việc làm đã lưu'
-                    : activeTab === 'matching-jobs'
-                    ? 'Việc làm phù hợp'
-                    : activeTab === 'job-suggestions'
-                    ? 'Việc làm gợi ý'
-                    : activeTab === 'following-companies'
-                    ? 'Công ty đang theo dõi'
-                    : activeTab === 'messages'
-                    ? 'Tin nhắn'
-                    : activeTab === 'change-password'
-                    ? 'Đổi mật khẩu'
-                    : 'Tổng quan'}
-                </h1>
-                <div className="flex gap-2">
-                  <button className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    className="md:hidden -ml-0.5 -mt-0.5 h-10 w-10 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none"
+                    onClick={() => setMobileMenuOpen(true)}
+                  >
+                    <span className="sr-only">Open sidebar</span>
+                    <svg
+                      className="h-5 w-5"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                  </button>
+                  <h1 className="text-base sm:text-lg md:text-xl font-bold truncate max-w-[180px] sm:max-w-xs md:max-w-none">
+                    {activeTab === "profile"
+                      ? "Thông tin cá nhân"
+                      : activeTab === "cv-management"
+                        ? "Quản lý CV"
+                        : activeTab === "create-cv"
+                          ? "Tạo mới CV"
+                          : activeTab === "job-applications"
+                            ? "Thư xin việc"
+                            : activeTab === "schedule"
+                              ? "Sơ yếu lý lịch"
+                              : activeTab === "video"
+                                ? "Video giới thiệu"
+                                : activeTab === "audio"
+                                  ? "Audio giới thiệu"
+                                  : activeTab === "applied-jobs"
+                                    ? "Việc làm đã ứng tuyển"
+                                    : activeTab === "saved-jobs"
+                                      ? "Việc làm đã lưu"
+                                      : activeTab === "matching-jobs"
+                                        ? "Việc làm phù hợp"
+                                        : activeTab === "job-suggestions"
+                                          ? "Việc làm gợi ý"
+                                          : activeTab === "following-companies"
+                                            ? "Công ty đang theo dõi"
+                                            : activeTab === "messages"
+                                              ? "Tin nhắn"
+                                              : activeTab === "change-password"
+                                                ? "Đổi mật khẩu"
+                                                : "Tổng quan"}
+                  </h1>
+                </div>
+                <div className="flex gap-1 sm:gap-2">
+                  <button className="inline-flex items-center p-1.5 sm:px-3 sm:py-1.5 border border-gray-300 shadow-sm text-xs sm:text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
+                      className="h-4 w-4 sm:mr-2"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -677,22 +731,34 @@ export default function CandidateLayout({ children }: { children: ReactNode }) {
                       <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                       <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                     </svg>
-                    Thông báo
+                    <span className="hidden sm:inline">Thông báo</span>
                   </button>
-                  <button className="inline-flex items-center px-3 py-1.5 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none">
-                    Tìm việc ngay
+                  <button className="inline-flex items-center px-2 py-1.5 sm:px-3 sm:py-1.5 border border-transparent shadow-sm text-xs sm:text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none">
+                    <span className="hidden sm:inline">Tìm việc</span>
+                    <span className="sm:hidden">Tìm</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 ml-1"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="11" cy="11" r="8" />
+                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
                   </button>
                 </div>
               </div>
             </header>
 
-            <div className="container mx-auto py-8 px-4 md:px-6">
-              {renderContent()}
-            </div>
+            <div className="container mx-auto py-8 px-4 md:px-6">{renderContent()}</div>
           </main>
         </div>
       </div>
       <Toaster />
     </ThemeProvider>
-  );
+  )
 }

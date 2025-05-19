@@ -1,79 +1,57 @@
-import Link from 'next/link';
-import { ArrowLeft, Eye, Upload } from 'lucide-react';
+import Link from "next/link"
+import { ArrowLeft, Eye, Upload } from "lucide-react"
 
 export default function EmployerRegisterPage() {
-  if (typeof window !== 'undefined') {
-    window.scrollTo(0, 0);
+  if (typeof window !== "undefined") {
+    window.scrollTo(0, 0)
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
-        <Link
-          href="/"
-          className="inline-flex items-center text-gray-600 hover:text-emerald-600 mb-8"
-        >
+        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-emerald-600 mb-8">
           <ArrowLeft className="mr-2" size={18} />
           <span>Quay lại</span>
         </Link>
 
         <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-sm">
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">
-            Đăng ký tài khoản nhà tuyển dụng
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">Đăng ký tài khoản nhà tuyển dụng</h1>
           <p className="text-gray-600 mb-6">
-            Cùng tạo dựng lợi thế cho doanh nghiệp trước hàng triệu ứng viên
-            tiềm năng
+            Cùng tạo dựng lợi thế cho doanh nghiệp trước hàng triệu ứng viên tiềm năng
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <div className="border border-dashed border-emerald-300 rounded-lg p-6 flex flex-col items-center justify-center bg-emerald-50">
               <Upload size={32} className="text-emerald-500 mb-2" />
-              <h3 className="text-center text-emerald-700 font-medium mb-1">
-                Tải lên logo công ty
-              </h3>
-              <p className="text-xs text-center text-gray-500 mb-2">
-                File PNG, JPEG dưới 1 MB
-              </p>
+              <h3 className="text-center text-emerald-700 font-medium mb-1">Tải lên logo công ty</h3>
+              <p className="text-xs text-center text-gray-500 mb-2">File PNG, JPEG dưới 1 MB</p>
               <button className="mt-2 px-4 py-2 bg-white border border-emerald-500 text-emerald-600 rounded-md text-sm hover:bg-emerald-50 transition-colors">
                 Chọn file
               </button>
-              <p className="text-xs text-center text-gray-500 mt-2">
-                Thu hút sự quan tâm của ứng viên
-              </p>
+              <p className="text-xs text-center text-gray-500 mt-2">Thu hút sự quan tâm của ứng viên</p>
             </div>
 
             <div className="border border-dashed border-emerald-300 rounded-lg p-6 flex flex-col items-center justify-center bg-emerald-50">
               <Upload size={32} className="text-emerald-500 mb-2" />
-              <h3 className="text-center text-emerald-700 font-medium mb-1">
-                Tải lên đăng ký kinh doanh công ty
-              </h3>
-              <p className="text-xs text-center text-gray-500 mb-2">
-                File PNG, JPEG dưới 1 MB
-              </p>
+              <h3 className="text-center text-emerald-700 font-medium mb-1">Tải lên đăng ký kinh doanh công ty</h3>
+              <p className="text-xs text-center text-gray-500 mb-2">File PNG, JPEG dưới 1 MB</p>
               <button className="mt-2 px-4 py-2 bg-white border border-emerald-500 text-emerald-600 rounded-md text-sm hover:bg-emerald-50 transition-colors">
                 Chọn file
               </button>
               <p className="text-xs text-center text-gray-500 mt-2">
-                Có thể cập nhật sau, khi cấp phát, tài khoản của bạn được định
-                danh uy tín
+                Có thể cập nhật sau, khi cấp phát, tài khoản của bạn được định danh uy tín
               </p>
             </div>
           </div>
 
           <div className="border-l-4 border-emerald-500 pl-4 py-2 bg-emerald-50 mb-8">
-            <h2 className="text-xl font-semibold text-emerald-700 mb-2">
-              Thông tin nhà tuyển dụng
-            </h2>
+            <h2 className="text-xl font-semibold text-emerald-700 mb-2">Thông tin nhà tuyển dụng</h2>
           </div>
 
           <form className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label
-                  htmlFor="company-name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="company-name" className="block text-sm font-medium text-gray-700 mb-1">
                   Tên doanh nghiệp <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -85,10 +63,7 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="tax-id"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="tax-id" className="block text-sm font-medium text-gray-700 mb-1">
                   Mã số thuế doanh nghiệp
                 </label>
                 <input
@@ -100,12 +75,8 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="display-name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Tên mong muốn hiển thị, rút gọn{' '}
-                  <span className="text-red-500">*</span>
+                <label htmlFor="display-name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Tên mong muốn hiển thị, rút gọn <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -116,10 +87,7 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="industry"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="industry" className="block text-sm font-medium text-gray-700 mb-1">
                   Ngành nghề
                 </label>
                 <input
@@ -131,10 +99,7 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="city"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
                   Thành phố <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -146,10 +111,7 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="employee-count"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="employee-count" className="block text-sm font-medium text-gray-700 mb-1">
                   Quy mô nhân sự
                 </label>
                 <input
@@ -161,10 +123,7 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="budget"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-1">
                   Ngân sách tuyển dụng hàng năm
                 </label>
                 <input
@@ -176,10 +135,7 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="recruitment-needs"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="recruitment-needs" className="block text-sm font-medium text-gray-700 mb-1">
                   Nhu cầu tuyển dụng cho doanh nghiệp
                 </label>
                 <input
@@ -192,19 +148,13 @@ export default function EmployerRegisterPage() {
             </div>
 
             <div className="border-l-4 border-green-500 pl-4 py-2 bg-green-50 mb-8">
-              <h2 className="text-xl font-semibold text-green-700 mb-2">
-                Thông tin đăng nhập
-              </h2>
+              <h2 className="text-xl font-semibold text-green-700 mb-2">Thông tin đăng nhập</h2>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label
-                  htmlFor="contact-name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Họ và tên người phụ trách{' '}
-                  <span className="text-red-500">*</span>
+                <label htmlFor="contact-name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Họ và tên người phụ trách <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -215,10 +165,7 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="title"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
                   Danh xưng
                 </label>
                 <input
@@ -230,10 +177,7 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="position"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="position" className="block text-sm font-medium text-gray-700 mb-1">
                   Chức vụ
                 </label>
                 <input
@@ -245,10 +189,7 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                   Số điện thoại <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -260,12 +201,8 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Email đăng nhập, xác thực{' '}
-                  <span className="text-red-500">*</span>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email đăng nhập, xác thực <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -273,16 +210,11 @@ export default function EmployerRegisterPage() {
                   placeholder="example@company.com"
                   className="w-full border border-gray-300 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 />
-                <p className="text-xs text-gray-500 mt-1">
-                  (Email công ty định danh nhanh hơn)
-                </p>
+                <p className="text-xs text-gray-500 mt-1">(Email công ty định danh nhanh hơn)</p>
               </div>
 
               <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                   Mật khẩu <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -299,10 +231,7 @@ export default function EmployerRegisterPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="confirm-password"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1">
                   Nhập lại mật khẩu <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -328,20 +257,14 @@ export default function EmployerRegisterPage() {
                 />
               </div>
               <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
-                Bằng việc đăng ký tài khoản, bạn đã đồng ý với{' '}
-                <Link
-                  href="/terms"
-                  className="text-emerald-600 hover:underline"
-                >
+                Bằng việc đăng ký tài khoản, bạn đã đồng ý với{" "}
+                <Link href="/terms" className="text-emerald-600 hover:underline">
                   Điều khoản dịch vụ
-                </Link>{' '}
-                và{' '}
-                <Link
-                  href="/privacy"
-                  className="text-emerald-600 hover:underline"
-                >
+                </Link>{" "}
+                và{" "}
+                <Link href="/privacy" className="text-emerald-600 hover:underline">
                   Chính sách bảo mật
-                </Link>{' '}
+                </Link>{" "}
                 của chúng tôi.
               </label>
             </div>
@@ -355,11 +278,8 @@ export default function EmployerRegisterPage() {
 
             <div className="text-center mt-4">
               <p className="text-gray-600">
-                Bạn đã có tài khoản?{' '}
-                <Link
-                  href="/employer/login"
-                  className="text-emerald-600 hover:text-emerald-700"
-                >
+                Bạn đã có tài khoản?{" "}
+                <Link href="/employer/login" className="text-emerald-600 hover:text-emerald-700">
                   Đăng nhập ngay
                 </Link>
               </p>
@@ -368,5 +288,5 @@ export default function EmployerRegisterPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

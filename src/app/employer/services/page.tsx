@@ -1,126 +1,121 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from "react"
+import Link from "next/link"
+import { Search } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 const EmployerActiveServicesPage = () => {
-  const [activeTab, setActiveTab] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedService, setSelectedService] = useState('');
+  const [activeTab, setActiveTab] = useState("all")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedService, setSelectedService] = useState("")
 
   const services = [
     {
       id: 1,
-      orderId: '#269',
-      name: 'Job VIP3',
-      createdDate: '13-03-2025',
+      orderId: "#269",
+      name: "Job VIP3",
+      createdDate: "13-03-2025",
       quantity: 1,
-      status: 'active',
+      status: "active",
       credits: 500,
     },
     {
       id: 2,
-      orderId: '#270',
-      name: 'CV Search PRO',
-      createdDate: '15-03-2025',
+      orderId: "#270",
+      name: "CV Search PRO",
+      createdDate: "15-03-2025",
       quantity: 1,
-      status: 'active',
+      status: "active",
       credits: 300,
     },
     {
       id: 3,
-      orderId: '#271',
-      name: 'Job POPULAR',
-      createdDate: '20-03-2025',
+      orderId: "#271",
+      name: "Job POPULAR",
+      createdDate: "20-03-2025",
       quantity: 2,
-      status: 'unused',
+      status: "unused",
       credits: 200,
     },
     {
       id: 4,
-      orderId: '#272',
-      name: 'Banner VIP1',
-      createdDate: '01-04-2025',
+      orderId: "#272",
+      name: "Banner VIP1",
+      createdDate: "01-04-2025",
       quantity: 1,
-      status: 'expired',
+      status: "expired",
       credits: 700,
     },
-  ];
+  ]
 
-  const filteredServices = services.filter(service => {
+  const filteredServices = services.filter((service) => {
     if (
-      activeTab !== 'all' &&
-      ((activeTab === 'unused' && service.status !== 'unused') ||
-        (activeTab === 'active' && service.status !== 'active') ||
-        (activeTab === 'expired' && service.status !== 'expired'))
+      activeTab !== "all" &&
+      ((activeTab === "unused" && service.status !== "unused") ||
+        (activeTab === "active" && service.status !== "active") ||
+        (activeTab === "expired" && service.status !== "expired"))
     ) {
-      return false;
+      return false
     }
 
-    if (
-      searchQuery &&
-      !service.orderId.toLowerCase().includes(searchQuery.toLowerCase())
-    ) {
-      return false;
+    if (searchQuery && !service.orderId.toLowerCase().includes(searchQuery.toLowerCase())) {
+      return false
     }
 
     if (selectedService && service.name !== selectedService) {
-      return false;
+      return false
     }
 
-    return true;
-  });
+    return true
+  })
 
-  const hasServices = filteredServices.length > 0;
+  const hasServices = filteredServices.length > 0
 
   return (
     <div className="p-6">
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <h1 className="text-xl font-bold text-teal-700 mb-6">
-          Dịch vụ của tôi
-        </h1>
+        <h1 className="text-xl font-bold text-teal-700 mb-6">Dịch vụ của tôi</h1>
 
         <div className="mb-6 border-b pb-1">
           <div className="flex overflow-x-auto">
             <button
               className={`px-4 py-2 whitespace-nowrap ${
-                activeTab === 'all'
-                  ? 'border-b-2 border-teal-600 text-teal-600 font-medium'
-                  : 'text-gray-500 hover:text-gray-700'
+                activeTab === "all"
+                  ? "border-b-2 border-teal-600 text-teal-600 font-medium"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
-              onClick={() => setActiveTab('all')}
+              onClick={() => setActiveTab("all")}
             >
               Tất cả
             </button>
             <button
               className={`px-4 py-2 whitespace-nowrap ${
-                activeTab === 'unused'
-                  ? 'border-b-2 border-teal-600 text-teal-600 font-medium'
-                  : 'text-gray-500 hover:text-gray-700'
+                activeTab === "unused"
+                  ? "border-b-2 border-teal-600 text-teal-600 font-medium"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
-              onClick={() => setActiveTab('unused')}
+              onClick={() => setActiveTab("unused")}
             >
               Chưa sử dụng
             </button>
             <button
               className={`px-4 py-2 whitespace-nowrap ${
-                activeTab === 'active'
-                  ? 'border-b-2 border-teal-600 text-teal-600 font-medium'
-                  : 'text-gray-500 hover:text-gray-700'
+                activeTab === "active"
+                  ? "border-b-2 border-teal-600 text-teal-600 font-medium"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
-              onClick={() => setActiveTab('active')}
+              onClick={() => setActiveTab("active")}
             >
               Đang sử dụng
             </button>
             <button
               className={`px-4 py-2 whitespace-nowrap ${
-                activeTab === 'expired'
-                  ? 'border-b-2 border-teal-600 text-teal-600 font-medium'
-                  : 'text-gray-500 hover:text-gray-700'
+                activeTab === "expired"
+                  ? "border-b-2 border-teal-600 text-teal-600 font-medium"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
-              onClick={() => setActiveTab('expired')}
+              onClick={() => setActiveTab("expired")}
             >
               Đã hết hạn
             </button>
@@ -135,12 +130,9 @@ const EmployerActiveServicesPage = () => {
                 placeholder="Mã đơn"
                 className="w-full px-3 py-2 pl-9 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                 value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={16}
-              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
             </div>
           </div>
 
@@ -148,7 +140,7 @@ const EmployerActiveServicesPage = () => {
             <select
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               value={selectedService}
-              onChange={e => setSelectedService(e.target.value)}
+              onChange={(e) => setSelectedService(e.target.value)}
             >
               <option value="">Gói dịch vụ</option>
               <option value="Job POPULAR">JOB POPULAR</option>
@@ -164,9 +156,9 @@ const EmployerActiveServicesPage = () => {
             <Button
               className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700"
               onClick={() => {
-                setSearchQuery('');
-                setSelectedService('');
-                setActiveTab('all');
+                setSearchQuery("")
+                setSelectedService("")
+                setActiveTab("all")
               }}
             >
               Tìm kiếm
@@ -194,36 +186,26 @@ const EmployerActiveServicesPage = () => {
                     <td className="px-4 py-3 text-sm">{service.orderId}</td>
                     <td className="px-4 py-3 text-sm">
                       <div>
-                        <p className="font-medium text-blue-600">
-                          {service.name}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          Ngày tạo đơn: {service.createdDate}
-                        </p>
+                        <p className="font-medium text-blue-600">{service.name}</p>
+                        <p className="text-xs text-gray-500">Ngày tạo đơn: {service.createdDate}</p>
                       </div>
                     </td>
                     <td className="px-4 py-3 text-sm">{service.quantity}</td>
                     <td className="px-4 py-3 text-sm">
-                      {service.status === 'active' && (
+                      {service.status === "active" && (
                         <span className="px-2.5 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">
                           Còn hiệu lực
                         </span>
                       )}
-                      {service.status === 'unused' && (
-                        <span className="px-2.5 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
-                          Chưa sử dụng
-                        </span>
+                      {service.status === "unused" && (
+                        <span className="px-2.5 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Chưa sử dụng</span>
                       )}
-                      {service.status === 'expired' && (
-                        <span className="px-2.5 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">
-                          Đã hết hạn
-                        </span>
+                      {service.status === "expired" && (
+                        <span className="px-2.5 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">Đã hết hạn</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-sm">
-                      <span className="text-blue-600">
-                        {service.credits} credits
-                      </span>
+                      <span className="text-blue-600">{service.credits} credits</span>
                     </td>
                   </tr>
                 ))}
@@ -232,17 +214,9 @@ const EmployerActiveServicesPage = () => {
           </div>
         ) : (
           <div className="text-center py-12">
-            <img
-              src="/no-services-found.png"
-              alt="No Services"
-              className="w-32 h-32 mx-auto mb-4"
-            />
-            <h3 className="text-lg font-medium mb-2">
-              Không tìm thấy dịch vụ nào
-            </h3>
-            <p className="text-gray-500 mb-4">
-              Bạn chưa có dịch vụ nào hoặc không có dịch vụ phù hợp với tìm kiếm
-            </p>
+            <img src="/no-services-found.png" alt="No Services" className="w-32 h-32 mx-auto mb-4" />
+            <h3 className="text-lg font-medium mb-2">Không tìm thấy dịch vụ nào</h3>
+            <p className="text-gray-500 mb-4">Bạn chưa có dịch vụ nào hoặc không có dịch vụ phù hợp với tìm kiếm</p>
             <Button
               className="inline-flex items-center px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700"
               asChild
@@ -253,7 +227,7 @@ const EmployerActiveServicesPage = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EmployerActiveServicesPage;
+export default EmployerActiveServicesPage

@@ -1,8 +1,8 @@
-'use client';
+"use client"
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
   User,
@@ -19,14 +19,14 @@ import {
   Building,
   Lock,
   Search,
-} from 'lucide-react';
+} from "lucide-react"
 
 const CandidateSidebar = () => {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   const isActive = (path: string) => {
-    return pathname === path;
-  };
+    return pathname === path
+  }
 
   return (
     <div className="h-full flex flex-col">
@@ -35,10 +35,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/dashboard"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/dashboard')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/dashboard")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <LayoutDashboard className="mr-3 h-5 w-5" />
@@ -48,10 +48,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/profile"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/profile')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/profile")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <User className="mr-3 h-5 w-5" />
@@ -61,10 +61,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/cv-management"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/cv-management')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/cv-management")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <FileText className="mr-3 h-5 w-5" />
@@ -74,10 +74,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/create-cv"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/create-cv')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/create-cv")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <FilePlus className="mr-3 h-5 w-5" />
@@ -87,10 +87,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/job-applications"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/job-applications')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/job-applications")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <Mail className="mr-3 h-5 w-5" />
@@ -100,10 +100,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/schedule"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/schedule')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/schedule")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <Calendar className="mr-3 h-5 w-5" />
@@ -113,10 +113,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/video"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/video')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/video")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <Video className="mr-3 h-5 w-5" />
@@ -126,10 +126,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/audio"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/audio')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/audio")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <AudioLines className="mr-3 h-5 w-5" />
@@ -139,10 +139,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/applied-jobs"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/applied-jobs')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/applied-jobs")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <Briefcase className="mr-3 h-5 w-5" />
@@ -152,10 +152,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/saved-jobs"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/saved-jobs')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/saved-jobs")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <Bookmark className="mr-3 h-5 w-5" />
@@ -165,10 +165,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/matching-jobs"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/matching-jobs')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/matching-jobs")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <PuzzleIcon className="mr-3 h-5 w-5" />
@@ -178,10 +178,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/job-alerts"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/job-alerts')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/job-alerts")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <Search className="mr-3 h-5 w-5" />
@@ -191,10 +191,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/following-companies"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/following-companies')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/following-companies")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <Building className="mr-3 h-5 w-5" />
@@ -204,10 +204,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/messages"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/messages')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/messages")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <MessageSquare className="mr-3 h-5 w-5" />
@@ -217,10 +217,10 @@ const CandidateSidebar = () => {
           <Link
             href="/candidate/change-password"
             className={cn(
-              'flex items-center px-3 py-2 text-sm rounded-md group',
-              isActive('/candidate/change-password')
-                ? 'bg-orange-50 text-orange-600'
-                : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+              "flex items-center px-3 py-2 text-sm rounded-md group",
+              isActive("/candidate/change-password")
+                ? "bg-orange-50 text-orange-600"
+                : "text-gray-700 hover:bg-orange-50 hover:text-orange-600",
             )}
           >
             <Lock className="mr-3 h-5 w-5" />
@@ -231,9 +231,7 @@ const CandidateSidebar = () => {
 
       <div className="p-4 border-t border-gray-200">
         <div className="flex items-center">
-          <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600">
-            VĐ
-          </div>
+          <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600">VĐ</div>
           <div className="ml-3">
             <p className="text-sm font-medium text-gray-700">Vũ Đức</p>
             <p className="text-xs text-gray-500">Ứng viên</p>
@@ -241,7 +239,7 @@ const CandidateSidebar = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CandidateSidebar;
+export default CandidateSidebar

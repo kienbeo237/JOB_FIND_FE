@@ -1,120 +1,114 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { Plus, Clock, Edit, Trash2, Eye, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from "react"
+import Link from "next/link"
+import { Plus, Clock, Edit, Trash2, Eye, Search } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 const jobsData = [
   {
     id: 1,
-    title: 'Frontend Developer',
-    location: 'TP. Hồ Chí Minh',
-    department: 'Engineering',
-    postedDate: '10/11/2023',
-    expiryDate: '10/12/2023',
+    title: "Frontend Developer",
+    location: "TP. Hồ Chí Minh",
+    department: "Engineering",
+    postedDate: "10/11/2023",
+    expiryDate: "10/12/2023",
     applicants: 18,
-    status: 'active',
+    status: "active",
   },
   {
     id: 2,
-    title: 'Product Manager',
-    location: 'TP. Hồ Chí Minh',
-    department: 'Product',
-    postedDate: '08/11/2023',
-    expiryDate: '08/12/2023',
+    title: "Product Manager",
+    location: "TP. Hồ Chí Minh",
+    department: "Product",
+    postedDate: "08/11/2023",
+    expiryDate: "08/12/2023",
     applicants: 12,
-    status: 'active',
+    status: "active",
   },
   {
     id: 3,
-    title: 'UX Designer',
-    location: 'TP. Hồ Chí Minh',
-    department: 'Design',
-    postedDate: '05/11/2023',
-    expiryDate: '05/12/2023',
+    title: "UX Designer",
+    location: "TP. Hồ Chí Minh",
+    department: "Design",
+    postedDate: "05/11/2023",
+    expiryDate: "05/12/2023",
     applicants: 9,
-    status: 'active',
+    status: "active",
   },
   {
     id: 4,
-    title: 'Backend Developer',
-    location: 'TP. Hồ Chí Minh',
-    department: 'Engineering',
-    postedDate: '01/11/2023',
-    expiryDate: '01/12/2023',
+    title: "Backend Developer",
+    location: "TP. Hồ Chí Minh",
+    department: "Engineering",
+    postedDate: "01/11/2023",
+    expiryDate: "01/12/2023",
     applicants: 8,
-    status: 'active',
+    status: "active",
   },
   {
     id: 5,
-    title: 'HR Manager',
-    location: 'TP. Hồ Chí Minh',
-    department: 'Human Resources',
-    postedDate: '25/10/2023',
-    expiryDate: '25/11/2023',
+    title: "HR Manager",
+    location: "TP. Hồ Chí Minh",
+    department: "Human Resources",
+    postedDate: "25/10/2023",
+    expiryDate: "25/11/2023",
     applicants: 5,
-    status: 'expired',
+    status: "expired",
   },
   {
     id: 6,
-    title: 'Finance Specialist',
-    location: 'TP. Hồ Chí Minh',
-    department: 'Finance',
-    postedDate: '20/10/2023',
-    expiryDate: '20/11/2023',
+    title: "Finance Specialist",
+    location: "TP. Hồ Chí Minh",
+    department: "Finance",
+    postedDate: "20/10/2023",
+    expiryDate: "20/11/2023",
     applicants: 7,
-    status: 'expired',
+    status: "expired",
   },
   {
     id: 7,
-    title: 'Marketing Coordinator',
-    location: 'Hà Nội',
-    department: 'Marketing',
-    postedDate: '15/10/2023',
-    expiryDate: '15/11/2023',
+    title: "Marketing Coordinator",
+    location: "Hà Nội",
+    department: "Marketing",
+    postedDate: "15/10/2023",
+    expiryDate: "15/11/2023",
     applicants: 4,
-    status: 'expired',
+    status: "expired",
   },
-];
+]
 
 export default function JobsPage() {
-  const [filter, setFilter] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [filter, setFilter] = useState("all")
+  const [searchTerm, setSearchTerm] = useState("")
 
-  const filteredJobs = jobsData.filter(job => {
-    const matchesFilter = filter === 'all' || job.status === filter;
+  const filteredJobs = jobsData.filter((job) => {
+    const matchesFilter = filter === "all" || job.status === filter
     const matchesSearch =
       job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.location.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFilter && matchesSearch;
-  });
+      job.location.toLowerCase().includes(searchTerm.toLowerCase())
+    return matchesFilter && matchesSearch
+  })
 
   const renderStatusBadge = (status: string) => {
     switch (status) {
-      case 'active':
+      case "active":
         return (
           <span className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-orange-100 text-orange-700">
             Đang hiển thị
           </span>
-        );
-      case 'expired':
+        )
+      case "expired":
+        return <span className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-700">Hết hạn</span>
+      case "draft":
         return (
-          <span className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-700">
-            Hết hạn
-          </span>
-        );
-      case 'draft':
-        return (
-          <span className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700">
-            Bản nháp
-          </span>
-        );
+          <span className="px-2.5 py-0.5 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700">Bản nháp</span>
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <div className="p-6">
@@ -140,7 +134,7 @@ export default function JobsPage() {
               <input
                 type="text"
                 value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Tìm theo chức danh, phòng ban, địa điểm..."
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
@@ -149,31 +143,25 @@ export default function JobsPage() {
 
           <div className="flex gap-2">
             <button
-              onClick={() => setFilter('all')}
+              onClick={() => setFilter("all")}
               className={`px-4 py-2 rounded-md font-medium ${
-                filter === 'all'
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                filter === "all" ? "bg-orange-500 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
               Tất cả
             </button>
             <button
-              onClick={() => setFilter('active')}
+              onClick={() => setFilter("active")}
               className={`px-4 py-2 rounded-md font-medium ${
-                filter === 'active'
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                filter === "active" ? "bg-orange-500 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
               Đang hiển thị
             </button>
             <button
-              onClick={() => setFilter('expired')}
+              onClick={() => setFilter("expired")}
               className={`px-4 py-2 rounded-md font-medium ${
-                filter === 'expired'
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                filter === "expired" ? "bg-orange-500 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
               Hết hạn
@@ -197,13 +185,11 @@ export default function JobsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {filteredJobs.map(job => (
+              {filteredJobs.map((job) => (
                 <tr key={job.id} className="text-sm hover:bg-gray-50">
                   <td className="px-6 py-4">
                     <div>
-                      <h3 className="font-medium text-blue-600 text-sm">
-                        {job.title}
-                      </h3>
+                      <h3 className="font-medium text-blue-600 text-sm">{job.title}</h3>
                       <div className="text-gray-500 text-xs mt-1">
                         <span>{job.department}</span>
                         <span className="mx-1">•</span>
@@ -276,13 +262,11 @@ export default function JobsPage() {
                 <path d="M2 14h16"></path>
               </svg>
             </div>
-            <h3 className="text-xl font-medium text-gray-700 mb-2">
-              Không tìm thấy tin tuyển dụng
-            </h3>
+            <h3 className="text-xl font-medium text-gray-700 mb-2">Không tìm thấy tin tuyển dụng</h3>
             <p className="text-gray-500 mb-6 text-sm">
               {searchTerm
-                ? 'Không có tin tuyển dụng nào phù hợp với tìm kiếm của bạn'
-                : 'Bạn chưa có tin tuyển dụng nào trong danh mục này'}
+                ? "Không có tin tuyển dụng nào phù hợp với tìm kiếm của bạn"
+                : "Bạn chưa có tin tuyển dụng nào trong danh mục này"}
             </p>
             <Button asChild className="bg-orange-500 hover:bg-orange-600">
               <Link href="/employer/jobs/create">
@@ -298,9 +282,8 @@ export default function JobsPage() {
       {filteredJobs.length > 0 && (
         <div className="flex items-center justify-between mt-6">
           <div className="text-sm text-gray-600">
-            Hiển thị <span className="font-medium">{filteredJobs.length}</span>{' '}
-            trong tổng số <span className="font-medium">{jobsData.length}</span>{' '}
-            tin tuyển dụng
+            Hiển thị <span className="font-medium">{filteredJobs.length}</span> trong tổng số{" "}
+            <span className="font-medium">{jobsData.length}</span> tin tuyển dụng
           </div>
 
           <div className="flex space-x-1">
@@ -323,5 +306,5 @@ export default function JobsPage() {
         </div>
       )}
     </div>
-  );
+  )
 }

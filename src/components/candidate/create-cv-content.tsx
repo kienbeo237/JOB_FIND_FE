@@ -1,34 +1,14 @@
-'use client';
+"use client"
 
-import { useState, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Checkbox } from '@/components/ui/checkbox';
+import { useState, useRef } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Camera,
   Calendar,
@@ -43,11 +23,11 @@ import {
   X,
   RefreshCw,
   Square,
-} from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+} from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 import {
   Dialog,
   DialogContent,
@@ -55,17 +35,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog"
 
 const formSchema = z.object({
-  fullName: z.string().min(2, 'Họ tên phải có ít nhất 2 ký tự'),
-  birthDate: z.string().min(1, 'Vui lòng chọn ngày sinh'),
+  fullName: z.string().min(2, "Họ tên phải có ít nhất 2 ký tự"),
+  birthDate: z.string().min(1, "Vui lòng chọn ngày sinh"),
   gender: z.string(),
   maritalStatus: z.string(),
   idNumber: z.string().optional(),
   citizenIdNumber: z.string().optional(),
-  email: z.string().email('Email không hợp lệ'),
-  phone: z.string().min(10, 'Số điện thoại phải có ít nhất 10 số'),
+  email: z.string().email("Email không hợp lệ"),
+  phone: z.string().min(10, "Số điện thoại phải có ít nhất 10 số"),
   introduction: z.string().optional(),
 
   province: z.string().optional(),
@@ -82,7 +62,7 @@ const formSchema = z.object({
         startDate: z.string().optional(),
         endDate: z.string().optional(),
         description: z.string().optional(),
-      })
+      }),
     )
     .optional(),
 
@@ -96,7 +76,7 @@ const formSchema = z.object({
         currentlyWorking: z.boolean().optional(),
         reasonForLeaving: z.string().optional(),
         description: z.string().optional(),
-      })
+      }),
     )
     .optional(),
 
@@ -105,434 +85,404 @@ const formSchema = z.object({
       z.object({
         name: z.string().optional(),
         level: z.string().optional(),
-      })
+      }),
     )
     .optional(),
 
   foundVia: z.array(z.string()).optional(),
   otherSource: z.string().optional(),
-});
+})
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof formSchema>
 
 export default function CreateCVContent() {
-  const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState('personal');
-  const [selectedTemplate, setSelectedTemplate] = useState<number | null>(null);
+  const { toast } = useToast()
+  const [activeTab, setActiveTab] = useState("personal")
+  const [selectedTemplate, setSelectedTemplate] = useState<number | null>(null)
 
-  const [photoDialogOpen, setPhotoDialogOpen] = useState(false);
-  const [videoDialogOpen, setVideoDialogOpen] = useState(false);
-  const [audioDialogOpen, setAudioDialogOpen] = useState(false);
+  const [photoDialogOpen, setPhotoDialogOpen] = useState(false)
+  const [videoDialogOpen, setVideoDialogOpen] = useState(false)
+  const [audioDialogOpen, setAudioDialogOpen] = useState(false)
 
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const [videoPreview, setVideoPreview] = useState<string | null>(null);
-  const [audioPreview, setAudioPreview] = useState<string | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null)
+  const [videoPreview, setVideoPreview] = useState<string | null>(null)
+  const [audioPreview, setAudioPreview] = useState<string | null>(null)
 
-  const [isRecording, setIsRecording] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
-  const [recordingInterval, setRecordingInterval] = useState<number | null>(
-    null
-  );
+  const [isRecording, setIsRecording] = useState(false)
+  const [recordingTime, setRecordingTime] = useState(0)
+  const [recordingInterval, setRecordingInterval] = useState<number | null>(null)
 
-  const photoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const photoRef = useRef<HTMLVideoElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const audioRef = useRef<HTMLAudioElement>(null)
 
-  const photoStreamRef = useRef<MediaStream | null>(null);
-  const videoStreamRef = useRef<MediaStream | null>(null);
-  const audioStreamRef = useRef<MediaStream | null>(null);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const chunksRef = useRef<Blob[]>([]);
+  const photoStreamRef = useRef<MediaStream | null>(null)
+  const videoStreamRef = useRef<MediaStream | null>(null)
+  const audioStreamRef = useRef<MediaStream | null>(null)
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null)
+  const chunksRef = useRef<Blob[]>([])
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: '',
-      birthDate: '',
-      gender: 'Nam',
-      maritalStatus: 'Độc thân',
-      idNumber: '',
-      citizenIdNumber: '',
-      email: '',
-      phone: '',
-      introduction: '',
-      province: '',
-      district: '',
-      ward: '',
-      streetAddress: '',
+      fullName: "",
+      birthDate: "",
+      gender: "Nam",
+      maritalStatus: "Độc thân",
+      idNumber: "",
+      citizenIdNumber: "",
+      email: "",
+      phone: "",
+      introduction: "",
+      province: "",
+      district: "",
+      ward: "",
+      streetAddress: "",
       education: [
         {
-          degree: '',
-          school: '',
-          major: '',
-          startDate: '',
-          endDate: '',
-          description: '',
+          degree: "",
+          school: "",
+          major: "",
+          startDate: "",
+          endDate: "",
+          description: "",
         },
       ],
       experience: [
         {
-          company: '',
-          position: '',
-          startDate: '',
-          endDate: '',
+          company: "",
+          position: "",
+          startDate: "",
+          endDate: "",
           currentlyWorking: false,
-          reasonForLeaving: '',
-          description: '',
+          reasonForLeaving: "",
+          description: "",
         },
       ],
-      skills: [{ name: '', level: 'Beginner' }],
+      skills: [{ name: "", level: "Beginner" }],
       foundVia: [],
-      otherSource: '',
+      otherSource: "",
     },
-  });
+  })
 
   const handleAddEducation = () => {
-    const currentEducation = form.getValues().education || [];
-    form.setValue('education', [
+    const currentEducation = form.getValues().education || []
+    form.setValue("education", [
       ...currentEducation,
       {
-        degree: '',
-        school: '',
-        major: '',
-        startDate: '',
-        endDate: '',
-        description: '',
+        degree: "",
+        school: "",
+        major: "",
+        startDate: "",
+        endDate: "",
+        description: "",
       },
-    ]);
-  };
+    ])
+  }
 
   const handleAddExperience = () => {
-    const currentExperience = form.getValues().experience || [];
-    form.setValue('experience', [
+    const currentExperience = form.getValues().experience || []
+    form.setValue("experience", [
       ...currentExperience,
       {
-        company: '',
-        position: '',
-        startDate: '',
-        endDate: '',
+        company: "",
+        position: "",
+        startDate: "",
+        endDate: "",
         currentlyWorking: false,
-        reasonForLeaving: '',
-        description: '',
+        reasonForLeaving: "",
+        description: "",
       },
-    ]);
-  };
+    ])
+  }
 
   const handleAddSkill = () => {
-    const currentSkills = form.getValues().skills || [];
-    form.setValue('skills', [
-      ...currentSkills,
-      { name: '', level: 'Beginner' },
-    ]);
-  };
+    const currentSkills = form.getValues().skills || []
+    form.setValue("skills", [...currentSkills, { name: "", level: "Beginner" }])
+  }
 
   const handleSubmit = (values: FormValues) => {
     toast({
-      title: 'CV đã được tạo',
-      description: 'CV của bạn đã được tạo thành công.',
-    });
-  };
+      title: "CV đã được tạo",
+      description: "CV của bạn đã được tạo thành công.",
+    })
+  }
 
   const handleAIGenerate = () => {
     toast({
-      title: 'Trợ lý AI',
-      description: 'AI đang phân tích thông tin của bạn để nâng cao CV...',
-    });
-  };
+      title: "Trợ lý AI",
+      description: "AI đang phân tích thông tin của bạn để nâng cao CV...",
+    })
+  }
 
   const startPhotoCapture = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      photoStreamRef.current = stream;
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      photoStreamRef.current = stream
 
       if (photoRef.current) {
-        photoRef.current.srcObject = stream;
+        photoRef.current.srcObject = stream
       }
 
-      setPhotoDialogOpen(true);
+      setPhotoDialogOpen(true)
 
       toast({
-        title: 'Camera đã được bật',
-        description: 'Hãy tạo điểm chụp ảnh tốt nhất và nhấn chụp ảnh.',
-      });
+        title: "Camera đã được bật",
+        description: "Hãy tạo điểm chụp ảnh tốt nhất và nhấn chụp ảnh.",
+      })
     } catch (err) {
-      console.error('Không thể truy cập camera:', err);
+      console.error("Không thể truy cập camera:", err)
       toast({
-        title: 'Lỗi truy cập camera',
-        description: 'Vui lòng cho phép truy cập camera và thử lại.',
-        variant: 'destructive',
-      });
+        title: "Lỗi truy cập camera",
+        description: "Vui lòng cho phép truy cập camera và thử lại.",
+        variant: "destructive",
+      })
     }
-  };
+  }
 
   const capturePhoto = () => {
     if (photoRef.current && canvasRef.current) {
-      const context = canvasRef.current.getContext('2d');
+      const context = canvasRef.current.getContext("2d")
 
       if (context) {
-        canvasRef.current.width = photoRef.current.videoWidth;
-        canvasRef.current.height = photoRef.current.videoHeight;
+        canvasRef.current.width = photoRef.current.videoWidth
+        canvasRef.current.height = photoRef.current.videoHeight
 
-        context.drawImage(
-          photoRef.current,
-          0,
-          0,
-          canvasRef.current.width,
-          canvasRef.current.height
-        );
+        context.drawImage(photoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height)
 
-        const photoData = canvasRef.current.toDataURL('image/png');
-        setPhotoPreview(photoData);
+        const photoData = canvasRef.current.toDataURL("image/png")
+        setPhotoPreview(photoData)
 
         toast({
-          title: 'Đã chụp ảnh thành công',
-          description: 'Ảnh đã được chụp và lưu vào hồ sơ của bạn.',
-        });
+          title: "Đã chụp ảnh thành công",
+          description: "Ảnh đã được chụp và lưu vào hồ sơ của bạn.",
+        })
       }
     }
-  };
+  }
 
   const closePhotoDialog = () => {
     if (photoStreamRef.current) {
-      photoStreamRef.current.getTracks().forEach(track => track.stop());
-      photoStreamRef.current = null;
+      photoStreamRef.current.getTracks().forEach((track) => track.stop())
+      photoStreamRef.current = null
     }
-    setPhotoDialogOpen(false);
-  };
+    setPhotoDialogOpen(false)
+  }
 
   const startVideoCapture = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true,
-      });
+      })
 
-      videoStreamRef.current = stream;
+      videoStreamRef.current = stream
 
       if (videoRef.current) {
-        videoRef.current.srcObject = stream;
+        videoRef.current.srcObject = stream
       }
 
-      const mediaRecorder = new MediaRecorder(stream);
-      mediaRecorderRef.current = mediaRecorder;
-      chunksRef.current = [];
+      const mediaRecorder = new MediaRecorder(stream)
+      mediaRecorderRef.current = mediaRecorder
+      chunksRef.current = []
 
-      mediaRecorder.ondataavailable = e => {
+      mediaRecorder.ondataavailable = (e) => {
         if (e.data.size > 0) {
-          chunksRef.current.push(e.data);
+          chunksRef.current.push(e.data)
         }
-      };
+      }
 
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'video/mp4' });
-        const videoUrl = URL.createObjectURL(blob);
-        setVideoPreview(videoUrl);
+        const blob = new Blob(chunksRef.current, { type: "video/mp4" })
+        const videoUrl = URL.createObjectURL(blob)
+        setVideoPreview(videoUrl)
 
-        setIsRecording(false);
-        setRecordingTime(0);
+        setIsRecording(false)
+        setRecordingTime(0)
         if (recordingInterval !== null) {
-          clearInterval(recordingInterval);
-          setRecordingInterval(null);
+          clearInterval(recordingInterval)
+          setRecordingInterval(null)
         }
 
         toast({
-          title: 'Đã quay video thành công',
-          description: 'Video đã được quay và lưu vào hồ sơ của bạn.',
-        });
-      };
+          title: "Đã quay video thành công",
+          description: "Video đã được quay và lưu vào hồ sơ của bạn.",
+        })
+      }
 
-      setVideoDialogOpen(true);
+      setVideoDialogOpen(true)
 
       toast({
-        title: 'Camera đã được bật',
-        description: 'Hãy nhấn nút quay để bắt đầu ghi video.',
-      });
+        title: "Camera đã được bật",
+        description: "Hãy nhấn nút quay để bắt đầu ghi video.",
+      })
     } catch (err) {
-      console.error('Không thể truy cập camera hoặc microphone:', err);
+      console.error("Không thể truy cập camera hoặc microphone:", err)
       toast({
-        title: 'Lỗi truy cập thiết bị',
-        description:
-          'Vui lòng cho phép truy cập camera và microphone, sau đó thử lại.',
-        variant: 'destructive',
-      });
+        title: "Lỗi truy cập thiết bị",
+        description: "Vui lòng cho phép truy cập camera và microphone, sau đó thử lại.",
+        variant: "destructive",
+      })
     }
-  };
+  }
 
   const toggleVideoRecording = () => {
     if (!isRecording) {
       if (mediaRecorderRef.current) {
-        mediaRecorderRef.current.start();
-        setIsRecording(true);
+        mediaRecorderRef.current.start()
+        setIsRecording(true)
 
         const interval = window.setInterval(() => {
-          setRecordingTime(prev => prev + 1);
-        }, 1000);
-        setRecordingInterval(interval);
+          setRecordingTime((prev) => prev + 1)
+        }, 1000)
+        setRecordingInterval(interval)
 
         toast({
-          title: 'Đang quay video',
-          description:
-            'Nói rõ và tự nhiên, giới thiệu bản thân trong khoảng 30 giây.',
-        });
+          title: "Đang quay video",
+          description: "Nói rõ và tự nhiên, giới thiệu bản thân trong khoảng 30 giây.",
+        })
       }
     } else {
-      if (
-        mediaRecorderRef.current &&
-        mediaRecorderRef.current.state !== 'inactive'
-      ) {
-        mediaRecorderRef.current.stop();
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+        mediaRecorderRef.current.stop()
 
         if (recordingInterval !== null) {
-          clearInterval(recordingInterval);
-          setRecordingInterval(null);
+          clearInterval(recordingInterval)
+          setRecordingInterval(null)
         }
       }
     }
-  };
+  }
 
   const closeVideoDialog = () => {
-    if (
-      isRecording &&
-      mediaRecorderRef.current &&
-      mediaRecorderRef.current.state !== 'inactive'
-    ) {
-      mediaRecorderRef.current.stop();
+    if (isRecording && mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      mediaRecorderRef.current.stop()
     }
 
     if (recordingInterval !== null) {
-      clearInterval(recordingInterval);
-      setRecordingInterval(null);
+      clearInterval(recordingInterval)
+      setRecordingInterval(null)
     }
 
     if (videoStreamRef.current) {
-      videoStreamRef.current.getTracks().forEach(track => track.stop());
-      videoStreamRef.current = null;
+      videoStreamRef.current.getTracks().forEach((track) => track.stop())
+      videoStreamRef.current = null
     }
 
-    setIsRecording(false);
-    setVideoDialogOpen(false);
-  };
+    setIsRecording(false)
+    setVideoDialogOpen(false)
+  }
 
   const startAudioCapture = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
 
-      audioStreamRef.current = stream;
+      audioStreamRef.current = stream
 
-      const mediaRecorder = new MediaRecorder(stream);
-      mediaRecorderRef.current = mediaRecorder;
-      chunksRef.current = [];
+      const mediaRecorder = new MediaRecorder(stream)
+      mediaRecorderRef.current = mediaRecorder
+      chunksRef.current = []
 
-      mediaRecorder.ondataavailable = e => {
+      mediaRecorder.ondataavailable = (e) => {
         if (e.data.size > 0) {
-          chunksRef.current.push(e.data);
+          chunksRef.current.push(e.data)
         }
-      };
+      }
 
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'audio/mp3' });
-        const audioUrl = URL.createObjectURL(blob);
-        setAudioPreview(audioUrl);
+        const blob = new Blob(chunksRef.current, { type: "audio/mp3" })
+        const audioUrl = URL.createObjectURL(blob)
+        setAudioPreview(audioUrl)
 
-        setIsRecording(false);
-        setRecordingTime(0);
+        setIsRecording(false)
+        setRecordingTime(0)
         if (recordingInterval !== null) {
-          clearInterval(recordingInterval);
-          setRecordingInterval(null);
+          clearInterval(recordingInterval)
+          setRecordingInterval(null)
         }
 
         toast({
-          title: 'Đã ghi âm thành công',
-          description: 'Audio đã được ghi và lưu vào hồ sơ của bạn.',
-        });
-      };
+          title: "Đã ghi âm thành công",
+          description: "Audio đã được ghi và lưu vào hồ sơ của bạn.",
+        })
+      }
 
-      setAudioDialogOpen(true);
+      setAudioDialogOpen(true)
 
       toast({
-        title: 'Microphone đã được bật',
-        description: 'Hãy nhấn nút ghi âm để bắt đầu.',
-      });
+        title: "Microphone đã được bật",
+        description: "Hãy nhấn nút ghi âm để bắt đầu.",
+      })
     } catch (err) {
-      console.error('Không thể truy cập microphone:', err);
+      console.error("Không thể truy cập microphone:", err)
       toast({
-        title: 'Lỗi truy cập microphone',
-        description: 'Vui lòng cho phép truy cập microphone và thử lại.',
-        variant: 'destructive',
-      });
+        title: "Lỗi truy cập microphone",
+        description: "Vui lòng cho phép truy cập microphone và thử lại.",
+        variant: "destructive",
+      })
     }
-  };
+  }
 
   const toggleAudioRecording = () => {
     if (!isRecording) {
       if (mediaRecorderRef.current) {
-        mediaRecorderRef.current.start();
-        setIsRecording(true);
+        mediaRecorderRef.current.start()
+        setIsRecording(true)
 
         const interval = window.setInterval(() => {
-          setRecordingTime(prev => prev + 1);
-        }, 1000);
-        setRecordingInterval(interval);
+          setRecordingTime((prev) => prev + 1)
+        }, 1000)
+        setRecordingInterval(interval)
 
         toast({
-          title: 'Đang ghi âm',
-          description:
-            'Nói rõ và tự nhiên, giới thiệu bản thân trong khoảng 30 giây.',
-        });
+          title: "Đang ghi âm",
+          description: "Nói rõ và tự nhiên, giới thiệu bản thân trong khoảng 30 giây.",
+        })
       }
     } else {
-      if (
-        mediaRecorderRef.current &&
-        mediaRecorderRef.current.state !== 'inactive'
-      ) {
-        mediaRecorderRef.current.stop();
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+        mediaRecorderRef.current.stop()
 
         if (recordingInterval !== null) {
-          clearInterval(recordingInterval);
-          setRecordingInterval(null);
+          clearInterval(recordingInterval)
+          setRecordingInterval(null)
         }
       }
     }
-  };
+  }
 
   const closeAudioDialog = () => {
-    if (
-      isRecording &&
-      mediaRecorderRef.current &&
-      mediaRecorderRef.current.state !== 'inactive'
-    ) {
-      mediaRecorderRef.current.stop();
+    if (isRecording && mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      mediaRecorderRef.current.stop()
     }
 
     if (recordingInterval !== null) {
-      clearInterval(recordingInterval);
-      setRecordingInterval(null);
+      clearInterval(recordingInterval)
+      setRecordingInterval(null)
     }
 
     if (audioStreamRef.current) {
-      audioStreamRef.current.getTracks().forEach(track => track.stop());
-      audioStreamRef.current = null;
+      audioStreamRef.current.getTracks().forEach((track) => track.stop())
+      audioStreamRef.current = null
     }
 
-    setIsRecording(false);
-    setAudioDialogOpen(false);
-  };
+    setIsRecording(false)
+    setAudioDialogOpen(false)
+  }
 
   const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds
-      .toString()
-      .padStart(2, '0')}`;
-  };
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`
+  }
 
   return (
     <div className="max-w-5xl mx-auto">
       <div className="mb-6">
         <p className="text-gray-600 mb-4">
-          Xây dựng CV chuyên nghiệp để nổi bật với nhà tuyển dụng. Công cụ AI
-          của chúng tôi có thể giúp tối ưu hóa nội dung của bạn.
+          Xây dựng CV chuyên nghiệp để nổi bật với nhà tuyển dụng. Công cụ AI của chúng tôi có thể giúp tối ưu hóa nội
+          dung của bạn.
         </p>
         <div className="flex space-x-4">
           <Button onClick={handleAIGenerate} className="flex items-center">
@@ -554,21 +504,13 @@ export default function CreateCVContent() {
             <p className="text-sm text-gray-600 mb-4">(PNG, JP, dưới 1MB)</p>
             <div className="w-32 h-32 bg-blue-100 rounded-md flex items-center justify-center mb-4 overflow-hidden">
               {photoPreview ? (
-                <img
-                  src={photoPreview || '/placeholder.svg'}
-                  alt="Ảnh hồ sơ"
-                  className="w-full h-full object-cover"
-                />
+                <img src={photoPreview || "/placeholder.svg"} alt="Ảnh hồ sơ" className="w-full h-full object-cover" />
               ) : (
                 <ImageIcon className="h-12 w-12 text-blue-500" />
               )}
             </div>
             <p className="text-sm text-gray-600 mb-4">Phù hợp với mọi CV</p>
-            <Button
-              variant="outline"
-              className="mt-auto"
-              onClick={startPhotoCapture}
-            >
+            <Button variant="outline" className="mt-auto" onClick={startPhotoCapture}>
               <Camera className="h-4 w-4 mr-2" />
               Chụp ảnh
             </Button>
@@ -582,30 +524,19 @@ export default function CreateCVContent() {
         {/* Video Card */}
         <Card className="bg-emerald-50">
           <CardContent className="p-6 flex flex-col items-center text-center">
-            <h3 className="font-medium mb-3">
-              Video giới thiệu bản thân 30 giây
-            </h3>
+            <h3 className="font-medium mb-3">Video giới thiệu bản thân 30 giây</h3>
             <p className="text-sm text-gray-600 mb-4">(MP4, dưới 2MB)</p>
             <div className="w-32 h-32 bg-emerald-100 rounded-md flex items-center justify-center mb-4 overflow-hidden">
               {videoPreview ? (
-                <video
-                  src={videoPreview}
-                  className="w-full h-full object-cover"
-                  controls
-                />
+                <video src={videoPreview} className="w-full h-full object-cover" controls />
               ) : (
                 <Video className="h-12 w-12 text-emerald-500" />
               )}
             </div>
             <p className="text-sm text-gray-600 mb-4">
-              Được ưu tiên hiển thị kết quả tìm hồ sơ để gây ấn tượng cao với
-              nhà tuyển dụng
+              Được ưu tiên hiển thị kết quả tìm hồ sơ để gây ấn tượng cao với nhà tuyển dụng
             </p>
-            <Button
-              variant="outline"
-              className="mt-auto"
-              onClick={startVideoCapture}
-            >
+            <Button variant="outline" className="mt-auto" onClick={startVideoCapture}>
               <PlayCircle className="h-4 w-4 mr-2" />
               Quay Video
             </Button>
@@ -625,25 +556,16 @@ export default function CreateCVContent() {
               {audioPreview ? (
                 <div className="w-full flex flex-col items-center">
                   <Mic className="h-12 w-12 text-purple-500 mb-2" />
-                  <audio
-                    src={audioPreview}
-                    controls
-                    className="w-full max-w-[120px]"
-                  />
+                  <audio src={audioPreview} controls className="w-full max-w-[120px]" />
                 </div>
               ) : (
                 <Mic className="h-12 w-12 text-purple-500" />
               )}
             </div>
             <p className="text-sm text-gray-600 mb-4">
-              Thân thiện với nhà tuyển dụng, nhất là vị trí sales, MC, phát
-              thanh viên
+              Thân thiện với nhà tuyển dụng, nhất là vị trí sales, MC, phát thanh viên
             </p>
-            <Button
-              variant="outline"
-              className="mt-auto"
-              onClick={startAudioCapture}
-            >
+            <Button variant="outline" className="mt-auto" onClick={startAudioCapture}>
               <Mic className="h-4 w-4 mr-2" />
               Ghi âm
             </Button>
@@ -657,12 +579,7 @@ export default function CreateCVContent() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-          <Tabs
-            defaultValue="personal"
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full"
-          >
+          <Tabs defaultValue="personal" value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid grid-cols-4 mb-8">
               <TabsTrigger value="personal">Thông tin cá nhân</TabsTrigger>
               <TabsTrigger value="address">Địa chỉ</TabsTrigger>
@@ -674,10 +591,7 @@ export default function CreateCVContent() {
               <Card>
                 <CardHeader>
                   <CardTitle>Thông tin cá nhân</CardTitle>
-                  <CardDescription>
-                    Nhập thông tin cơ bản của bạn mà nhà tuyển dụng sẽ thấy đầu
-                    tiên
-                  </CardDescription>
+                  <CardDescription>Nhập thông tin cơ bản của bạn mà nhà tuyển dụng sẽ thấy đầu tiên</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4 p-6 md:p-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -688,10 +602,7 @@ export default function CreateCVContent() {
                         <FormItem>
                           <FormLabel>Họ tên của bạn</FormLabel>
                           <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Họ tên đầy đủ của bạn"
-                            />
+                            <Input {...field} placeholder="Họ tên đầy đủ của bạn" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -706,11 +617,7 @@ export default function CreateCVContent() {
                           <FormLabel>Ngày tháng năm sinh</FormLabel>
                           <FormControl>
                             <div className="flex items-center border rounded-md border-input bg-background">
-                              <Input
-                                className="border-0"
-                                type="date"
-                                {...field}
-                              />
+                              <Input className="border-0" type="date" {...field} />
                               <Calendar className="h-4 w-4 mr-3 text-gray-400" />
                             </div>
                           </FormControl>
@@ -733,8 +640,8 @@ export default function CreateCVContent() {
                                 type="radio"
                                 id="male"
                                 value="Nam"
-                                checked={field.value === 'Nam'}
-                                onChange={() => field.onChange('Nam')}
+                                checked={field.value === "Nam"}
+                                onChange={() => field.onChange("Nam")}
                                 className="mr-2"
                               />
                               <label htmlFor="male">Nam</label>
@@ -744,8 +651,8 @@ export default function CreateCVContent() {
                                 type="radio"
                                 id="female"
                                 value="Nữ"
-                                checked={field.value === 'Nữ'}
-                                onChange={() => field.onChange('Nữ')}
+                                checked={field.value === "Nữ"}
+                                onChange={() => field.onChange("Nữ")}
                                 className="mr-2"
                               />
                               <label htmlFor="female">Nữ</label>
@@ -768,8 +675,8 @@ export default function CreateCVContent() {
                                 type="radio"
                                 id="single"
                                 value="Độc thân"
-                                checked={field.value === 'Độc thân'}
-                                onChange={() => field.onChange('Độc thân')}
+                                checked={field.value === "Độc thân"}
+                                onChange={() => field.onChange("Độc thân")}
                                 className="mr-2"
                               />
                               <label htmlFor="single">Độc thân</label>
@@ -779,8 +686,8 @@ export default function CreateCVContent() {
                                 type="radio"
                                 id="married"
                                 value="Kết hôn"
-                                checked={field.value === 'Kết hôn'}
-                                onChange={() => field.onChange('Kết hôn')}
+                                checked={field.value === "Kết hôn"}
+                                onChange={() => field.onChange("Kết hôn")}
                                 className="mr-2"
                               />
                               <label htmlFor="married">Kết hôn</label>
@@ -800,10 +707,7 @@ export default function CreateCVContent() {
                         <FormItem>
                           <FormLabel>Số CMND</FormLabel>
                           <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Nhập số chứng minh nhân dân"
-                            />
+                            <Input {...field} placeholder="Nhập số chứng minh nhân dân" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -817,10 +721,7 @@ export default function CreateCVContent() {
                         <FormItem>
                           <FormLabel>Số CCCD</FormLabel>
                           <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Nếu không có để trống"
-                            />
+                            <Input {...field} placeholder="Nếu không có để trống" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -835,10 +736,7 @@ export default function CreateCVContent() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            Email nhận kết quả{' '}
-                            <span className="text-gray-500">
-                              (những bài kiểm tra)
-                            </span>
+                            Email nhận kết quả <span className="text-gray-500">(những bài kiểm tra)</span>
                           </FormLabel>
                           <FormControl>
                             <Input {...field} placeholder="Email của bạn" />
@@ -855,10 +753,7 @@ export default function CreateCVContent() {
                         <FormItem>
                           <FormLabel>Số điện thoại của bạn</FormLabel>
                           <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Số điện thoại liên hệ"
-                            />
+                            <Input {...field} placeholder="Số điện thoại liên hệ" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -888,7 +783,7 @@ export default function CreateCVContent() {
                   <Button variant="outline" type="button">
                     Lưu nháp
                   </Button>
-                  <Button type="button" onClick={() => setActiveTab('address')}>
+                  <Button type="button" onClick={() => setActiveTab("address")}>
                     Tiếp: Địa chỉ
                   </Button>
                 </CardFooter>
@@ -899,9 +794,7 @@ export default function CreateCVContent() {
               <Card>
                 <CardHeader>
                   <CardTitle>Địa chỉ</CardTitle>
-                  <CardDescription>
-                    Thông tin về nơi bạn đang sinh sống
-                  </CardDescription>
+                  <CardDescription>Thông tin về nơi bạn đang sinh sống</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
@@ -912,11 +805,7 @@ export default function CreateCVContent() {
                         name="province"
                         render={({ field }) => (
                           <FormItem>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              defaultValue={field.value}
-                            >
+                            <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                               <FormControl>
                                 <SelectTrigger>
                                   <SelectValue placeholder="Tỉnh, thành" />
@@ -924,9 +813,7 @@ export default function CreateCVContent() {
                               </FormControl>
                               <SelectContent>
                                 <SelectItem value="hanoi">Hà Nội</SelectItem>
-                                <SelectItem value="hcm">
-                                  TP. Hồ Chí Minh
-                                </SelectItem>
+                                <SelectItem value="hcm">TP. Hồ Chí Minh</SelectItem>
                                 <SelectItem value="danang">Đà Nẵng</SelectItem>
                               </SelectContent>
                             </Select>
@@ -940,11 +827,7 @@ export default function CreateCVContent() {
                         name="district"
                         render={({ field }) => (
                           <FormItem>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              defaultValue={field.value}
-                            >
+                            <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                               <FormControl>
                                 <SelectTrigger>
                                   <SelectValue placeholder="Quận, huyện" />
@@ -966,11 +849,7 @@ export default function CreateCVContent() {
                         name="ward"
                         render={({ field }) => (
                           <FormItem>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                              defaultValue={field.value}
-                            >
+                            <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                               <FormControl>
                                 <SelectTrigger>
                                   <SelectValue placeholder="Phường, xã" />
@@ -994,10 +873,7 @@ export default function CreateCVContent() {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Số nhà, Tên đường/Ấp/Thôn"
-                            />
+                            <Input {...field} placeholder="Số nhà, Tên đường/Ấp/Thôn" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -1006,17 +882,10 @@ export default function CreateCVContent() {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Button
-                    variant="outline"
-                    type="button"
-                    onClick={() => setActiveTab('personal')}
-                  >
+                  <Button variant="outline" type="button" onClick={() => setActiveTab("personal")}>
                     Quay lại
                   </Button>
-                  <Button
-                    type="button"
-                    onClick={() => setActiveTab('education')}
-                  >
+                  <Button type="button" onClick={() => setActiveTab("education")}>
                     Tiếp: Học vấn
                   </Button>
                 </CardFooter>
@@ -1027,19 +896,14 @@ export default function CreateCVContent() {
               <Card>
                 <CardHeader>
                   <CardTitle>Học vấn</CardTitle>
-                  <CardDescription>
-                    Thêm thông tin về học vấn của bạn
-                  </CardDescription>
+                  <CardDescription>Thêm thông tin về học vấn của bạn</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-4">
                     <FormLabel>Bằng cấp</FormLabel>
 
                     {form.getValues().education?.map((_, index) => (
-                      <div
-                        key={index}
-                        className="space-y-4 p-4 border rounded-md bg-gray-50"
-                      >
+                      <div key={index} className="space-y-4 p-4 border rounded-md bg-gray-50">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <FormField
                             control={form.control}
@@ -1047,11 +911,7 @@ export default function CreateCVContent() {
                             render={({ field }) => (
                               <FormItem>
                                 <FormLabel>Bằng cấp</FormLabel>
-                                <Select
-                                  onValueChange={field.onChange}
-                                  value={field.value}
-                                  defaultValue={field.value}
-                                >
+                                <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                                   <FormControl>
                                     <SelectTrigger>
                                       <SelectValue placeholder="Chọn bằng cấp" />
@@ -1059,21 +919,11 @@ export default function CreateCVContent() {
                                   </FormControl>
                                   <SelectContent>
                                     <SelectItem value="thpt">THPT</SelectItem>
-                                    <SelectItem value="trungcap">
-                                      Trung cấp
-                                    </SelectItem>
-                                    <SelectItem value="caodang">
-                                      Cao đẳng
-                                    </SelectItem>
-                                    <SelectItem value="daihoc">
-                                      Đại học
-                                    </SelectItem>
-                                    <SelectItem value="thacsi">
-                                      Thạc sĩ
-                                    </SelectItem>
-                                    <SelectItem value="tiensi">
-                                      Tiến sĩ
-                                    </SelectItem>
+                                    <SelectItem value="trungcap">Trung cấp</SelectItem>
+                                    <SelectItem value="caodang">Cao đẳng</SelectItem>
+                                    <SelectItem value="daihoc">Đại học</SelectItem>
+                                    <SelectItem value="thacsi">Thạc sĩ</SelectItem>
+                                    <SelectItem value="tiensi">Tiến sĩ</SelectItem>
                                   </SelectContent>
                                 </Select>
                                 <FormMessage />
@@ -1088,10 +938,7 @@ export default function CreateCVContent() {
                               <FormItem>
                                 <FormLabel>Tên trường</FormLabel>
                                 <FormControl>
-                                  <Input
-                                    {...field}
-                                    placeholder="Tên trường đã học"
-                                  />
+                                  <Input {...field} placeholder="Tên trường đã học" />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -1106,10 +953,7 @@ export default function CreateCVContent() {
                             <FormItem>
                               <FormLabel>Chuyên ngành</FormLabel>
                               <FormControl>
-                                <Input
-                                  {...field}
-                                  placeholder="Chuyên ngành đã học"
-                                />
+                                <Input {...field} placeholder="Chuyên ngành đã học" />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -1166,29 +1010,17 @@ export default function CreateCVContent() {
                       </div>
                     ))}
 
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="flex items-center"
-                      onClick={handleAddEducation}
-                    >
+                    <Button type="button" variant="outline" className="flex items-center" onClick={handleAddEducation}>
                       <Plus className="h-4 w-4 mr-2" />
                       Thêm thông tin học vấn
                     </Button>
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Button
-                    variant="outline"
-                    type="button"
-                    onClick={() => setActiveTab('address')}
-                  >
+                  <Button variant="outline" type="button" onClick={() => setActiveTab("address")}>
                     Quay lại
                   </Button>
-                  <Button
-                    type="button"
-                    onClick={() => setActiveTab('experience')}
-                  >
+                  <Button type="button" onClick={() => setActiveTab("experience")}>
                     Tiếp: Kinh nghiệm làm việc
                   </Button>
                 </CardFooter>
@@ -1199,19 +1031,14 @@ export default function CreateCVContent() {
               <Card>
                 <CardHeader>
                   <CardTitle>Kinh nghiệm làm việc</CardTitle>
-                  <CardDescription>
-                    Thêm thông tin về kinh nghiệm làm việc của bạn
-                  </CardDescription>
+                  <CardDescription>Thêm thông tin về kinh nghi���m làm việc của bạn</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-4">
                     <FormLabel>Nơi làm việc</FormLabel>
 
                     {form.getValues().experience?.map((_, index) => (
-                      <div
-                        key={index}
-                        className="space-y-4 p-4 border rounded-md bg-gray-50"
-                      >
+                      <div key={index} className="space-y-4 p-4 border rounded-md bg-gray-50">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <FormField
                             control={form.control}
@@ -1220,10 +1047,7 @@ export default function CreateCVContent() {
                               <FormItem>
                                 <FormLabel>Tên công ty</FormLabel>
                                 <FormControl>
-                                  <Input
-                                    {...field}
-                                    placeholder="Tên công ty đã làm việc"
-                                  />
+                                  <Input {...field} placeholder="Tên công ty đã làm việc" />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -1237,10 +1061,7 @@ export default function CreateCVContent() {
                               <FormItem>
                                 <FormLabel>Vị trí làm việc</FormLabel>
                                 <FormControl>
-                                  <Input
-                                    {...field}
-                                    placeholder="Vị trí công việc"
-                                  />
+                                  <Input {...field} placeholder="Vị trí công việc" />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -1273,10 +1094,7 @@ export default function CreateCVContent() {
                                   <Input
                                     type="date"
                                     {...field}
-                                    disabled={
-                                      form.getValues().experience?.[index]
-                                        .currentlyWorking
-                                    }
+                                    disabled={form.getValues().experience?.[index].currentlyWorking}
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -1291,22 +1109,16 @@ export default function CreateCVContent() {
                           render={({ field }) => (
                             <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                               <FormControl>
-                                <Checkbox
-                                  checked={field.value}
-                                  onCheckedChange={field.onChange}
-                                />
+                                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                               </FormControl>
                               <div className="space-y-1 leading-none">
-                                <FormLabel>
-                                  Tôi vẫn đang làm việc tại đây
-                                </FormLabel>
+                                <FormLabel>Tôi vẫn đang làm việc tại đây</FormLabel>
                               </div>
                             </FormItem>
                           )}
                         />
 
-                        {!form.getValues().experience?.[index]
-                          .currentlyWorking && (
+                        {!form.getValues().experience?.[index].currentlyWorking && (
                           <FormField
                             control={form.control}
                             name={`experience.${index}.reasonForLeaving`}
@@ -1314,10 +1126,7 @@ export default function CreateCVContent() {
                               <FormItem>
                                 <FormLabel>Lý do nghỉ việc</FormLabel>
                                 <FormControl>
-                                  <Input
-                                    {...field}
-                                    placeholder="Lý do nghỉ việc"
-                                  />
+                                  <Input {...field} placeholder="Lý do nghỉ việc" />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -1345,23 +1154,14 @@ export default function CreateCVContent() {
                       </div>
                     ))}
 
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="flex items-center"
-                      onClick={handleAddExperience}
-                    >
+                    <Button type="button" variant="outline" className="flex items-center" onClick={handleAddExperience}>
                       <Plus className="h-4 w-4 mr-2" />
                       Thêm kinh nghiệm làm việc
                     </Button>
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Button
-                    variant="outline"
-                    type="button"
-                    onClick={() => setActiveTab('education')}
-                  >
+                  <Button variant="outline" type="button" onClick={() => setActiveTab("education")}>
                     Quay lại
                   </Button>
                   <Button type="submit">Hoàn thành CV</Button>
@@ -1377,18 +1177,11 @@ export default function CreateCVContent() {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Chụp ảnh hồ sơ</DialogTitle>
-            <DialogDescription>
-              Điều chỉnh camera để có ảnh chân dung rõ nét
-            </DialogDescription>
+            <DialogDescription>Điều chỉnh camera để có ảnh chân dung rõ nét</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col space-y-4">
             <div className="relative bg-black rounded-md overflow-hidden">
-              <video
-                ref={photoRef}
-                autoPlay
-                playsInline
-                className="w-full h-64 object-cover"
-              />
+              <video ref={photoRef} autoPlay playsInline className="w-full h-64 object-cover" />
               <canvas ref={canvasRef} className="hidden" />
             </div>
             <div className="flex space-x-2 justify-center">
@@ -1408,7 +1201,7 @@ export default function CreateCVContent() {
                 <h4 className="font-medium mb-2">Ảnh đã chụp:</h4>
                 <div className="bg-gray-100 rounded-md overflow-hidden">
                   <img
-                    src={photoPreview || '/placeholder.svg'}
+                    src={photoPreview || "/placeholder.svg"}
                     alt="Ảnh vừa chụp"
                     className="w-full max-h-64 object-contain"
                   />
@@ -1434,19 +1227,11 @@ export default function CreateCVContent() {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Video giới thiệu bản thân</DialogTitle>
-            <DialogDescription>
-              Quay một video ngắn giới thiệu về bạn
-            </DialogDescription>
+            <DialogDescription>Quay một video ngắn giới thiệu về bạn</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col space-y-4">
             <div className="relative bg-black rounded-md overflow-hidden">
-              <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                muted={!isRecording}
-                className="w-full h-64 object-cover"
-              />
+              <video ref={videoRef} autoPlay playsInline muted={!isRecording} className="w-full h-64 object-cover" />
               {isRecording && (
                 <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md flex items-center text-sm">
                   <span className="animate-pulse mr-1">⚫</span>
@@ -1455,10 +1240,7 @@ export default function CreateCVContent() {
               )}
             </div>
             <div className="flex space-x-2 justify-center">
-              <Button
-                onClick={toggleVideoRecording}
-                variant={isRecording ? 'destructive' : 'default'}
-              >
+              <Button onClick={toggleVideoRecording} variant={isRecording ? "destructive" : "default"}>
                 {isRecording ? (
                   <>
                     <Square className="h-4 w-4 mr-2" />
@@ -1492,10 +1274,7 @@ export default function CreateCVContent() {
               <X className="h-4 w-4 mr-2" />
               Huỷ
             </Button>
-            <Button
-              disabled={!videoPreview || isRecording}
-              onClick={closeVideoDialog}
-            >
+            <Button disabled={!videoPreview || isRecording} onClick={closeVideoDialog}>
               <CheckCircle2 className="h-4 w-4 mr-2" />
               Sử dụng video này
             </Button>
@@ -1508,41 +1287,25 @@ export default function CreateCVContent() {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Ghi âm giới thiệu bản thân</DialogTitle>
-            <DialogDescription>
-              Tạo một đoạn ghi âm giới thiệu về bạn
-            </DialogDescription>
+            <DialogDescription>Tạo một đoạn ghi âm giới thiệu về bạn</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col space-y-4">
             <div className="bg-gray-100 rounded-md overflow-hidden p-6 flex flex-col items-center justify-center min-h-[200px]">
-              <Mic
-                className={`h-24 w-24 ${
-                  isRecording ? 'text-red-500 animate-pulse' : 'text-gray-400'
-                }`}
-              />
+              <Mic className={`h-24 w-24 ${isRecording ? "text-red-500 animate-pulse" : "text-gray-400"}`} />
               {isRecording && (
                 <div className="mt-4 text-center">
-                  <div className="text-xl font-bold">
-                    {formatTime(recordingTime)}
-                  </div>
+                  <div className="text-xl font-bold">{formatTime(recordingTime)}</div>
                   <p className="text-sm text-gray-500">Đang ghi âm...</p>
                 </div>
               )}
               {!isRecording && audioPreview && (
                 <div className="w-full mt-4">
-                  <audio
-                    ref={audioRef}
-                    src={audioPreview}
-                    controls
-                    className="w-full"
-                  />
+                  <audio ref={audioRef} src={audioPreview} controls className="w-full" />
                 </div>
               )}
             </div>
             <div className="flex space-x-2 justify-center">
-              <Button
-                onClick={toggleAudioRecording}
-                variant={isRecording ? 'destructive' : 'default'}
-              >
+              <Button onClick={toggleAudioRecording} variant={isRecording ? "destructive" : "default"}>
                 {isRecording ? (
                   <>
                     <Square className="h-4 w-4 mr-2" />
@@ -1568,10 +1331,7 @@ export default function CreateCVContent() {
               <X className="h-4 w-4 mr-2" />
               Huỷ
             </Button>
-            <Button
-              disabled={!audioPreview || isRecording}
-              onClick={closeAudioDialog}
-            >
+            <Button disabled={!audioPreview || isRecording} onClick={closeAudioDialog}>
               <CheckCircle2 className="h-4 w-4 mr-2" />
               Sử dụng audio này
             </Button>
@@ -1579,5 +1339,5 @@ export default function CreateCVContent() {
         </DialogContent>
       </Dialog>
     </div>
-  );
+  )
 }
