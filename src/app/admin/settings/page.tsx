@@ -139,7 +139,7 @@ export default function SettingsPage() {
                 Configure system security options
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4 sm:p-6 md:p-8 lg:p-10">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <div className="space-y-0.5">
                   <Label htmlFor="two-factor">
@@ -220,7 +220,7 @@ export default function SettingsPage() {
               <CardTitle>Appearance Settings</CardTitle>
               <CardDescription>Customize the admin interface</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 p-4 sm:p-6 md:p-8 lg:p-10">
               <div>
                 <h3 className="text-sm font-medium mb-4">Theme</h3>
                 <div className="grid grid-cols-1 xs:grid-cols-3 gap-4">
