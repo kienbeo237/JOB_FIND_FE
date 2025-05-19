@@ -1,9 +1,20 @@
 "use client"
+
+import React from "react"
 import { UserPlus, Filter, Download, Search } from "lucide-react"
 import { useState, useEffect } from "react"
 import Swal from "sweetalert2"
 
-export default function UsersManagement() {
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  type: string;
+  status: string;
+  joinDate: string;
+}
+
+const UsersManagement: React.FC = () => {
   
   const users = [
     {
@@ -623,3 +634,5 @@ export default function UsersManagement() {
     </div>
   )
 }
+
+export default UsersManagement;
