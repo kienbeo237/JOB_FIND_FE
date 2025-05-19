@@ -116,7 +116,7 @@ export default function AdminProfilePage() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Profile Summary Card */}
-        <Card className="md:col-span-1">
+        <Card className="md:col-span-1 p-4 sm:p-6 md:p-8 lg:p-10">
           <CardHeader className="text-center">
             <div className="flex flex-col items-center">
               <div className="relative mb-4 group">
@@ -235,13 +235,13 @@ export default function AdminProfilePage() {
             {/* About Tab */}
             <TabsContent value="about">
               <Card>
-                <CardHeader>
+                <CardHeader className="">
                   <CardTitle>About Me</CardTitle>
                   <CardDescription>
                     Your professional information and bio
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 p-4 sm:p-6 md:p-8 lg:p-10">
                   <div>
                     <h3 className="font-medium mb-2">Bio</h3>
                     {isEditing ? (
@@ -302,7 +302,7 @@ export default function AdminProfilePage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-6">
+                  <div className="space-y-6 p-4 sm:p-6 md:p-8 lg:p-10">
                     {[
                       {
                         action:
@@ -362,7 +362,7 @@ export default function AdminProfilePage() {
                     Manage your account security and access
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 p-4 sm:p-6 md:p-8 lg:p-10">
                   <div>
                     <div className="flex justify-between items-center mb-4">
                       <div>
@@ -477,7 +477,7 @@ export default function AdminProfilePage() {
                   <CardTitle>Preferences</CardTitle>
                   <CardDescription>Customize your experience</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 p-4 sm:p-6 md:p-8 lg:p-10">
                   <div>
                     <h3 className="font-medium mb-4">Notifications</h3>
                     <div className="space-y-3">
