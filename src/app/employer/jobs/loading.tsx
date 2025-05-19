@@ -8,7 +8,6 @@ export default function JobsLoading() {
         <Skeleton className="h-10 w-32" />
       </div>
 
-      {/* Filters & Search */}
       <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
         <div className="flex flex-col md:flex-row gap-4">
           <Skeleton className="h-10 flex-1" />
@@ -20,7 +19,6 @@ export default function JobsLoading() {
         </div>
       </div>
 
-      {/* Jobs List */}
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">
         <div className="p-4">
           {Array(5)
@@ -43,7 +41,6 @@ export default function JobsLoading() {
         </div>
       </div>
 
-      {/* Pagination */}
       <div className="flex items-center justify-between mt-6">
         <Skeleton className="h-5 w-64" />
         <div className="flex space-x-1">

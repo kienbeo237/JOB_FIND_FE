@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import Swal from "sweetalert2"
 
 export default function CategoriesManagement() {
-  // Pagination state
+  
   const [currentPage, setCurrentPage] = useState(1)
   const [activeTab, setActiveTab] = useState("categories")
   const itemsPerPage = 6
@@ -14,7 +14,7 @@ export default function CategoriesManagement() {
   const [newCategoryName, setNewCategoryName] = useState("")
   const [newCategoryStatus, setNewCategoryStatus] = useState("Active")
 
-  // Mock data for job categories
+  
   const jobCategories = [
     { id: 1, name: "Information Technology", count: 245, status: "Active" },
     { id: 2, name: "Finance & Accounting", count: 187, status: "Active" },
@@ -30,7 +30,7 @@ export default function CategoriesManagement() {
     { id: 12, name: "Manufacturing", count: 32, status: "Active" },
   ]
 
-  // Mock data for locations
+  
   const locations = [
     { id: 1, name: "New York", count: 345, status: "Active" },
     { id: 2, name: "San Francisco", count: 287, status: "Active" },
@@ -46,30 +46,30 @@ export default function CategoriesManagement() {
     { id: 12, name: "Phoenix", count: 87, status: "Active" },
   ]
 
-  // Get current data based on active tab
+  
   const currentData = activeTab === "categories" ? jobCategories : locations
 
-  // Calculate pagination
+  
   const totalItems = currentData.length
   const totalPages = Math.ceil(totalItems / itemsPerPage)
 
-  // Get current items
+  
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
   const currentItems = currentData.slice(indexOfFirstItem, indexOfLastItem)
 
-  // Change page
+  
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
   const nextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages))
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1))
 
-  // Handle adding a new category
+  
   const handleAddCategory = (e) => {
     e.preventDefault()
 
     if (!newCategoryName.trim()) return
 
-    // In a real app, this would be an API call
+    
     const newCategory = {
       id: currentData.length + 1,
       name: newCategoryName,
@@ -77,19 +77,19 @@ export default function CategoriesManagement() {
       status: newCategoryStatus,
     }
 
-    // For demo purposes, we'll just log it
+    
     console.log("Adding new category:", newCategory)
 
-    // Reset form and close modal
+    
     setNewCategoryName("")
     setNewCategoryStatus("Active")
     setIsModalOpen(false)
 
-    // Show success message (in a real app)
+    
     alert(`New ${activeTab === "categories" ? "category" : "location"} added: ${newCategoryName}`)
   }
 
-  // Handle editing an item
+  
   const handleEditItem = (item) => {
     Swal.fire({
       title: `Edit ${activeTab === "categories" ? "Category" : "Location"}`,
@@ -137,14 +137,14 @@ export default function CategoriesManagement() {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        // In a real app, this would be an API call
+        
         console.log(`Updating ${activeTab === "categories" ? "category" : "location"}:`, {
           id: item.id,
           name: result.value.name,
           status: result.value.status,
         })
 
-        // Show success message
+        
         Swal.fire({
           icon: "success",
           title: "Updated!",
@@ -155,7 +155,7 @@ export default function CategoriesManagement() {
     })
   }
 
-  // Handle deleting an item
+  
   const handleDeleteItem = (item) => {
     Swal.fire({
       title: "Are you sure?",
@@ -168,10 +168,10 @@ export default function CategoriesManagement() {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        // In a real app, this would be an API call
+        
         console.log(`Deleting ${activeTab === "categories" ? "category" : "location"}:`, item)
 
-        // Show success message
+        
         Swal.fire({
           icon: "success",
           title: "Deleted!",
@@ -182,7 +182,7 @@ export default function CategoriesManagement() {
     })
   }
 
-  // Reset to page 1 when tab changes
+  
   useEffect(() => {
     setCurrentPage(1)
   }, [activeTab])
@@ -378,9 +378,8 @@ export default function CategoriesManagement() {
                     </svg>
                   </button>
 
-                  {/* Page numbers */}
                   {Array.from({ length: Math.min(totalPages, 3) }).map((_, idx) => {
-                    // Show current page and adjacent pages
+                    
                     let pageNumber
                     if (totalPages <= 3) {
                       pageNumber = idx + 1
@@ -444,7 +443,7 @@ export default function CategoriesManagement() {
               <h3 className="text-lg font-medium">Add New {activeTab === "categories" ? "Category" : "Location"}</h3>
               <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-gray-700">
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns="http:
                   className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"

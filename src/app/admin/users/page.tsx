@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Swal from "sweetalert2"
 
 export default function UsersManagement() {
-  // Mock data for users
+  
   const users = [
     {
       id: 1,
@@ -72,7 +72,7 @@ export default function UsersManagement() {
     },
   ]
 
-  // Add state to track active tab
+  
   const [activeTab, setActiveTab] = useState("all")
   const [showFilterMenu, setShowFilterMenu] = useState(false)
   const [statusFilters, setStatusFilters] = useState<string[]>([])
@@ -88,7 +88,7 @@ export default function UsersManagement() {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(5)
 
-  // Toggle status filter
+  
   const toggleStatusFilter = (status: string) => {
     if (statusFilters.includes(status)) {
       setStatusFilters(statusFilters.filter((s) => s !== status))
@@ -97,18 +97,18 @@ export default function UsersManagement() {
     }
   }
 
-  // Export to CSV function
+  
   const exportToCSV = () => {
-    // Create CSV header
+    
     const headers = ["Name", "Email", "Type", "Status", "Join Date"]
 
-    // Convert user data to CSV rows
+    
     const userRows = filteredUsers.map((user) => [user.name, user.email, user.type, user.status, user.joinDate])
 
-    // Combine headers and rows
+    
     const csvContent = [headers.join(","), ...userRows.map((row) => row.join(","))].join("\n")
 
-    // Create a blob and download link
+    
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
     const url = URL.createObjectURL(blob)
     const link = document.createElement("a")
@@ -120,28 +120,28 @@ export default function UsersManagement() {
     document.body.removeChild(link)
   }
 
-  // Filter users based on active tab and status filters
+  
   const filteredUsers = users.filter((user) => {
-    // First filter by tab
+    
     const matchesTab =
       activeTab === "all" ||
       (activeTab === "candidates" && user.type === "Candidate") ||
       (activeTab === "employers" && user.type === "Employer") ||
       (activeTab === "admins" && user.type === "Admin")
 
-    // Then filter by status if status filters are applied
+    
     const matchesStatus = statusFilters.length === 0 || statusFilters.includes(user.status)
 
     return matchesTab && matchesStatus
   })
 
-  // Pagination logic
+  
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
   const currentItems = filteredUsers.slice(indexOfFirstItem, indexOfLastItem)
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage)
 
-  // Handle page changes
+  
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1)
@@ -158,7 +158,7 @@ export default function UsersManagement() {
     setCurrentPage(pageNumber)
   }
 
-  // Handle edit button click
+  
   const handleEditClick = (user: any) => {
     setSelectedUser(user)
     setEditFormData({
@@ -232,7 +232,7 @@ export default function UsersManagement() {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        // In a real app, you would update the user via API
+        
         Swal.fire({
           title: "Success!",
           text: `User ${result.value.name} has been updated.`,
@@ -243,7 +243,7 @@ export default function UsersManagement() {
     })
   }
 
-  // Handle delete button click
+  
   const handleDeleteClick = (user: any) => {
     Swal.fire({
       title: "Are you sure?",
@@ -255,7 +255,7 @@ export default function UsersManagement() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        // In a real app, you would delete the user via API
+        
         Swal.fire({
           title: "Deleted!",
           text: `User ${user.name} has been deleted.`,
@@ -266,7 +266,7 @@ export default function UsersManagement() {
     })
   }
 
-  // Close filter menu when clicking outside
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (showFilterMenu && !(event.target as Element).closest(".filter-menu-container")) {
@@ -550,7 +550,7 @@ export default function UsersManagement() {
                   <span className="sr-only">Previous</span>
                   <svg
                     className="h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns="http:
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -565,7 +565,7 @@ export default function UsersManagement() {
 
                 {/* Generate page buttons */}
                 {Array.from({ length: Math.min(totalPages, 5) }).map((_, index) => {
-                  // Calculate page number to display
+                  
                   let pageNum =
                     currentPage <= 3
                       ? index + 1
@@ -573,7 +573,7 @@ export default function UsersManagement() {
                         ? totalPages - 4 + index
                         : currentPage - 2 + index
 
-                  // Ensure page number is within valid range
+                  
                   if (pageNum <= 0) pageNum = 1
                   if (pageNum > totalPages) return null
 
@@ -603,7 +603,7 @@ export default function UsersManagement() {
                   <span className="sr-only">Next</span>
                   <svg
                     className="h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns="http:
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"

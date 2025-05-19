@@ -115,7 +115,6 @@ export default function EmployerActivityPage() {
           </div>
         </div>
 
-        {/* Load more button */}
         <div className="text-center mt-8">
           <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">Xem thêm hoạt động</button>
         </div>

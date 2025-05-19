@@ -24,7 +24,6 @@ export default function AnalyticsPage() {
   const [timeRange, setTimeRange] = useState("last30Days")
   const [showTimeRangeDropdown, setShowTimeRangeDropdown] = useState(false)
 
-  // Mock data for charts
   const userRegistrationData = [
     { name: "Jan", candidates: 65, employers: 28 },
     { name: "Feb", candidates: 59, employers: 32 },
@@ -86,7 +85,6 @@ export default function AnalyticsPage() {
     { name: "Jul", rate: 40 },
   ]
 
-  // Stats cards data
   const stats = [
     {
       title: "Total Users",
@@ -193,7 +191,6 @@ export default function AnalyticsPage() {
         </div>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
           <div key={index} className="bg-white rounded-lg shadow p-5 border border-gray-100">

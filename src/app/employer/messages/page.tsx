@@ -92,7 +92,6 @@ const EmployerMessagesPage = () => {
       <p className="text-sm text-gray-500 mb-6">Quản lý trò chuyện với ứng viên</p>
 
       <div className="flex flex-col lg:flex-row lg:h-[600px] border border-gray-200 rounded-lg overflow-hidden">
-        {/* Conversations List */}
         <div className="w-full lg:w-1/3 border-r border-gray-200">
           <Tabs defaultValue="all" className="w-full">
             <TabsList className="w-full grid grid-cols-2">
@@ -175,7 +174,6 @@ const EmployerMessagesPage = () => {
           </Tabs>
         </div>
 
-        {/* Message Display */}
         <div className="w-full lg:w-2/3 flex flex-col">
           <div className="p-4 border-b border-gray-200 flex justify-between items-center">
             <div className="flex items-center">

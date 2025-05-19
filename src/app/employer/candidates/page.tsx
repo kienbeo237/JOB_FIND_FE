@@ -333,7 +333,6 @@ const CandidatesPage = () => {
         </div>
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-center mt-6">
         <nav className="flex text-sm">
           <button className="px-3 py-1 border border-gray-300 rounded-l-md">Trước</button>
@@ -344,7 +343,6 @@ const CandidatesPage = () => {
         </nav>
       </div>
 
-      {/* CV Label Dialog */}
       <Dialog open={showLabelDialog} onOpenChange={setShowLabelDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -376,7 +374,6 @@ const CandidatesPage = () => {
         </DialogContent>
       </Dialog>
 
-      {/* CV Viewer Dialog */}
       <Dialog open={showCVDialog} onOpenChange={setShowCVDialog}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>

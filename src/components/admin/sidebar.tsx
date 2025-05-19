@@ -19,12 +19,9 @@ import {
   Layers,
 } from 'lucide-react';
 
-const scrollbarHideStyle = {
-  scrollbarWidth: 'none',
+const scrollbarHideStyle: React.CSSProperties = {
+  scrollbarWidth: 'none' as const,
   msOverflowStyle: 'none',
-  '&::-webkit-scrollbar': {
-    display: 'none',
-  },
 };
 
 export default function AdminSidebar() {
@@ -105,7 +102,10 @@ export default function AdminSidebar() {
         </button>
       </div>
 
-      <div className="flex-1 py-4 overflow-y-auto" style={scrollbarHideStyle}>
+      <div
+        className="flex-1 py-4 overflow-y-auto [&::-webkit-scrollbar]:hidden"
+        style={scrollbarHideStyle}
+      >
         <nav className="px-2 space-y-1">
           {navItems.map(item => (
             <Link
